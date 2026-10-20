@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 44" width="50" height="44">
+  <metadata>{"id":"mount-fuji","name":"Mount Fuji in Bloom","blurb":"Cherry blossom season, seen through the moon window.","band":"medium","W":50,"H":44,"slots":3,"lanes":4,"chunk":[60,90],"wait":0.6,"bg":"#ffcf8f"}</metadata>
+  <defs>
+    <clipPath id="window"><circle cx="25" cy="22" r="19.5"/></clipPath>
+    <pattern id="petals" x="2" y="0" width="6" height="5" patternUnits="userSpaceOnUse">
+      <rect x="1" y="1" width="2" height="1" fill="#e8508f"/>
+      <rect x="4" y="3" width="1" height="1" fill="#e8508f"/>
+    </pattern>
+  </defs>
+  <!-- plaster wall -->
+  <rect width="50" height="44" fill="#ffcf8f"/>
+  <rect width="50" height="44" fill="url(#petals)"/>
+
+  <!-- the view through the round window -->
+  <g clip-path="url(#window)">
+    <rect width="50" height="44" fill="#fff1d6"/>
+    <rect x="0" y="0" width="50" height="20" fill="url(#petals)"/>
+    <circle cx="35" cy="11" r="5" fill="#e8508f" stroke="#2a1f33" stroke-width="1.5"/>
+    <path d="M0,36 L19,13 C21,11 28,11 30,13 L50,36 Z" fill="#5a86d9"/>
+    <path d="M26,11.5 C28,11.5 29,12 30,13 L50,36 L33,36 Z" fill="#3d5fae"/>
+    <path d="M14.1,19 L19,13 C21,11 28,11 30,13 L35.2,19 L33,22.5 L30.5,19.5 L28,23.5 L25,19.5 L22,22.5 L19.5,19 L16.5,21.5 Z" fill="#ffffff"/>
+    <path d="M0,36 L19,13 C21,11 28,11 30,13 L50,36" fill="none" stroke="#2a1f33" stroke-width="1.6" stroke-linejoin="round"/>
+    <!-- lake -->
+    <rect y="34" width="50" height="12" fill="#3d5fae"/>
+    <rect y="33.5" width="50" height="1.4" fill="#2a1f33"/>
+    <g fill="#ffffff">
+      <rect x="16" y="37" width="5" height="1"/><rect x="25" y="39" width="6" height="1"/><rect x="23" y="36" width="2" height="1"/>
+      <rect x="11" y="39" width="3" height="1"/><rect x="31" y="36" width="3" height="1"/><rect x="19" y="41" width="4" height="1"/>
+    </g>
+    <g fill="#e8508f">
+      <rect x="21" y="39" width="2" height="1"/><rect x="28" y="37" width="2" height="1"/><rect x="14" y="37" width="1" height="1"/>
+    </g>
+    <g fill="#2a1f33">
+      <circle cx="9" cy="33" r="5.2"/><circle cx="14.5" cy="34.5" r="4.2"/><circle cx="4" cy="36" r="4.7"/>
+      <circle cx="40" cy="33" r="5.2"/><circle cx="35" cy="34.5" r="4"/><circle cx="45.5" cy="35.5" r="4.7"/>
+    </g>
+    <g fill="#ff9cc2">
+      <circle cx="9" cy="33" r="4"/><circle cx="14.5" cy="34.5" r="3"/><circle cx="4" cy="36" r="3.5"/>
+      <circle cx="40" cy="33" r="4"/><circle cx="35" cy="34.5" r="2.8"/><circle cx="45.5" cy="35.5" r="3.5"/>
+    </g>
+    <g fill="#ffffff"><rect x="8" y="31" width="1" height="1"/><rect x="40" y="31" width="1" height="1"/><rect x="13" y="34" width="1" height="1"/></g>
+  </g>
+
+  <!-- the round wooden frame -->
+  <circle cx="25" cy="22" r="20.5" fill="none" stroke="#2a1f33" stroke-width="3.6"/>
+  <circle cx="25" cy="22" r="20.5" fill="none" stroke="#8a5a3c" stroke-width="1.4"/>
+
+  <!-- blossom branches over the frame -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M-2,2 C5,3 11,7 17,12 M8,5.5 C10,3 12,2 15,1.5 M52,42 C46,40 42,38 37,38.5" stroke="#2a1f33" stroke-width="3.2"/>
+    <path d="M-2,2 C5,3 11,7 17,12 M8,5.5 C10,3 12,2 15,1.5 M52,42 C46,40 42,38 37,38.5" stroke="#8a5a3c" stroke-width="1.4"/>
+  </g>
+  <g fill="#2a1f33">
+    <circle cx="3.5" cy="4" r="4.6"/><circle cx="10" cy="7.5" r="4.8"/><circle cx="15.5" cy="12" r="4.4"/>
+    <circle cx="14.5" cy="2" r="4"/><circle cx="47" cy="39.5" r="4.6"/><circle cx="41" cy="38" r="4.2"/>
+  </g>
+  <g fill="#ff9cc2">
+    <circle cx="3.5" cy="4" r="3.4"/><circle cx="10" cy="7.5" r="3.6"/><circle cx="15.5" cy="12" r="3.2"/>
+    <circle cx="14.5" cy="2" r="2.8"/><circle cx="47" cy="39.5" r="3.4"/><circle cx="41" cy="38" r="3"/>
+  </g>
+  <g fill="#ffffff">
+    <rect x="3" y="3" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="15" y="11" width="1" height="1"/>
+    <rect x="14" y="1" width="1" height="1"/><rect x="47" y="38" width="1" height="1"/><rect x="40" y="37" width="1" height="1"/>
+  </g>
+</svg>

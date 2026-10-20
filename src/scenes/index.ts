@@ -9,6 +9,7 @@ import { hotAirBalloon } from './hot-air-balloon';
 import { iceCreamTruck } from './ice-cream-truck';
 import { koiPond } from './koi-pond';
 import { lighthouseAtDusk } from './lighthouse-at-dusk';
+import { mountFuji } from './mount-fuji';
 import { paperBoat } from './paper-boat';
 import { recordPlayer } from './record-player';
 import { rubberDuck } from './rubber-duck';
@@ -17,5 +18,5 @@ import { toucan } from './toucan';
 
 /** Scene lookup by id. Each scene file is imported here as it is added. */
 export const SCENES: Record<string, Scene> = Object.fromEntries(
-  [hotAirBalloon, rubberDuck, goldfishBowl, recordPlayer, lighthouseAtDusk, sleepingFox, toucan, desertCactus, paperBoat, iceCreamTruck, brooklynBridge, birthdayCake, koiPond, coralReef, bentoBox].map((s) => [s.id, s]),
+  [hotAirBalloon, rubberDuck, goldfishBowl, recordPlayer, lighthouseAtDusk, sleepingFox, toucan, desertCactus, paperBoat, iceCreamTruck, brooklynBridge, mountFuji, birthdayCake, koiPond, coralReef, bentoBox].map((s) => [s.id, s]),
 );
