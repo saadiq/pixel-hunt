@@ -177,18 +177,22 @@ any violation:
   Appending scene 31 unlocks it for anyone who has cleared scene 30.
 - Saved data has a schema version so it can be migrated later.
 
-### The 30 scenes (draft list, my call, open to edits)
-Mixed across places, animals, objects and moments, with each band roughly
-balanced. The Brooklyn Bridge is redrawn at the larger size. No other
-prototype scenes carry over.
+### The 30 scenes (as shipped, in progression order; see `src/scenes/manifest.ts`)
+Mixed across places, animals, objects and moments, ten per band. The
+Brooklyn Bridge is redrawn at the larger size. No other prototype scenes
+carry over. Against the draft list, Coral Reef (reframed as a clownfish in
+an anemone) moved from Hard to Medium, and Jellyfish became Jellyfish
+Aquarium and moved from Medium to Hard.
 
-- **Easy:** Hot Air Balloon, Goldfish Bowl, Lighthouse at Dusk, Rubber Duck, Sleeping Fox, Record Player, Desert Cactus at Noon, Paper Boat in
-  the Rain, Toucan, Ice Cream Truck
-- **Medium:** Brooklyn Bridge, Koi Pond, Mount Fuji in Bloom, Birthday Cake, Arcade Cabinet, Night Owl, Venice Canal, Campfire Under the
-  Stars, Typewriter, Jellyfish
-- **Hard:** Golden Gate in Fog, Coral Reef, Northern Lights over a Cabin,
-  Peacock, Rose Window, Bento Box, Fireworks over the Harbor,
-  Chameleon, Hummingbird & Flowers, Santorini Rooftops
+- **Easy:** Hot Air Balloon, Rubber Duck, Goldfish Bowl, Record Player,
+  Lighthouse at Dusk, Sleeping Fox, Toucan, Desert Cactus at Noon, Paper
+  Boat in the Rain, Ice Cream Truck
+- **Medium:** Brooklyn Bridge, Typewriter, Coral Reef, Venice Canal, Mount
+  Fuji in Bloom, Arcade Cabinet, Birthday Cake, Night Owl, Koi Pond,
+  Campfire Under the Stars
+- **Hard:** Bento Box, Golden Gate in Fog, Peacock, Northern Lights over a
+  Cabin, Santorini Rooftops, Chameleon, Fireworks over the Harbor,
+  Hummingbird & Flowers, Rose Window, Jellyfish Aquarium
 
 Every scene must read as its subject at thumbnail size (64px).
 
