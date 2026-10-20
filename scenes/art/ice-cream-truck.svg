@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 46" width="44" height="46">
+  <metadata>{"id":"ice-cream-truck","name":"Ice Cream Truck","blurb":"You can hear the jingle from three streets away.","band":"easy","W":44,"H":46,"slots":5,"lanes":3,"chunk":[46,66],"wait":0.3,"bg":"#e3d7ff"}</metadata>
+  <defs>
+    <path id="truck" d="M3.5,38 L3.5,18 C3.5,16.5 4.5,15.5 6,15.5 L29.5,15.5 L29.5,23 L36,23 C37.5,23 38.5,23.5 39,25 L41,30.5 L41,38 Z"/>
+    <clipPath id="truckClip"><use href="#truck"/></clipPath>
+    <g id="mini">
+      <path d="M0,3 L4,3 L2,7 Z" fill="#e8a85a"/>
+      <circle cx="2" cy="2" r="2"/>
+    </g>
+  </defs>
+  <rect width="44" height="46" fill="#e3d7ff"/>
+  <!-- road -->
+  <rect y="40" width="44" height="6" fill="#8a8fa8"/>
+  <g fill="#ffffff"><rect x="1" y="43" width="5" height="1"/><rect x="19" y="43" width="6" height="1"/><rect x="38" y="43" width="5" height="1"/></g>
+  <!-- giant cone on the roof -->
+  <path d="M12,9.5 L22,9.5 L17,16 Z" fill="#e8a85a" stroke="#2a1f33" stroke-width="1.4" stroke-linejoin="round"/>
+  <circle cx="17" cy="7.5" r="4.1" fill="#7fe0c0" stroke="#2a1f33" stroke-width="1.4"/>
+  <circle cx="17" cy="3.6" r="3.4" fill="#ff6fa0" stroke="#2a1f33" stroke-width="1.4"/>
+  <rect x="15" y="2" width="1" height="2" fill="#ffffff"/>
+  <rect x="14" y="6.5" width="1" height="2" fill="#ffffff"/>
+  <!-- body: white with a pink skirt -->
+  <g clip-path="url(#truckClip)">
+    <rect width="44" height="46" fill="#ffffff"/>
+    <rect y="33" width="44" height="6" fill="#ff6fa0"/>
+    <rect y="32.5" width="44" height="1" fill="#2a1f33"/>
+    <!-- striped awning -->
+    <rect x="4" y="16" width="26" height="5" fill="#ffffff"/>
+    <rect x="4" y="16" width="4" height="5" fill="#ff6fa0"/>
+    <rect x="12" y="16" width="4" height="5" fill="#ff6fa0"/>
+    <rect x="20" y="16" width="4" height="5" fill="#ff6fa0"/>
+    <rect x="28" y="16" width="4" height="5" fill="#ff6fa0"/>
+    <rect x="4" y="21" width="26" height="1" fill="#2a1f33"/>
+  </g>
+  <use href="#truck" fill="none" stroke="#2a1f33" stroke-width="1.6" stroke-linejoin="round"/>
+  <!-- serving window with cones on the counter -->
+  <rect x="7.5" y="23.5" width="19" height="6.5" fill="#8fd3f5" stroke="#2a1f33" stroke-width="1.3"/>
+  <use href="#mini" x="10" y="23" fill="#ff6fa0"/>
+  <use href="#mini" x="15" y="23" fill="#7fe0c0"/>
+  <use href="#mini" x="20" y="23" fill="#ffe14d"/>
+  <!-- windscreen -->
+  <path d="M31,24.5 L36,24.5 L38.5,30 L31,30 Z" fill="#8fd3f5" stroke="#2a1f33" stroke-width="1.2" stroke-linejoin="round"/>
+  <!-- headlight and bumper -->
+  <rect x="39" y="33" width="2.5" height="2" fill="#ffe14d"/>
+  <rect x="37.5" y="37" width="6" height="2" fill="#8a8fa8" stroke="#2a1f33" stroke-width="1"/>
+  <!-- wheels -->
+  <circle cx="11" cy="38.5" r="3.8" fill="#2a1f33"/>
+  <circle cx="33" cy="38.5" r="3.8" fill="#2a1f33"/>
+  <circle cx="11" cy="38.5" r="2.2" fill="#8a8fa8"/>
+  <circle cx="33" cy="38.5" r="2.2" fill="#8a8fa8"/>
+  <!-- sprinkles on the skirt -->
+  <g fill="#ffffff">
+    <rect x="19" y="35" width="2" height="1"/><rect x="24" y="36" width="1" height="1"/>
+    <rect x="6" y="35" width="1" height="1"/><rect x="27" y="34.5" width="2" height="1"/>
+  </g>
+  <rect x="16" y="35.5" width="1" height="1" fill="#ffe14d"/>
+</svg>

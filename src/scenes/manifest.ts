@@ -9,6 +9,7 @@ export const MANIFEST: string[] = [
   'toucan',
   'desert-cactus',
   'paper-boat',
+  'ice-cream-truck',
   'brooklyn-bridge',
   'birthday-cake',
   'coral-reef',
