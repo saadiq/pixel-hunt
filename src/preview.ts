@@ -4,17 +4,11 @@ import { enclosureDepth } from '../scripts/depth';
 import { TARGETS } from './core/targets';
 import { drawThumb } from './render/thumb';
 import { SCENES } from './scenes';
+import { el } from './ui/dom';
 import { MANIFEST } from './scenes/manifest';
 import type { Scene } from './core/types';
 
 const DEALS = 20;
-
-function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string): HTMLElementTagNameMap[K] {
-  const e = document.createElement(tag);
-  if (cls) e.className = cls;
-  if (text !== undefined) e.textContent = text;
-  return e;
-}
 
 function stats(s: Scene, out: HTMLElement): void {
   const structure = checkStructure(s);
