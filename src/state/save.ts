@@ -1,5 +1,6 @@
 import { parseArt, sceneLevel } from '../core/board';
-import type { Band, Lanes, Meta, Scene, Slots } from '../core/types';
+import { randomLevel } from '../random/level';
+import type { Band, Lanes, Level, Meta, Scene, Slots } from '../core/types';
 import type { Game, Snapshot } from './game';
 
 const KEY = 'crumbhunt.v1';
@@ -75,17 +76,18 @@ const validState = (st: unknown, d: Dims): boolean =>
   && Array.isArray(st.slots) && st.slots.length === d.ns && st.slots.every((s) => s === null || isSquad(s, d.nc))
   && isInt(st.taps, 0) && typeof st.onLine === 'boolean';
 
-function findScene(meta: Meta, scenes: Record<string, Scene>): Scene | null {
-  if (meta.kind === 'random') return null; // Task 10 adds randomLevel
-  return Object.hasOwn(scenes, meta.id) ? scenes[meta.id] : null;
+function findLevel(meta: Meta, scenes: Record<string, Scene>): Level | null {
+  if (meta.kind === 'random') {
+    return BANDS.includes(meta.band) && isInt(meta.seed, 1) ? randomLevel(meta.band, meta.seed) : null;
+  }
+  return Object.hasOwn(scenes, meta.id) ? sceneLevel(scenes[meta.id]) : null;
 }
 
 export function fromRun(r: SavedRun, scenes: Record<string, Scene>): Game | null {
   try {
     if (!isObj(r) || !isObj(r.meta)) return null;
-    const scene = findScene(r.meta, scenes);
-    if (!scene) return null;
-    const level = sceneLevel(scene);
+    const level = findLevel(r.meta, scenes);
+    if (!level) return null;
     const board = parseArt(level);
     const n = board.W * board.H;
     const d: Dims = { n, nl: level.lanes, ns: level.slots, nc: board.colors.length };
