@@ -94,7 +94,7 @@ Scene rules:
 
 ## Deploying
 
-`bun run build` produces a fully static site in `dist/`. It deploys to Cloudflare Pages as is, with build command `bun run build` and output directory `dist`. Assets use relative paths (`base: './'`), so it also works from a sub-path.
+Live at https://pixel-hunt.saadiq.workers.dev. `bun run build` produces a fully static site in `dist/`, served as a Cloudflare Workers static-assets site configured in `wrangler.jsonc`. Workers Builds is connected to this repo, so every push to `main` builds (`bun run build`) and deploys (`bunx wrangler deploy`). To deploy by hand, run `bun run build && bunx wrangler deploy`. Assets use relative paths (`base: './'`), so the build also works from a sub-path.
 
 The service worker precaches every build asset, so the game works offline after the first load. Google Fonts are cached at runtime; without them the UI falls back to system fonts.
 

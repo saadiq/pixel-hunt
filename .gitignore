@@ -3,3 +3,4 @@ dist/
 out/
 .claude/worktrees/
 .DS_Store
+.wrangler/
