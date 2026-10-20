@@ -1,5 +1,5 @@
 // Rasterises scenes/art/<id>.svg to src/scenes/<id>.ts. Usage: bun run build-scenes [id…]
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import type { Scene } from '../src/core/types';
 import { parseMeta, rasterize } from './raster';
 
@@ -78,5 +78,6 @@ if (import.meta.main) {
       process.exitCode = 1;
     }
   }
-  writeFileSync(`${OUT}/index.ts`, indexSource(all));
+  // Index only scenes whose module exists, so one bad SVG doesn't break every import.
+  writeFileSync(`${OUT}/index.ts`, indexSource(all.filter((id) => existsSync(`${OUT}/${id}.ts`))));
 }
