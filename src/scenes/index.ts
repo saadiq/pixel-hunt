@@ -1,4 +1,5 @@
 import type { Scene } from '../core/types';
+import { fireworksHarbor } from './fireworks-harbor';
 import { northernLights } from './northern-lights';
 import { goldenGate } from './golden-gate';
 import { santoriniRooftops } from './santorini-rooftops';
@@ -28,5 +29,5 @@ import { veniceCanal } from './venice-canal';
 
 /** Scene lookup by id. Each scene file is imported here as it is added. */
 export const SCENES: Record<string, Scene> = Object.fromEntries(
-  [hotAirBalloon, rubberDuck, goldfishBowl, recordPlayer, lighthouseAtDusk, sleepingFox, toucan, desertCactus, paperBoat, iceCreamTruck, brooklynBridge, typewriter, coralReef, veniceCanal, mountFuji, arcadeCabinet, birthdayCake, nightOwl, koiPond, campfire, bentoBox, roseWindow, peacock, santoriniRooftops, goldenGate, northernLights].map((s) => [s.id, s]),
+  [hotAirBalloon, rubberDuck, goldfishBowl, recordPlayer, lighthouseAtDusk, sleepingFox, toucan, desertCactus, paperBoat, iceCreamTruck, brooklynBridge, typewriter, coralReef, veniceCanal, mountFuji, arcadeCabinet, birthdayCake, nightOwl, koiPond, campfire, bentoBox, roseWindow, peacock, santoriniRooftops, goldenGate, northernLights, fireworksHarbor].map((s) => [s.id, s]),
 );
