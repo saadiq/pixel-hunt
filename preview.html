@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Scene Preview</title>
+    <style>
+      :root {
+        --bg: #e7ecef; --panel: #f8fafb; --ink: #18222d; --muted: #5a6876; --line: #c8d1d8; --warn: #c23d28; --ok: #2f7d3b;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #11151a; --panel: #1a2027; --ink: #e5eaef; --muted: #8e9ba8; --line: #2b343e; --warn: #ff7b60; --ok: #7fd08a;
+          color-scheme: dark;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #11151a; --panel: #1a2027; --ink: #e5eaef; --muted: #8e9ba8; --line: #2b343e; --warn: #ff7b60; --ok: #7fd08a;
+        color-scheme: dark;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font: 14px system-ui, -apple-system, sans-serif; }
+      h1 { font-size: 18px; margin: 0 0 16px; }
+      .scene { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+      .scene h2 { font-size: 16px; margin: 0 0 4px; }
+      .blurb { color: var(--muted); margin: 0 0 12px; }
+      .art { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+      .art canvas { image-rendering: pixelated; max-width: 100%; }
+      .stats { font: 12px ui-monospace, Menlo, monospace; margin-top: 12px; white-space: pre-wrap; }
+      .err { color: var(--warn); }
+      .ok { color: var(--ok); }
+    </style>
+  </head>
+  <body>
+    <h1>Scene preview</h1>
+    <div id="scenes"></div>
+    <script type="module" src="/src/preview.ts"></script>
+  </body>
+</html>
