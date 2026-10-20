@@ -286,6 +286,21 @@ Read the spec's "Check-in 2 + spike result" bullets and the revised band table f
 - [ ] **Step 2:** Run. If it fails, optimise without changing results. For example, `pickNear` can scan only cells adjacent to open cells, and the `distField` per slot can be reused within a tick when the grid hasn't changed. Determinism tests (same seed gives same lanes, all replays win) must still pass unchanged.
 - [ ] **Step 3: Commit** `perf(core): fast dealing on 56-wide boards`.
 
+### Task 7D: A difficulty lever for Hard
+
+Task 7S found that Hard is hard to reach with the generator as-is. At 2 slots taps exceed 60, and `wait` has no effect because waiting squads are only dealt while `used < slots - 2`. Bento only just makes Hard at 0.42.
+
+**Files:** Modify `src/core/deal.ts` and `src/core/types.ts` (`Params`), `scripts/checks.ts` if needed. Test: `tests/core/deal.test.ts`.
+
+**Interfaces:** Add an optional `Params.waitSlack?: number` (default 2, today's behaviour). Waiting squads may be dealt while `used < slots - waitSlack`. Hard scenes may use `waitSlack: 1`. A waiting squad's colour must still become reachable later in the generated sequence, which holds by construction because generation plays forward.
+
+- [ ] **Step 1: Write failing tests:**
+  - With `waitSlack: 1, wait: 0.9, slots: 3`, seeds 1..200 on `sceneLevel(d20)` and the bento scene all replay to a win.
+  - Deals with the default `waitSlack` are byte-identical to before (snapshot a few seeds' lanes before changing anything).
+- [ ] **Step 2:** Implement, then run `bun test`.
+- [ ] **Step 3:** Re-tune Bento Box with `waitSlack: 1` toward a win rate of ~0.3, then run `validate` on all scenes. Everything must stay in band.
+- [ ] **Step 4: Commit** `feat(core): tunable waiting-squad slack for harder deals`, then `chore(scenes): retune bento`.
+
 ### Task 8: Canvas renderer (board, nest, ants, crumbs)
 
 **Files:**
@@ -374,11 +389,11 @@ interface Renderer {
 
 ### Task 12: Medium scenes 12–20
 
-Same as Task 11 for Koi Pond, Mount Fuji in Bloom, Arcade Cabinet, Night Owl, Venice Canal, Campfire Under the Stars, Typewriter and Jellyfish (8 new). Brooklyn Bridge is scene 11 and Birthday Cake is already drawn (Task 7S). Mostly the 'subject on a patterned background' layout.
+Same as Task 11 for Koi Pond, Mount Fuji in Bloom, Arcade Cabinet, Night Owl, Venice Canal, Campfire Under the Stars and Typewriter (7 new). Brooklyn Bridge, Birthday Cake and Coral Reef (moved to Medium in Task 7S) are already drawn. Mostly the 'subject on a patterned background' layout.
 
 ### Task 13: Hard scenes 22–30
 
-Same as Task 11 for Golden Gate in Fog, Northern Lights over a Cabin, Peacock, Rose Window, Fireworks over the Harbor, Chameleon, Hummingbird & Flowers and Santorini Rooftops (8 new). Coral Reef and Bento Box are already drawn (Task 7S). Use the boxed or compartmented layout (bento-like) so the Hard depth gate (avg ≥ 1.5) is met.
+Same as Task 11 for Golden Gate in Fog, Northern Lights over a Cabin, Peacock, Rose Window, Fireworks over the Harbor, Chameleon, Hummingbird & Flowers, Santorini Rooftops and Jellyfish Aquarium (9 new). Bento Box is already drawn (Task 7S). Use `waitSlack` (Task 7D) as needed. Use the boxed or compartmented layout (bento-like) so the Hard depth gate (avg ≥ 1.5) is met.
 
 - [ ] **Final step for Task 13:** Run full `bun run validate` (500 deals). Tune `TARGETS.winRate` so Easy, Medium and Hard medians are clearly separated, with no scene in the wrong band. Commit `chore: tune difficulty targets`.
 
