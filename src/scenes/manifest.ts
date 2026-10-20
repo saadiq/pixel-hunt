@@ -14,6 +14,7 @@ export const MANIFEST: string[] = [
   'mount-fuji',
   'birthday-cake',
   'koi-pond',
+  'night-owl',
   'coral-reef',
   'arcade-cabinet',
   'bento-box',
