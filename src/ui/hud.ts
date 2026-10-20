@@ -28,18 +28,20 @@ export function renderLanes(g: Game, onTap: (lane: number) => void): void {
   });
 }
 
-// Slot elements are rebuilt only when a slot gets a different squad, so the drop animation plays once.
+// A slot element is replaced only when that slot gets a different squad, so its drop animation plays once.
 let shown: (Squad | null)[] = [];
 
 export function renderSlots(g: Game): void {
   const box = $('slots');
   box.style.setProperty('--n', String(g.slots.length));
-  const same = box.children.length === g.slots.length && g.slots.every((s, k) => s === shown[k]);
-  if (!same) {
-    box.innerHTML = '';
-    g.slots.forEach(() => box.appendChild(el('div', 'slot')));
-    shown = g.slots.slice();
+  if (box.children.length !== g.slots.length) {
+    box.replaceChildren(...g.slots.map(() => el('div', 'slot')));
+    shown = [];
   }
+  g.slots.forEach((s, k) => {
+    if (s !== shown[k]) box.children[k].replaceWith(el('div', 'slot'));
+  });
+  shown = g.slots.slice();
   g.slots.forEach((s, k) => {
     const d = box.children[k] as HTMLElement;
     if (!s) { d.className = 'slot'; d.innerHTML = ''; d.removeAttribute('style'); return; }
