@@ -16,7 +16,7 @@
 - ESLint: `max-lines: 300` (error, per file), `max-lines-per-function: 100` (error), `complexity: 15` (warn). Scene data files are exempt from nothing; keep each under 300 lines.
 - Rules are exactly the prototype's (`stepSlots`, `distField`, `pickNear`, `holeCol`, `generate`, `playout`, lines 174–342).
 - 3 undos per board. 3 hints per board. Unlimited restarts; a restart re-deals and resets undos and hints to 3.
-- Bands (revised after art check-in 1): Easy grid 40–44 wide, 5 slots, 3 lanes, wait ~0.3. Medium 46–50 wide, 4 slots, 4 lanes, wait ~0.5–0.7. Hard 52–56 wide, 3–4 slots, 4–5 lanes, wait ~0.8–0.95. Heights 36–60.
+- Bands (revised after art check-in 1): Easy grid 40–44 wide, 4–5 slots, 3 lanes, wait ~0.3. Medium 46–50 wide, 3–4 slots, 4 lanes, wait ~0.5–0.7. Hard 52–56 wide, 2–3 slots, 4–5 lanes, wait ~0.8–0.95. Heights 36–60.
 - Target 30–60 taps per board. Squad size (`chunk`) scales with block count.
 - Scene rules: ≤ 9 colors, no color with < 4 cells, colors visually distinct, recognizable at 64px.
 - Progress is stored by scene id, never index. Save data carries `v: 1`.
