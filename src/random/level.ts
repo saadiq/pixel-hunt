@@ -1,3 +1,5 @@
+import { parseArt } from '../core/board';
+import { deal } from '../core/deal';
 import type { Band, Level, Params } from '../core/types';
 import { makeScene } from './scene';
 
@@ -11,11 +13,44 @@ export const RANDOM_BANDS: Record<Band, BandSpec> = {
 
 export const randomKey = (band: Band, seed: number): string => `r-${band}-${seed}`;
 
-/** A random scene as a playable level; squad size scales so a board takes about 45 taps. */
-export function randomLevel(band: Band, seed: number): Level {
+const TARGET = 45;
+const chunkFor = (avg: number): [number, number] => [Math.max(1, Math.round(avg * 0.75)), Math.max(1, Math.round(avg * 1.25))];
+
+const PROBES = 4, LO = 36, HI = 54, ATTEMPTS = 4;
+
+interface Built { level: Level; spread: number; ok: boolean }
+
+/** Builds a level for one scene variant, calibrating squad size so a deal takes about 45 taps. */
+function build(band: Band, seed: number, variant: number): Built {
   const { size, slots, lanes, wait } = RANDOM_BANDS[band];
-  const art = makeScene(seed, size);
-  const avg = Math.max(1, Math.round((size * size) / 45));
-  const chunk: [number, number] = [Math.max(1, Math.round(avg * 0.75)), Math.max(1, Math.round(avg * 1.25))];
-  return { key: randomKey(band, seed), name: art.name, band, rows: art.rows, pal: art.pal, slots, lanes, wait, chunk };
+  const art = makeScene(seed + variant * 104729, size);
+  const make = (avg: number): Level =>
+    ({ key: randomKey(band, seed), name: art.name, band, rows: art.rows, pal: art.pal, slots, lanes, wait, chunk: chunkFor(avg) });
+  const board = parseArt(art);
+  // A single deal's tap count is noisy, so probe several deals.
+  const probe = (l: Level): number[] => Array.from({ length: PROBES }, (_, k) => deal(l, board, seed + k * 7919).line.length);
+  const mean = (t: number[]): number => t.reduce((a, b) => a + b, 0) / t.length;
+  let avg = Math.max(1, (size * size) / TARGET), level = make(avg), taps = probe(level);
+  for (let pass = 0; pass < 3 && (mean(taps) < 41 || mean(taps) > 49); pass++) {
+    avg = Math.max(1, Math.round((avg * mean(taps)) / TARGET));
+    level = make(avg);
+    taps = probe(level);
+  }
+  const spread = Math.max(...taps.map((t) => Math.abs(t - TARGET)));
+  return { level, spread, ok: Math.min(...taps) >= LO && Math.max(...taps) <= HI };
+}
+
+/**
+ * A random scene as a playable level, deterministic per (band, seed). Squad caps are limited by
+ * reachable cells, so squad size is calibrated by dealing; a scene whose deals vary too much in
+ * length is swapped for another variant of the same seed.
+ */
+export function randomLevel(band: Band, seed: number): Level {
+  let best: Built | null = null;
+  for (let v = 0; v < ATTEMPTS; v++) {
+    const b = build(band, seed, v);
+    if (b.ok) return b.level;
+    if (!best || b.spread < best.spread) best = b;
+  }
+  return (best as Built).level;
 }

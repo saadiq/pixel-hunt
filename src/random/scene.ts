@@ -20,17 +20,21 @@ export function makeScene(seed: number, size: number, forceType?: SceneType): Ar
     return n;
   };
   let n = count();
-  for (let c = 0; c < cols.length; c++) {
-    if (n[c] === 0 || n[c] >= 4) continue;
-    for (let i = 0; i < W * H; i++) {
-      if (g[i] !== c) continue;
-      const px = i % W, py = (i / W) | 0;
-      for (const [a, b] of N4) {
-        if (inb(px + a, py + b) && g[(py + b) * W + px + a] !== c) { g[i] = g[(py + b) * W + px + a]; break; }
+  for (let round = 0; round < 8; round++) {
+    let changed = false;
+    for (let c = 0; c < cols.length; c++) {
+      if (n[c] === 0 || n[c] >= 4) continue;
+      for (let i = 0; i < W * H; i++) {
+        if (g[i] !== c) continue;
+        const px = i % W, py = (i / W) | 0;
+        for (const [a, b] of N4) {
+          if (inb(px + a, py + b) && g[(py + b) * W + px + a] !== c) { g[i] = g[(py + b) * W + px + a]; changed = true; break; }
+        }
       }
+      n = count();
     }
+    if (!changed) break;
   }
-  n = count();
   const pal: Record<string, string> = {}, map: string[] = [];
   [...n.keys()].filter((c) => n[c] > 0).forEach((c, k) => { map[c] = CHARS[k]; pal[CHARS[k]] = cols[c]; });
   const rows: string[] = [];
