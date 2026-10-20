@@ -366,7 +366,7 @@ interface Renderer {
 
 ### Task 11: Easy scenes 2–10
 
-**Files:** Create 9 files in `src/scenes/` and modify `manifest.ts` and `index.ts`. The scenes are Goldfish Bowl, Lighthouse at Dusk, Rubber Duck, Sleeping Fox, Record Player, Desert Cactus at Noon, Paper Boat in the Rain, Toucan and Ice Cream Truck. Follow the spec's art direction and check-in 2 results: style-B cubes, no decorative borders, open subject on a plain background (mostly). Easy scenes need taps 30–60 and win rates within the Easy band.
+**Files:** Create 9 files in `src/scenes/` and modify `manifest.ts` and `index.ts`. The scenes are Goldfish Bowl, Lighthouse at Dusk, Rubber Duck, Sleeping Fox, Record Player, Desert Cactus at Noon, Paper Boat in the Rain, Toucan and Ice Cream Truck. Follow the spec's art direction and check-in 2 results: style-B cubes, borders only where they don't cramp the subject, open subject on a plain background (mostly). Easy scenes need taps 30–60 and win rates within the Easy band.
 
 - [ ] **Step 1:** Draw each scene as an SVG in `scenes/art/` (Task 7R pipeline and the spec's art direction), in the Easy band, then run `build-scenes`. Most colours should touch open edges.
 - [ ] **Step 2:** Run `bun run validate` until there are no errors. Taps should be 30–60 and win rate within the Easy target. Check every PNG thumb reads as its subject.

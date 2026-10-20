@@ -228,9 +228,9 @@ Every scene must read as its subject at thumbnail size (64px).
   picked **style B**: soft glossy cubes, where each seam is a darker tone of the
   cube's own colour, with a top highlight and a soft bottom shade, no dark
   grout. They loved the **bento** (Hard) and liked the **cake** (Medium)
-  *without* a decorative border: a border that doesn't belong to the subject
-  "chokes" the picture, so scenes get no decorative frames (a bento box's own
-  walls are fine).
+  *without* its border. On the cake the border cramped the subject. This is
+  not a blanket rule: decorative borders are allowed when the subject still
+  has room to breathe. Judge each scene on its own.
 - **What drives difficulty (measured in the spike):** busyness alone does
   not; *enclosure depth* does (the fewest colour changes from the board edge to
   a cell), together with the slot count. The cake has 136 regions and wins
