@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'bun:test';
-import { sceneLevel } from '../../src/core/board';
+import { parseArt, sceneLevel } from '../../src/core/board';
+import { deal } from '../../src/core/deal';
 import { newGame, tapLane, tick } from '../../src/state/game';
 import { defaults, fromRun, load, store, toRun } from '../../src/state/save';
 import type { SaveV1 } from '../../src/state/save';
@@ -12,6 +13,7 @@ const fake = (init?: string): Storage => {
 };
 const throwing = { getItem() { throw new Error('denied'); }, setItem() { throw new Error('quota'); } } as unknown as Storage;
 const scenes = { [d20.id]: d20 };
+const line = deal(sceneLevel(d20), parseArt(sceneLevel(d20)), 7).line;
 const mk = () => newGame({ kind: 'campaign', id: d20.id }, sceneLevel(d20), 7);
 
 describe('load/store', () => {
@@ -51,9 +53,9 @@ describe('load/store', () => {
 describe('toRun/fromRun', () => {
   test('roundtrip survives JSON and keeps state', () => {
     const g = mk();
-    tapLane(g, g.line[0]);
+    tapLane(g, line[0]);
     tick(g);
-    tapLane(g, g.line[1]);
+    tapLane(g, line[1]);
     g.undos = 2;
     const r = JSON.parse(JSON.stringify(toRun(g, 7)));
     const h = fromRun(r, scenes);
@@ -63,15 +65,15 @@ describe('toRun/fromRun', () => {
     expect(h.lanes).toEqual(g.lanes);
     expect(h.slots).toEqual(g.slots);
     expect(h.hist.length).toBe(g.hist.length);
-    expect([h.undos, h.taps, h.onLine, h.remaining]).toEqual([2, g.taps, g.onLine, g.remaining]);
+    expect([h.undos, h.taps, h.remaining]).toEqual([2, g.taps, g.remaining]);
     expect(h.board.W).toBe(g.board.W);
   });
 
   test('snapshot remaining is recomputed from its grid, not trusted', () => {
     const g = mk();
-    tapLane(g, g.line[0]);
+    tapLane(g, line[0]);
     tick(g);
-    tapLane(g, g.line[1]);
+    tapLane(g, line[1]);
     const r = toRun(g, 7);
     const h = fromRun({ ...r, hist: r.hist.map((s) => ({ ...s, remaining: 999 })) }, scenes);
     expect(h?.hist.length).toBe(2);
@@ -93,12 +95,15 @@ describe('toRun/fromRun', () => {
     expect(fromRun({} as never, scenes)).toBeNull();
   });
 
+  test('legacy runs carrying line/onLine still restore', () => {
+    const r = { ...toRun(mk(), 7), line: [0], onLine: true };
+    expect(fromRun(r, scenes)).not.toBeNull();
+  });
+
   test('bad scalars and out-of-range values return null', () => {
     const r = toRun(mk(), 7);
     expect(fromRun({ ...r, undos: 'x' as unknown as number }, scenes)).toBeNull();
     expect(fromRun({ ...r, undos: 4 }, scenes)).toBeNull();
-    expect(fromRun({ ...r, onLine: 1 as unknown as boolean }, scenes)).toBeNull();
-    expect(fromRun({ ...r, line: [99] }, scenes)).toBeNull();
     expect(fromRun({ ...r, grid: r.grid.map(() => 99) }, scenes)).toBeNull();
     const lanes = r.lanes.map((q) => q.map((s) => ({ ...s, color: 99 })));
     expect(fromRun({ ...r, lanes }, scenes)).toBeNull();

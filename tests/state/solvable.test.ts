@@ -2,7 +2,8 @@
 // with detours — an off-line tap that is undone, and save -> JSON -> restore both between taps and
 // mid-eat — and check the board still clears.
 import { describe, expect, test } from 'bun:test';
-import { sceneLevel } from '../../src/core/board';
+import { parseArt, sceneLevel } from '../../src/core/board';
+import { deal } from '../../src/core/deal';
 import { mulberry } from '../../src/core/rng';
 import type { Band, Level, Meta } from '../../src/core/types';
 import { randomLevel } from '../../src/random/level';
@@ -26,8 +27,9 @@ function detour(g: Game, rng: () => number): string | null {
 
 /** Plays one deal to the end; returns why it failed, or null when it was won. */
 function play(meta: Meta, level: Level, seed: number, rng: () => number): string | null {
+  const line = deal(level, parseArt(level), seed).line;
   let g = newGame(meta, level, seed);
-  while (status(g) === 'playing' && g.taps < g.line.length) {
+  while (status(g) === 'playing' && g.taps < line.length) {
     settle(g);
     const x = rng();
     if (x < 0.15 && g.undos > 0) {
@@ -39,8 +41,7 @@ function play(meta: Meta, level: Level, seed: number, rng: () => number): string
       g = back;
       settle(g);
     }
-    if (!g.onLine) return `off the line at tap ${g.taps}`;
-    if (tapLane(g, g.line[g.taps]) !== 'ok') return `tap ${g.taps} refused`;
+    if (tapLane(g, line[g.taps]) !== 'ok') return `tap ${g.taps} refused`;
     if (rng() < 0.1) {
       for (let k = 0; k < 3; k++) tick(g);
       const back = roundtrip(g, seed);
@@ -49,7 +50,7 @@ function play(meta: Meta, level: Level, seed: number, rng: () => number): string
     }
   }
   settle(g);
-  return status(g) === 'won' ? null : `not won: ${g.remaining} left after ${g.taps}/${g.line.length} taps`;
+  return status(g) === 'won' ? null : `not won: ${g.remaining} left after ${g.taps}/${line.length} taps`;
 }
 
 const BANDS: Band[] = ['easy', 'medium', 'hard'];

@@ -1,20 +1,18 @@
 import { parseArt } from '../core/board';
 import { deal } from '../core/deal';
+import { copyLanes, copySlots } from '../core/squads';
 import { stepSlots } from '../core/step';
 import type { BiteFn, Board, Lanes, Level, Meta, Slots, Squad } from '../core/types';
 
-export interface Snapshot { grid: Int8Array; lanes: Lanes; slots: Slots; remaining: number; taps: number; onLine: boolean }
+export interface Snapshot { grid: Int8Array; lanes: Lanes; slots: Slots; remaining: number; taps: number }
 
 export interface Game {
   meta: Meta; level: Level; board: Board; grid: Int8Array; lanes: Lanes; slots: Slots;
   hist: Snapshot[]; undos: number; usedUndo: number;
-  taps: number; remaining: number; stuck: boolean; idle: boolean; line: number[]; onLine: boolean;
+  taps: number; remaining: number; stuck: boolean;
 }
 
 export const HIST_MAX = 3; // only 3 undos per board, so older snapshots are never used (and bloat saves)
-const copy = (s: Squad): Squad => ({ ...s });
-const copyLanes = (l: Lanes): Lanes => l.map((q) => q.map(copy));
-const copySlots = (s: Slots): Slots => s.map((q) => (q ? copy(q) : null));
 
 export function newGame(meta: Meta, level: Level, seed: number): Game {
   const board = parseArt(level);
@@ -24,12 +22,12 @@ export function newGame(meta: Meta, level: Level, seed: number): Game {
     meta, level, board, grid, lanes: d.lanes, slots: Array(level.slots).fill(null),
     hist: [], undos: 3, usedUndo: 0, taps: 0,
     remaining: grid.reduce((a, v) => a + (v >= 0 ? 1 : 0), 0),
-    stuck: false, idle: true, line: d.line, onLine: true,
+    stuck: false,
   };
 }
 
 function snapshot(g: Game): Snapshot {
-  return { grid: g.grid.slice(), lanes: copyLanes(g.lanes), slots: copySlots(g.slots), remaining: g.remaining, taps: g.taps, onLine: g.onLine };
+  return { grid: g.grid.slice(), lanes: copyLanes(g.lanes), slots: copySlots(g.slots), remaining: g.remaining, taps: g.taps };
 }
 
 export function tapLane(g: Game, lane: number): 'ok' | 'full' | 'empty' {
@@ -39,19 +37,16 @@ export function tapLane(g: Game, lane: number): 'ok' | 'full' | 'empty' {
   if (free < 0) return 'full';
   g.hist.push(snapshot(g));
   if (g.hist.length > HIST_MAX) g.hist.shift();
-  g.slots[free] = copy(q.shift() as Squad);
-  g.onLine = g.onLine && g.idle && g.line[g.taps] === lane;
+  g.slots[free] = { ...(q.shift() as Squad) };
   g.taps++;
-  g.idle = false;
   g.stuck = false;
   return 'ok';
 }
 
-/** One stepSlots; sets idle = !ate and stuck. */
+/** One stepSlots; sets stuck; returns whether a squad ate. */
 export function tick(g: Game, onBite?: BiteFn): boolean {
   const { W, H } = g.board;
   const ate = stepSlots(g.grid, W, H, g.slots, (...a) => { g.remaining--; onBite?.(...a); });
-  g.idle = !ate;
   g.stuck = !ate && g.slots.every(Boolean) && g.remaining > 0;
   return ate;
 }
@@ -64,11 +59,9 @@ export function undo(g: Game): boolean {
   g.slots = h.slots;
   g.remaining = h.remaining;
   g.taps = h.taps;
-  g.onLine = h.onLine;
   g.undos--;
   g.usedUndo++;
   g.stuck = false;
-  g.idle = g.slots.every((s) => s === null);
   return true;
 }
 

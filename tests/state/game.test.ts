@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'bun:test';
-import { sceneLevel } from '../../src/core/board';
+import { parseArt, sceneLevel } from '../../src/core/board';
+import { deal } from '../../src/core/deal';
 import type { Level, Meta } from '../../src/core/types';
 import { newGame, status, tapLane, tick, undo } from '../../src/state/game';
 import type { Game } from '../../src/state/game';
@@ -7,37 +8,27 @@ import { d20 } from '../fixtures/proto';
 
 const level = sceneLevel(d20);
 const meta: Meta = { kind: 'campaign', id: d20.id };
+const line = deal(level, parseArt(level), 7).line;
 const count = (g: Game) => g.grid.reduce((a, v) => a + (v >= 0 ? 1 : 0), 0);
 const settle = (g: Game) => { let n = 0; while (tick(g) && n++ < 10000); };
 
 describe('game', () => {
   test('newGame starts fresh', () => {
     const g = newGame(meta, level, 7);
-    expect(g).toMatchObject({ idle: true, onLine: true, undos: 3, taps: 0, stuck: false });
+    expect(g).toMatchObject({ undos: 3, taps: 0, stuck: false });
     expect(g.remaining).toBe(count(g));
     expect(status(g)).toBe('playing');
   });
 
-  test('tapping the recorded line with settling between taps wins and stays on line', () => {
+  test('tapping the recorded line with settling between taps wins', () => {
     const g = newGame(meta, level, 7);
-    for (const lane of g.line) {
+    for (const lane of line) {
       settle(g);
       expect(tapLane(g, lane)).toBe('ok');
-      expect(g.onLine).toBe(true);
     }
     settle(g);
     expect(g.remaining).toBe(0);
     expect(status(g)).toBe('won');
-    expect(g.onLine).toBe(true);
-  });
-
-  test('tapping while not idle drops off the line', () => {
-    const g = newGame(meta, level, 7);
-    tapLane(g, g.line[0]);
-    expect(g.idle).toBe(false);
-    const next = g.lanes.findIndex((l) => l.length);
-    tapLane(g, next);
-    expect(g.onLine).toBe(false);
   });
 
   test('spam-tapping returns full, conserves blocks and ticks progress', () => {
@@ -62,7 +53,7 @@ describe('game', () => {
 
   test('slot squads are copies, so undo snapshots stay intact', () => {
     const g = newGame(meta, level, 7);
-    const lane = g.line[0], head = g.lanes[lane][0];
+    const lane = line[0], head = g.lanes[lane][0];
     tapLane(g, lane);
     tick(g);
     expect(g.slots.find(Boolean)).not.toBe(head);
@@ -79,7 +70,7 @@ describe('game undo and end states', () => {
     const g = newGame(meta, level, 7);
     expect(undo(g)).toBe(false);
     expect(g.undos).toBe(3);
-    for (let i = 0; i < 4; i++) { tapLane(g, g.line[i]); settle(g); }
+    for (let i = 0; i < 4; i++) { tapLane(g, line[i]); settle(g); }
     expect([undo(g), undo(g), undo(g), undo(g)]).toEqual([true, true, true, false]);
     expect(g.undos).toBe(0);
     expect(g.usedUndo).toBe(3);
@@ -90,12 +81,10 @@ describe('game undo and end states', () => {
     const g = newGame(meta, level, 7);
     tapLane(g, g.lanes.findIndex((_, i) => eatsNow(i)));
     expect(tick(g)).toBe(true);
-    expect(g.idle).toBe(false);
     const l = g.lanes.findIndex((x) => x.length);
     tapLane(g, l);
     expect(undo(g)).toBe(true);
     expect(g.slots.some(Boolean)).toBe(true);
-    expect(g.idle).toBe(false);
   });
 
   test('history keeps only as many snapshots as undos (3)', () => {
@@ -123,12 +112,12 @@ describe('game undo and end states', () => {
     expect(undo(g)).toBe(true);
     expect(g.stuck).toBe(false);
     expect(status(g)).toBe('playing');
-    expect(g.idle).toBe(false); // the first squad still holds a slot
+    expect(g.slots.some(Boolean)).toBe(true); // the first squad still holds a slot
   });
 
   test('newGame on the same meta resets undos', () => {
     const g = newGame(meta, level, 7);
-    tapLane(g, g.line[0]);
+    tapLane(g, line[0]);
     undo(g);
     const h = newGame(meta, level, 8);
     expect([h.undos, h.usedUndo, h.hist.length]).toEqual([3, 0, 0]);
