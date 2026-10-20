@@ -15,6 +15,10 @@ describe('progress', () => {
     expect(isUnlocked('b', ['a', 'x', 'b'], c)).toBe(false);
   });
 
+  test('a cleared scene stays unlocked when one is inserted before it', () => {
+    expect(isUnlocked('b', ['a', 'x', 'b'], new Set(['a', 'b']))).toBe(true);
+  });
+
   test('nextScene: first uncleared, last when all cleared, ignores unknown ids', () => {
     expect(nextScene(['a', 'b'], new Set())).toBe('a');
     expect(nextScene(['a', 'b'], new Set(['gone', 'a']))).toBe('b');

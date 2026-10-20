@@ -3,7 +3,7 @@ import { hashStr } from '../core/rng';
 export function isUnlocked(id: string, manifest: string[], cleared: Set<string>): boolean {
   const i = manifest.indexOf(id);
   if (i < 0) return false;
-  return i === 0 || cleared.has(manifest[i - 1]);
+  return cleared.has(id) || i === 0 || cleared.has(manifest[i - 1]);
 }
 
 /** First unlocked, uncleared scene; the last scene if all are cleared. Ids not in the manifest are ignored. */
