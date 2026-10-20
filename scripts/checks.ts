@@ -3,7 +3,7 @@ import { deal, replayLine } from '../src/core/deal';
 import { playout } from '../src/core/playout';
 import { mulberry } from '../src/core/rng';
 import type { Scene } from '../src/core/types';
-import { HEIGHT_RANGE, TARGETS } from './targets';
+import { HEIGHT_RANGE, TARGETS, WIDTH_RANGE } from './targets';
 
 const MAX_COLORS = 9;
 const MIN_CELLS = 4;
@@ -12,8 +12,8 @@ const HEX = /^#[0-9a-f]{6}$/i;
 
 function checkSize(s: Scene, W: number): string[] {
   const errs: string[] = [];
-  const [wlo, whi] = TARGETS[s.band].width;
-  if (W < wlo || W > whi) errs.push(`width ${W} outside ${s.band} band ${wlo}-${whi}`);
+  const [wlo, whi] = WIDTH_RANGE;
+  if (W < wlo || W > whi) errs.push(`width ${W} outside ${wlo}-${whi}`);
   const [hlo, hhi] = HEIGHT_RANGE;
   if (s.rows.length < hlo || s.rows.length > hhi) errs.push(`height ${s.rows.length} outside ${hlo}-${hhi}`);
   return errs;

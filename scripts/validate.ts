@@ -1,6 +1,7 @@
 import { SCENES } from '../src/scenes';
 import { MANIFEST } from '../src/scenes/manifest';
 import { checkColors, checkDeals, checkStructure, estimateWinRate } from './checks';
+import { measureChoices } from './choices';
 import { enclosureDepth } from './depth';
 import { TARGETS } from './targets';
 
@@ -9,9 +10,10 @@ const quick = args.includes('--quick');
 const ids = args.filter((a) => !a.startsWith('--'));
 const DEALS = quick ? 50 : 500;
 const PLAYOUTS = 200;
+const CHOICE_DEALS = quick ? 3 : 8;
 
 const pad = (v: string | number, n: number) => String(v).padEnd(n);
-const header = [pad('id', 18), pad('band', 7), pad('WxH', 8), pad('col', 4), pad('slots', 6), pad('taps', 6), pad('ms', 7), pad('win', 6), pad('depth', 9), 'flags'];
+const header = [pad('id', 18), pad('band', 7), pad('WxH', 8), pad('col', 4), pad('slots', 6), pad('taps', 6), pad('ms', 7), pad('win', 6), pad('depth', 9), pad('choice', 7), pad('mindless', 9), 'flags'];
 console.log(header.join(' '));
 
 let failed = false;
@@ -26,7 +28,7 @@ for (const id of ids.length ? ids : MANIFEST) {
   const structure = checkStructure(s);
   const errs = [...structure, ...checkColors(s)];
   const t = TARGETS[s.band];
-  let taps = '-', ms = '-', win = '-', depth = '-';
+  let taps = '-', ms = '-', win = '-', depth = '-', choice = '-', mindless = '-';
   if (!structure.length) {
     const d = checkDeals(s, DEALS);
     if (d.failures) errs.push(`${d.failures}/${DEALS} deals failed`);
@@ -39,6 +41,11 @@ for (const id of ids.length ? ids : MANIFEST) {
       win = w.toFixed(2);
       const [wlo, whi] = t.winRate;
       if (w < wlo || w > whi) flags.push(`WARN win rate ${win} outside ${wlo}-${whi}`);
+      const c = measureChoices(s, CHOICE_DEALS);
+      choice = c.choice.toFixed(2);
+      mindless = c.mindless.toFixed(2);
+      if (c.choice < t.choice[0] || c.choice > t.choice[1]) flags.push(`WARN choice ${choice} outside ${t.choice.join('-')}`);
+      if (c.mindless > t.maxMindless) flags.push(`WARN mindless ${mindless} above ${t.maxMindless}`);
     }
     const dep = enclosureDepth(s);
     depth = `${dep.avg.toFixed(2)}/${dep.max}`;
@@ -48,6 +55,6 @@ for (const id of ids.length ? ids : MANIFEST) {
   const colours = new Set(s.rows.join('')).size;
   const size = `${s.rows[0]?.length ?? 0}x${s.rows.length}`;
   const notes = [...errs.map((e) => `ERROR ${e}`), ...flags].join('; ');
-  console.log([pad(id, 18), pad(s.band, 7), pad(size, 8), pad(colours, 4), pad(s.slots, 6), pad(taps, 6), pad(ms, 7), pad(win, 6), pad(depth, 9), notes].join(' '));
+  console.log([pad(id, 18), pad(s.band, 7), pad(size, 8), pad(colours, 4), pad(s.slots, 6), pad(taps, 6), pad(ms, 7), pad(win, 6), pad(depth, 9), pad(choice, 7), pad(mindless, 9), notes].join(' '));
 }
 process.exit(failed ? 1 : 0);

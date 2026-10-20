@@ -32,6 +32,8 @@ describe('checkStructure', () => {
     const rows = Array.from({ length: 36 }, () => 'ab'.repeat(20));
     expect(checkStructure({ ...base, rows })).toEqual([]);
     expect(checkStructure({ ...base, rows, waitSlack: 1 })).toEqual([]);
+    // width belongs to the art, so a small grid can still be a hard board
+    expect(checkStructure({ ...base, rows, band: 'hard', slots: 3 })).toEqual([]);
   });
   test('flags a non-integer or negative waitSlack', () => {
     const rows = Array.from({ length: 36 }, () => 'ab'.repeat(20));
