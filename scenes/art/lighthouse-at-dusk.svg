@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 48" width="42" height="48">
+  <metadata>{"id":"lighthouse-at-dusk","name":"Lighthouse at Dusk","blurb":"The lamp comes on as the sun goes down.","band":"easy","W":42,"H":48,"slots":5,"lanes":3,"chunk":[46,66],"wait":0.3,"bg":"#5b4b9e"}</metadata>
+  <defs>
+    <path id="tower" d="M13,41 L16,14 L26,14 L29,41 Z"/>
+    <clipPath id="towerClip"><use href="#tower"/></clipPath>
+  </defs>
+  <!-- sky: violet above, peach glow at the horizon -->
+  <rect width="42" height="48" fill="#5b4b9e"/>
+  <rect y="22" width="42" height="14" fill="#f59b7a"/>
+  <path d="M0,22 C6,20 10,23.5 16,21.5 C22,19.5 28,23.5 34,21.5 C38,20.5 40,21.5 42,21 L42,23 L0,23 Z" fill="#f59b7a"/>
+  <!-- stars -->
+  <g fill="#ffffff">
+    <rect x="4" y="3" width="1" height="3"/><rect x="3" y="4" width="3" height="1"/>
+    <rect x="35" y="2" width="1" height="3"/><rect x="34" y="3" width="3" height="1"/>
+    <rect x="9" y="17" width="1" height="1"/><rect x="31" y="16" width="1" height="1"/>
+    <rect x="13" y="1" width="1" height="1"/><rect x="39" y="18" width="1" height="1"/>
+    <rect x="1" y="12" width="1" height="1"/>
+  </g>
+  <!-- light beams -->
+  <path d="M21,9 L0,4 L0,15 Z" fill="#ffeb99"/>
+  <path d="M21,9 L42,4 L42,15 Z" fill="#ffeb99"/>
+  <!-- cloud streaks -->
+  <rect x="27" y="26" width="13" height="2" rx="1" fill="#5b4b9e"/>
+  <rect x="31" y="29.5" width="9" height="1.6" rx="0.8" fill="#5b4b9e"/>
+  <rect x="2" y="25" width="9" height="1.6" rx="0.8" fill="#5b4b9e"/>
+  <!-- setting sun -->
+  <circle cx="7" cy="36" r="6.5" fill="#ffd23f" stroke="#2a1f33" stroke-width="1.2"/>
+  <!-- sea -->
+  <rect y="35.5" width="42" height="12.5" fill="#3a6fd0"/>
+  <rect y="35.5" width="42" height="1" fill="#2a1f33"/>
+  <g fill="#ffffff">
+    <rect x="2" y="39" width="3" height="1"/><rect x="34" y="38" width="4" height="1"/>
+    <rect x="6" y="43" width="3" height="1"/><rect x="36" y="44" width="3" height="1"/>
+    <rect x="13" y="38" width="2" height="1"/>
+  </g>
+  <!-- rocks -->
+  <path d="M8,48 C8.5,43 12,39.5 17,40 C19,38 25,38 27,40 C31,39.5 34,43 35,48 Z" fill="#8a8fa8" stroke="#2a1f33" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M12,46 C13,44 15,43 17,43.5" fill="none" stroke="#2a1f33" stroke-width="1"/>
+  <path d="M29,45 C30,44 31,44 32,45" fill="none" stroke="#2a1f33" stroke-width="1"/>
+  <g fill="#ffffff">
+    <rect x="6" y="46" width="3" height="1"/><rect x="34" y="46" width="3" height="1"/>
+  </g>
+  <!-- tower with red and white bands -->
+  <g clip-path="url(#towerClip)">
+    <rect width="42" height="48" fill="#ffffff"/>
+    <rect y="14" width="42" height="5" fill="#e8433a"/>
+    <rect y="24" width="42" height="5" fill="#e8433a"/>
+    <rect y="34" width="42" height="7" fill="#e8433a"/>
+  </g>
+  <use href="#tower" fill="none" stroke="#2a1f33" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M19,41 L19,37.5 C19,35.5 23,35.5 23,37.5 L23,41 Z" fill="#2a1f33"/>
+  <rect x="20" y="29" width="2" height="3" fill="#2a1f33"/>
+  <rect x="20" y="19" width="2" height="3" fill="#2a1f33"/>
+  <!-- gallery, lantern and roof -->
+  <rect x="13.5" y="11.5" width="15" height="3" fill="#e8433a" stroke="#2a1f33" stroke-width="1.5"/>
+  <rect x="16" y="5" width="10" height="6.5" fill="#ffd23f" stroke="#2a1f33" stroke-width="1.5"/>
+  <rect x="19" y="5.5" width="1" height="6" fill="#2a1f33"/><rect x="22" y="5.5" width="1" height="6" fill="#2a1f33"/>
+  <path d="M15,5.5 C15,0.5 27,0.5 27,5.5 Z" fill="#e8433a" stroke="#2a1f33" stroke-width="1.5" stroke-linejoin="round"/>
+  
+</svg>
