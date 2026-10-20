@@ -34,7 +34,13 @@ function options(b: Board, lanes: Lanes, s: State): { open: number[]; eatable: S
   return { open, eatable };
 }
 
-const keyOf = (s: State) => s.pos.join(',') + '|' + s.slots.map((q) => (q ? `${q.color}:${q.cap}` : '-')).join(',');
+// Different tap orders can reach the same lanes and slots with different cells eaten, so the grid is part of the key.
+const gridHash = (g: Int8Array): number => {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < g.length; i++) h = Math.imul(h ^ (g[i] + 1), 0x01000193);
+  return h >>> 0;
+};
+const keyOf = (s: State) => s.pos.join(',') + '|' + s.slots.map((q) => (q ? `${q.color}:${q.cap}` : '-')).join(',') + '|' + gridHash(s.g);
 
 /** Depth-first: can the settled state still be won? Budget exhaustion counts as yes (benefit of the doubt). */
 function solvable(b: Board, lanes: Lanes, s: State, budget = 3000): boolean {
