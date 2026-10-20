@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { dailyPick, isUnlocked, nextScene, todayKey } from '../../src/state/progress';
+import { dailyFor, dailyPick, isUnlocked, nextScene, todayKey } from '../../src/state/progress';
 
 describe('progress', () => {
   test('unlock follows predecessor', () => {
@@ -29,6 +29,23 @@ describe('progress', () => {
       expect(p).toBe(dailyPick(date, m, c));
       expect(['a', 'b', 'c']).toContain(p);
     }
+  });
+
+  test('dailyFor keeps the day\'s pick as scenes are cleared; a new date re-picks', () => {
+    const m = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+    const first = dailyFor('2026-10-20', m, new Set(), null);
+    expect(first).toEqual({ date: '2026-10-20', id: 'a' });
+    expect(dailyFor('2026-10-20', m, new Set(['a', 'b', 'c', 'd', 'e']), first)).toEqual(first);
+    const cleared = new Set(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+    const dates = ['2026-10-21', '2026-10-22', '2026-10-23', '2026-10-24', '2026-10-25'];
+    const picks = dates.map((d) => dailyFor(d, m, cleared, first));
+    picks.forEach((p, i) => { expect(p).toEqual({ date: dates[i], id: dailyPick(dates[i], m, cleared) }); });
+    expect(picks.some((p) => p.id !== 'a')).toBe(true);
+  });
+
+  test('dailyFor re-picks when the stored scene is gone', () => {
+    const p = dailyFor('2026-10-20', ['a', 'b'], new Set(['a']), { date: '2026-10-20', id: 'gone' });
+    expect(p).toEqual({ date: '2026-10-20', id: dailyPick('2026-10-20', ['a', 'b'], new Set(['a'])) });
   });
 
   test('todayKey formats local date', () => {

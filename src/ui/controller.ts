@@ -8,7 +8,7 @@ import { createRenderer, type Renderer } from '../render/board';
 import { SCENES } from '../scenes';
 import { MANIFEST } from '../scenes/manifest';
 import { type Game, newGame, status, tapLane, tick, undo } from '../state/game';
-import { dailyPick, nextScene, todayKey } from '../state/progress';
+import { dailyFor, nextScene, todayKey } from '../state/progress';
 import { type SaveV1, store, toRun } from '../state/save';
 import { $, el } from './dom';
 import { renderLanes, renderMeter, renderSlots, shakeSlots } from './hud';
@@ -99,7 +99,7 @@ export function playRandom(band: Band): void {
 
 export function playDaily(): void {
   const date = todayKey();
-  const id = dailyPick(date, MANIFEST, new Set(save.cleared));
+  const { id } = save.dailyPick = dailyFor(date, MANIFEST, new Set(save.cleared), save.dailyPick);
   start({ kind: 'daily', date, id }, hashStr(date + id));
 }
 

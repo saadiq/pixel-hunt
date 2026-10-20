@@ -2,6 +2,7 @@ import { parseArt, sceneLevel } from '../core/board';
 import { randomLevel } from '../random/level';
 import type { Band, Lanes, Level, Meta, Scene, Slots } from '../core/types';
 import type { Game, Snapshot } from './game';
+import type { DailyChoice } from './progress';
 
 const KEY = 'crumbhunt.v1';
 
@@ -13,6 +14,8 @@ export interface SavedRun {
 export interface SaveV1 {
   v: 1; cleared: string[]; wins: Record<Band, number>; daily: string | null;
   prefs: { sound: boolean; fast: boolean; band: Band }; run: SavedRun | null;
+  /** The day's scene, fixed on first pick so clearing scenes can't change it mid-day. */
+  dailyPick?: DailyChoice;
 }
 
 export function defaults(): SaveV1 {
@@ -28,6 +31,8 @@ function sanitize(raw: unknown): SaveV1 {
   if (Array.isArray(raw.cleared)) d.cleared = raw.cleared.filter((x): x is string => typeof x === 'string');
   if (isObj(raw.wins)) for (const b of BANDS) { const n = raw.wins[b]; if (typeof n === 'number' && n >= 0) d.wins[b] = n; }
   if (typeof raw.daily === 'string') d.daily = raw.daily;
+  const dp = raw.dailyPick;
+  if (isObj(dp) && typeof dp.date === 'string' && typeof dp.id === 'string') d.dailyPick = { date: dp.date, id: dp.id };
   if (isObj(raw.prefs)) {
     const p = raw.prefs;
     if (typeof p.sound === 'boolean') d.prefs.sound = p.sound;

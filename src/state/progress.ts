@@ -19,6 +19,14 @@ export function dailyPick(date: string, manifest: string[], cleared: Set<string>
   return pool[hashStr('crumb' + date) % pool.length];
 }
 
+export interface DailyChoice { date: string; id: string }
+
+/** The day's scene: the stored choice while its date matches and its scene still exists, else a fresh pick. */
+export function dailyFor(date: string, manifest: string[], cleared: Set<string>, stored: DailyChoice | null | undefined): DailyChoice {
+  if (stored && stored.date === date && manifest.includes(stored.id)) return stored;
+  return { date, id: dailyPick(date, manifest, cleared) };
+}
+
 export function todayKey(d: Date = new Date()): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }

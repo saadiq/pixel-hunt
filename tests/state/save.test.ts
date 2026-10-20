@@ -32,6 +32,16 @@ describe('load/store', () => {
     expect(load(s)).toEqual(v);
   });
 
+  test('dailyPick roundtrips; garbage is ignored', () => {
+    const s = fake();
+    const v: SaveV1 = { ...defaults(), dailyPick: { date: '2026-10-20', id: 'a' } };
+    store(v, s);
+    expect(load(s)).toEqual(v);
+    for (const bad of ['"x"', '{"date":1,"id":"a"}', '{"date":"d"}', '[]', 'null']) {
+      expect(load(fake(`{"v":1,"dailyPick":${bad}}`))).toEqual(defaults());
+    }
+  });
+
   test('garbage field types fall back to defaults', () => {
     const l = load(fake('{"v":1,"cleared":"x","prefs":{"band":"nope","sound":3},"wins":{"easy":"q"}}'));
     expect(l).toEqual(defaults());
