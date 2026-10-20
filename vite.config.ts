@@ -16,6 +16,7 @@ export default defineConfig(({ command }) => ({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon-180x180.png', 'icon.svg'],
       manifest: {
+        id: 'crumb-hunt',
         name: 'Crumb Hunt',
         short_name: 'Crumb Hunt',
         description: 'A pixel-art ant puzzle. Send the right squads to eat every crumb.',
