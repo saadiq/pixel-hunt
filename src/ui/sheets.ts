@@ -1,5 +1,6 @@
 // The scenes sheet (bands, daily, random) and the result sheet.
 import type { Art, Band, Scene } from '../core/types';
+import { RANDOM_BANDS } from '../random/level';
 import { drawThumb } from '../render/thumb';
 import { isUnlocked, nextScene, todayKey } from '../state/progress';
 import { $, el, LOCK_SVG } from './dom';
@@ -21,10 +22,14 @@ export interface ScenesCtx {
 export interface ResultButton { label: string; fn: () => void; primary?: boolean; disabled?: boolean }
 
 const BANDS: [Band, string][] = [['easy', 'Easy'], ['medium', 'Medium'], ['hard', 'Hard']];
-const BAND_NOTE: Record<Band, string> = {
-  easy: 'Roomy: 5 holding slots, 3 lanes, a gentle wait.',
-  medium: 'Balanced: 4 holding slots, 4 lanes. Some taps matter.',
-  hard: 'Tight: 3 holding slots, 5 lanes. Choose carefully.',
+const BAND_FEEL: Record<Band, [string, string]> = {
+  easy: ['Roomy', 'A gentle wait.'],
+  medium: ['Balanced', 'Some taps matter.'],
+  hard: ['Tight', 'Choose carefully.'],
+};
+const bandNote = (band: Band): string => {
+  const [feel, tail] = BAND_FEEL[band], { slots, lanes } = RANDOM_BANDS[band];
+  return `${feel}: ${slots} holding slots, ${lanes} lanes. ${tail}`;
 };
 
 function syncRandom(ctx: ScenesCtx, band: Band): void {
@@ -32,7 +37,7 @@ function syncRandom(ctx: ScenesCtx, band: Band): void {
     b.setAttribute('aria-checked', String(b.dataset.d === band));
     b.onclick = () => { ctx.onBand(b.dataset.d as Band); syncRandom(ctx, b.dataset.d as Band); };
   });
-  $('diffNote').textContent = BAND_NOTE[band];
+  $('diffNote').textContent = bandNote(band);
   $('endStat').textContent = `${ctx.wins[band]} cleared`;
   $('randBtn').onclick = () => { closeSheets(); ctx.onRandom(band); };
 }
