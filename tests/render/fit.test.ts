@@ -13,6 +13,15 @@ describe('fitBoard', () => {
   test('landscape 812x200 fits vertically', () => {
     expect(fitBoard(812, 200, 30, 30).CH).toBeLessThanOrEqual(200);
   });
+  test('short landscape stages shrink cells below 5px so the canvas fits both axes', () => {
+    for (const [W, H] of [[56, 60], [40, 36]]) {
+      const f = fitBoard(488, 160, W, H);
+      expect(f.CW + 12).toBeLessThanOrEqual(488);
+      expect(f.CH + 12).toBeLessThanOrEqual(160);
+      expect(f.cs).toBeGreaterThan(0);
+    }
+    expect(fitBoard(488, 160, 56, 60).cs).toBeLessThan(5);
+  });
   test('thin track and nest keep holes visible', () => {
     const f = fitBoard(400, 600, 40, 40);
     expect(f.T).toBeCloseTo(f.cs * 0.6);
@@ -25,7 +34,6 @@ describe('fitBoard', () => {
         expect(Number.isFinite(v)).toBe(true);
         expect(v).toBeGreaterThan(0);
       }
-      expect(f.cs).toBeGreaterThanOrEqual(5);
     }
   });
 });
