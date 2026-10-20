@@ -29,8 +29,15 @@ export function checkStructure(s: Scene): string[] {
   for (const row of s.rows) for (const ch of row) if (!(ch in s.pal)) unknown.add(ch);
   if (unknown.size) errs.push(`unknown chars: ${[...unknown].map((c) => JSON.stringify(c)).join(' ')}`);
   for (const [ch, hex] of Object.entries(s.pal)) if (!HEX.test(hex)) errs.push(`bad colour for "${ch}": ${hex}`);
-  errs.push(...checkSize(s, W));
+  errs.push(...checkSize(s, W), ...checkParams(s));
+  return errs;
+}
+
+function checkParams(s: Scene): string[] {
+  const errs: string[] = [];
+  const [slo, shi] = TARGETS[s.band].slots;
   if (!Number.isInteger(s.slots) || s.slots < 1) errs.push(`bad slots ${s.slots}`);
+  else if (s.slots < slo || s.slots > shi) errs.push(`slots ${s.slots} outside ${s.band} band ${slo}-${shi}`);
   if (!Number.isInteger(s.lanes) || s.lanes < 1) errs.push(`bad lanes ${s.lanes}`);
   if (s.chunk[0] < 1 || s.chunk[1] < s.chunk[0]) errs.push(`bad chunk ${s.chunk.join('-')}`);
   return errs;

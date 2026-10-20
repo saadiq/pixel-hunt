@@ -1,5 +1,6 @@
-// Dev-only scene preview: every manifest scene as raised cubes at 10px/cell and as a 64px thumb, with validator stats.
+// Dev-only scene preview: every manifest scene as glossy cubes at 10px/cell and as a 64px thumb, with validator stats.
 import { checkColors, checkDeals, checkStructure } from '../scripts/checks';
+import { enclosureDepth } from '../scripts/depth';
 import { TARGETS } from '../scripts/targets';
 import { drawThumb } from './render/thumb';
 import { SCENES } from './scenes';
@@ -27,6 +28,8 @@ function stats(s: Scene, out: HTMLElement): void {
     const [tlo, thi] = TARGETS[s.band].taps;
     lines.push(`${DEALS} deals: ${d.failures} failed, median taps ${d.medianTaps} (target ${tlo}-${thi}), median ${d.medianMs.toFixed(1)} ms`);
     if (d.failures) errs.push(`${d.failures}/${DEALS} deals failed`);
+    const dep = enclosureDepth(s), min = TARGETS[s.band].minAvgDepth;
+    lines.push(`depth avg ${dep.avg.toFixed(2)} max ${dep.max} (>=3: ${Math.round(dep.deep3 * 100)}%)${dep.avg < min ? `  WARN below ${min}` : ''}`);
   }
   out.append(el('div', '', lines.join('\n')));
   out.append(errs.length ? el('div', 'err', errs.join('\n')) : el('div', 'ok', 'no errors'));

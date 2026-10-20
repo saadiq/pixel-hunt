@@ -22,6 +22,12 @@ describe('checkStructure', () => {
     expect(errs.some((e) => /width/i.test(e))).toBe(true);
     expect(errs.some((e) => /height/i.test(e))).toBe(true);
   });
+  test('flags slots outside the band', () => {
+    const rows = Array.from({ length: 36 }, () => 'ab'.repeat(20));
+    expect(checkStructure({ ...base, rows, slots: 3 })).toEqual(['slots 3 outside easy band 4-5']);
+    const hard = checkStructure({ ...base, rows, band: 'hard', slots: 4 });
+    expect(hard).toContain('slots 4 outside hard band 2-3');
+  });
   test('accepts a grid inside its band', () => {
     const rows = Array.from({ length: 36 }, () => 'ab'.repeat(20));
     expect(checkStructure({ ...base, rows })).toEqual([]);
