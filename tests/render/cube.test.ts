@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { cubeRects, shade } from '../../src/render/cube';
+import { cubeRects, hexRgb, shade } from '../../src/render/cube';
 
 describe('shade', () => {
   test('mixes toward white and black', () => {
@@ -9,15 +9,42 @@ describe('shade', () => {
   });
 });
 
-describe('cubeRects', () => {
-  test('a 10px cube is inset by its gap, with a dark base, light bevel and true-colour face', () => {
-    const [base, light, face] = cubeRects(0, 0, 10, '#808080');
-    expect(base.x).toBeCloseTo(0.4);
-    expect(base.w).toBeCloseTo(9.2);
-    expect(base.hex < '#808080').toBe(true);
-    expect(light.hex > '#808080').toBe(true);
-    expect(face.hex).toBe('#808080');
-    expect(face.x + face.w).toBeLessThan(base.x + base.w);
+const luma = (hex: string) => hexRgb(hex).reduce((a, v) => a + v, 0);
+/** Channel ratios: two tones of one hue scale every channel by the same factor. */
+const ratios = (hex: string) => {
+  const [r, g, b] = hexRgb(hex);
+  return [r / (g || 1), g / (b || 1)];
+};
+
+describe('cubeRects (style B)', () => {
+  const face = '#c06030';
+  const rects = cubeRects(0, 0, 10, face);
+  const seam = rects[0];
+
+  test('the seam fills the cell in a darker tone of the cube colour, not a fixed dark grout', () => {
+    expect(seam).toMatchObject({ x: 0, y: 0, w: 10, h: 10 });
+    expect(luma(seam.hex)).toBeLessThan(luma(face));
+    const [a, b] = ratios(seam.hex), [fa, fb] = ratios(face);
+    expect(a).toBeCloseTo(fa, 1);
+    expect(b).toBeCloseTo(fb, 1);
+    expect(cubeRects(0, 0, 10, '#3050c0')[0].hex).not.toBe(seam.hex);
+  });
+  test('draws the true face colour, a lighter top highlight and a darker bottom shade', () => {
+    const faceRect = rects.find((r) => r.hex === face)!;
+    expect(faceRect).toBeDefined();
+    const lighter = rects.filter((r) => luma(r.hex) > luma(face));
+    expect(lighter.length).toBeGreaterThan(0);
+    expect(Math.min(...lighter.map((r) => r.y))).toBeLessThanOrEqual(faceRect.y);
+    const body = rects.find((r) => r !== seam && luma(r.hex) < luma(face))!;
+    expect(body.y + body.h).toBeGreaterThan(faceRect.y + faceRect.h);
+  });
+  test('every rect stays inside its cell', () => {
+    for (const r of cubeRects(5, 7, 10, face)) {
+      expect(r.x).toBeGreaterThanOrEqual(5);
+      expect(r.y).toBeGreaterThanOrEqual(7);
+      expect(r.x + r.w).toBeLessThanOrEqual(15 + 1e-9);
+      expect(r.y + r.h).toBeLessThanOrEqual(17 + 1e-9);
+    }
   });
   test('a tiny cell is one flat square with no gap', () => {
     expect(cubeRects(2, 3, 1.5, '#123456')).toEqual([{ x: 2, y: 3, w: 2, h: 2, hex: '#123456' }]);

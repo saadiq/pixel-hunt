@@ -1,8 +1,8 @@
-// Raised-cube cell look shared by the game canvas, the thumbnails and the PNG export.
+// Glossy raised-cube cell look shared by the game canvas, the thumbnails and the PNG export.
 
 export interface Rect { x: number; y: number; w: number; h: number; hex: string }
 
-/** Below this cell size the bevel and gap cannot be seen, so a cube is drawn as a flat square. */
+/** Below this cell size the seam and highlights cannot be seen, so a cube is drawn as a flat square. */
 export const MIN_CUBE_PX = 4;
 
 /** Splits a #rrggbb colour into its [r, g, b] channels (0-255). */
@@ -17,22 +17,26 @@ export function shade(hex: string, t: number): string {
 }
 
 /**
- * The rectangles of one raised cube in a cell of size s at (x, y), painted in order:
- * a dark base, a light top-left bevel, then the face. The cell is inset by a gap of max(0.5, s*0.08).
+ * The rectangles of one soft glossy cube ("style B") in a cell of size s at (x, y), painted in order:
+ * the seam (the whole cell in a darker tone of the cube's own colour, so there is no dark grout),
+ * a slightly darker body whose bottom and right edges show as a soft shade, the true-colour face,
+ * a lighter top highlight band and a small gloss spot.
  */
 export function cubeRects(x: number, y: number, s: number, hex: string): Rect[] {
   if (s < MIN_CUBE_PX) return [{ x, y, w: Math.ceil(s), h: Math.ceil(s), hex }]; // ceil: no seams between flat cells
-  const gap = Math.max(0.5, s * 0.08);
-  const x0 = x + gap / 2, y0 = y + gap / 2, w = s - gap;
-  const bevel = Math.max(1, w * 0.16);
+  const gap = Math.max(0.6, s * 0.11);
+  const w = s - gap;
+  const hl = Math.max(0.8, w * 0.16), sh = Math.max(0.8, w * 0.18);
   return [
-    { x: x0, y: y0, w, h: w, hex: shade(hex, -0.32) },
-    { x: x0, y: y0, w: w - bevel, h: w - bevel, hex: shade(hex, 0.38) },
-    { x: x0 + bevel, y: y0 + bevel, w: w - 2 * bevel, h: w - 2 * bevel, hex },
+    { x, y, w: s, h: s, hex: shade(hex, -0.28) },
+    { x, y, w, h: w, hex: shade(hex, -0.12) },
+    { x, y, w: w - sh * 0.5, h: w - sh, hex },
+    { x: x + w * 0.08, y, w: w * 0.78, h: hl, hex: shade(hex, 0.3) },
+    { x: x + w * 0.14, y: y + hl * 0.2, w: w * 0.28, h: hl * 0.9, hex: shade(hex, 0.55) },
   ];
 }
 
-/** Draws a raised cube for one cell. */
+/** Draws a glossy cube for one cell. */
 export function drawCube(ctx: CanvasRenderingContext2D, x: number, y: number, s: number, hex: string): void {
   for (const r of cubeRects(x, y, s, hex)) {
     ctx.fillStyle = r.hex;

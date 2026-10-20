@@ -8,7 +8,7 @@ import type { Scene } from '../src/core/types';
 const OUT = 'out/scenes';
 const SCALE = 12;
 const THUMB = 64;
-const BOARD = '#d6dde3'; // prototype --board token (light theme), shows through the gaps
+const BOARD = '#d6dde3'; // prototype --board token (light theme); cubes cover each cell, so it only shows past the art
 
 /** Paints a fractional rect, blending edge pixels by their coverage. */
 function fill(png: PNG, r: Rect): void {
@@ -26,7 +26,7 @@ function fill(png: PNG, r: Rect): void {
   }
 }
 
-/** Renders the art as raised cubes to a PNG outW pixels wide (same geometry as the in-app canvas). */
+/** Renders the art as glossy cubes to a PNG outW pixels wide (same geometry as the in-app canvas). */
 function render(s: Scene, outW: number): Buffer {
   const w = s.rows[0].length, h = s.rows.length, cell = outW / w;
   const png = new PNG({ width: outW, height: Math.max(1, Math.round(h * cell)) });
