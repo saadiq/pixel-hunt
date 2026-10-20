@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <metadata>{"id":"birthday-cake","name":"Birthday Cake","blurb":"Make a wish and blow!","band":"medium","W":48,"H":48,"slots":3,"lanes":4,"chunk":[60,90],"wait":0.6,"bg":"#a8e6cf"}</metadata>
+  <defs>
+    <pattern id="gingham" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#ffffff"/>
+      <rect width="4" height="8" fill="#ffc2d4"/>
+      <rect width="8" height="4" fill="#ffc2d4"/>
+      <rect width="4" height="4" fill="#ff5c8a"/>
+    </pattern>
+    <pattern id="wall" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect x="1" y="1" width="1" height="1" fill="#ffffff"/>
+      <rect x="5" y="5" width="2" height="1" fill="#ffffff"/>
+      <rect x="5.5" y="4.5" width="1" height="2" fill="#ffffff"/>
+    </pattern>
+    <g id="candle">
+      <rect x="0.5" y="5.5" width="4" height="7" fill="#4fb3ff" stroke="#3a2433" stroke-width="1"/>
+      <rect x="1" y="7" width="3" height="1" fill="#ffffff"/>
+      <rect x="1" y="10" width="3" height="1" fill="#ffffff"/>
+      <path d="M2.5,-1.5 C5.5,1.5 5.5,4.8 2.5,4.8 C-0.5,4.8 -0.5,1.5 2.5,-1.5 Z" fill="#ffd23f" stroke="#3a2433" stroke-width="1"/>
+      <rect x="2" y="2" width="1" height="2" fill="#ff5c8a"/>
+    </g>
+  <!-- frosting with drips: dark copy underneath gives a single outer outline -->
+  <g id="frostShape">
+    <rect x="9" y="17" width="30" height="6" rx="2"/>
+    <rect x="9" y="20" width="3" height="5" rx="1.5"/>
+    <rect x="14" y="20" width="3" height="8" rx="1.5"/>
+    <rect x="20" y="20" width="3" height="6" rx="1.5"/>
+    <rect x="26" y="20" width="3" height="9" rx="1.5"/>
+    <rect x="31" y="20" width="3" height="5" rx="1.5"/>
+    <rect x="36" y="20" width="3" height="7" rx="1.5"/>
+  </g>
+  </defs>
+  <!-- wall -->
+  <rect width="48" height="48" fill="#a8e6cf"/>
+  <rect width="48" height="30" fill="url(#wall)"/>
+  <!-- bunting -->
+  <path d="M-1,0.5 C12,5 36,5 49,0.5" fill="none" stroke="#3a2433" stroke-width="1"/>
+  <g stroke="#3a2433" stroke-width="0.9" stroke-linejoin="round">
+    <path d="M-0.5,1 L6,2.8 L2,9 Z" fill="#ff5c8a"/>
+    <path d="M7,3 L13.5,3.9 L10,10 Z" fill="#ffd23f"/>
+    <path d="M34.5,3.9 L41,3 L38,10 Z" fill="#4fb3ff"/>
+    <path d="M42,2.8 L48.5,1 L46,9 Z" fill="#ff5c8a"/>
+  </g>
+  <!-- tablecloth -->
+  <rect y="31" width="48" height="17" fill="url(#gingham)"/>
+  <rect y="30" width="48" height="1" fill="#3a2433"/>
+  <!-- plate -->
+  <ellipse cx="24" cy="40.5" rx="21.5" ry="5" fill="#ffffff" stroke="#3a2433" stroke-width="1"/>
+  <path d="M3.5,41 C10,46 38,46 44.5,41 L44,43 C38,46 10,46 4,43 Z" fill="#ffc2d4"/>
+  <!-- cake body -->
+  <rect x="8.5" y="17.5" width="31" height="23" rx="2" fill="#f5c27a" stroke="#3a2433" stroke-width="1"/>
+  <rect x="9" y="29" width="30" height="2" fill="#8a4b2e"/>
+  <rect x="9" y="31" width="30" height="1" fill="#ffffff"/>
+  <rect x="9" y="37" width="30" height="3" fill="#8a4b2e"/>
+  <use href="#frostShape" fill="#3a2433" stroke="#3a2433" stroke-width="2"/>
+  <use href="#frostShape" fill="#ff5c8a"/>
+  <!-- cream dollops on top -->
+  <g fill="#ffffff" stroke="#3a2433" stroke-width="0.9">
+    <circle cx="12" cy="16.5" r="2.6"/>
+    <circle cx="36" cy="16.5" r="2.6"/>
+  </g>
+  <!-- sprinkles -->
+  <g>
+    <rect x="12" y="20" width="2" height="1" fill="#ffd23f"/>
+    <rect x="16" y="19" width="1" height="1" fill="#ffffff"/>
+    <rect x="19" y="21" width="2" height="1" fill="#4fb3ff"/>
+    <rect x="23" y="19" width="1" height="1" fill="#ffd23f"/>
+    <rect x="27" y="20" width="2" height="1" fill="#ffffff"/>
+    <rect x="31" y="21" width="1" height="1" fill="#ffd23f"/>
+    <rect x="34" y="19" width="2" height="1" fill="#4fb3ff"/>
+    <rect x="14" y="22" width="1" height="1" fill="#4fb3ff"/>
+    <rect x="29" y="22" width="1" height="1" fill="#4fb3ff"/>
+    <rect x="37" y="21" width="1" height="1" fill="#ffffff"/>
+    <rect x="11" y="34" width="1" height="1" fill="#ff5c8a"/>
+    <rect x="15" y="33" width="2" height="1" fill="#4fb3ff"/>
+    <rect x="20" y="35" width="1" height="1" fill="#ffffff"/>
+    <rect x="24" y="33" width="2" height="1" fill="#ff5c8a"/>
+    <rect x="29" y="34" width="1" height="1" fill="#4fb3ff"/>
+    <rect x="32" y="33" width="2" height="1" fill="#ffffff"/>
+    <rect x="18" y="27" width="2" height="1" fill="#ff5c8a"/>
+    <rect x="28" y="27" width="1" height="1" fill="#4fb3ff"/>
+  </g>
+  <!-- candles -->
+  <use href="#candle" x="13" y="6"/>
+  <use href="#candle" x="21.5" y="5"/>
+  <use href="#candle" x="30" y="6"/>
+</svg>
