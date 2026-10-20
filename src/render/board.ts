@@ -3,8 +3,9 @@ import { mulberry } from '../core/rng';
 import type { BiteFn } from '../core/types';
 import type { Game } from '../state/game';
 import { type Ant, type Cells, type Crumb, type Geom, drawCrumbs, holeX, holeY, spawnAnt, stepAnts } from './ants';
-import { drawCube } from './cube';
+import { type CubeShades, shadeCache } from './cube';
 import { fitBoard } from './fit';
+import { type Layer, buildLayer, drawChewing, syncLayer } from './layer';
 
 export interface Renderer {
   reset(g: Game): void;
@@ -30,7 +31,8 @@ function dirtPattern(ctx: CanvasRenderingContext2D): CanvasPattern | null {
   return ctx.createPattern(p, 'repeat');
 }
 
-function drawNest(ctx: CanvasRenderingContext2D, geo: Geom, CW: number, CH: number, pat: CanvasPattern | null, g: Game): void {
+/** The static ground: dirt, track rails, the shaded board bed and the nest strip. */
+function drawGround(ctx: CanvasRenderingContext2D, geo: Geom, CW: number, CH: number, pat: CanvasPattern | null): void {
   const { T, cs, nest, ox, oy, bpx } = geo;
   ctx.fillStyle = pat ?? '#5e4230';
   ctx.fillRect(0, 0, CW, CH);
@@ -43,6 +45,11 @@ function drawNest(ctx: CanvasRenderingContext2D, geo: Geom, CW: number, CH: numb
   ctx.strokeRect(ox - 0.5, oy - 0.5, bpx + 1, geo.H * cs + 1);
   ctx.fillStyle = 'rgba(0,0,0,.18)';
   ctx.fillRect(0, oy + geo.H * cs, CW, nest);
+}
+
+/** Nest holes, ringed in the colour of the squad holding each slot. */
+function drawHoles(ctx: CanvasRenderingContext2D, geo: Geom, g: Game): void {
+  const { cs, nest } = geo;
   g.slots.forEach((sq, si) => {
     ctx.beginPath();
     ctx.ellipse(holeX(geo, holeCol(si, g.slots.length, geo.W)), holeY(geo), Math.max(3, cs * 0.55), nest * 0.24, 0, 0, 7);
@@ -52,19 +59,6 @@ function drawNest(ctx: CanvasRenderingContext2D, geo: Geom, CW: number, CH: numb
   });
 }
 
-function drawBlocks(ctx: CanvasRenderingContext2D, geo: Geom, cells: Cells, now: number, fast: boolean): void {
-  const { W, H, cs, ox, oy } = geo, ms = Math.max(1, (fast ? 65 : 130));
-  for (let i = 0; i < W * H; i++) {
-    const col = cells.vis[i];
-    if (col < 0) continue;
-    const x = ox + (i % W) * cs, y = oy + ((i / W) | 0) * cs;
-    if (cells.chew[i]) {
-      const p = Math.min(1, (now - cells.chew[i]) / ms), s = cs * (1 - p * 0.85), o = (cs - s) / 2;
-      drawCube(ctx, x + o, y + o, s, cells.colors[col]);
-    } else drawCube(ctx, x, y, cs, cells.colors[col]);
-  }
-}
-
 export function createRenderer(canvas: HTMLCanvasElement): Renderer {
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   const reduce = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -72,6 +66,7 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer {
   let CW = 0, CH = 0, dpr = 1, nSlots = 1, fastNow = false, last: Game | null = null;
   let cells: Cells = { colors: [], vis: new Int16Array(0), chew: new Float64Array(0) };
   let ants: Ant[] = [], crumbs: Crumb[] = [], pat: CanvasPattern | null = null, stage: [number, number] = [0, 0];
+  let shades: CubeShades[] = [], layer: Layer | null = null;
 
   const layout = (): void => {
     if (!last) return;
@@ -85,6 +80,7 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer {
     canvas.width = Math.round(CW * dpr);
     canvas.height = Math.round(CH * dpr);
     pat = dirtPattern(ctx);
+    layer = buildLayer(canvas.width, canvas.height, dpr, geo, cells, shades, (c) => drawGround(c, geo, CW, CH, pat));
   };
 
   const r: Renderer = {
@@ -92,6 +88,7 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer {
       last = g;
       nSlots = g.slots.length;
       cells = { colors: g.board.colors, vis: Int16Array.from(g.grid), chew: new Float64Array(g.grid.length) };
+      shades = shadeCache(g.board.colors);
       ants = []; crumbs = [];
       layout();
     },
@@ -106,11 +103,13 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer {
     frame(now, g, fast) {
       if (g !== last) { last = g; nSlots = g.slots.length; }
       fastNow = fast;
-      if (!CW) return;
+      if (!CW || !layer) return;
+      const chewing = syncLayer(layer, geo, cells, shades);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.drawImage(layer.canvas, 0, 0);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, CW, CH);
-      drawNest(ctx, geo, CW, CH, pat, g);
-      drawBlocks(ctx, geo, cells, now, fast);
+      drawHoles(ctx, geo, g);
+      drawChewing(ctx, geo, cells, shades, chewing, now, fast ? 65 : 130);
       crumbs = drawCrumbs(ctx, crumbs, now);
       ants = stepAnts(ctx, ants, now, geo, cells, crumbs, reduce, r.onChew);
     },

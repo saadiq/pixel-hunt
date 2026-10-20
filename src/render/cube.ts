@@ -16,29 +16,43 @@ export function shade(hex: string, t: number): string {
   return '#' + hexRgb(hex).map((v) => Math.round(v + (target - v) * k).toString(16).padStart(2, '0')).join('');
 }
 
+/** The five tones of one cube, precomputed per palette colour so drawing does no string work. */
+export interface CubeShades { seam: string; body: string; face: string; hl: string; gloss: string }
+
+export function cubeShades(hex: string): CubeShades {
+  return { seam: shade(hex, -0.28), body: shade(hex, -0.12), face: hex, hl: shade(hex, 0.3), gloss: shade(hex, 0.55) };
+}
+
+/** Tones for every colour of a palette, indexed like the palette. */
+export function shadeCache(colors: string[]): CubeShades[] {
+  return colors.map(cubeShades);
+}
+
 /**
  * The rectangles of one soft glossy cube ("style B") in a cell of size s at (x, y), painted in order:
  * the seam (the whole cell in a darker tone of the cube's own colour, so there is no dark grout),
  * a slightly darker body whose bottom and right edges show as a soft shade, the true-colour face,
- * a lighter top highlight band and a small gloss spot.
+ * a lighter top highlight band and a small gloss spot. `c` is a #rrggbb colour or its cached tones.
  */
-export function cubeRects(x: number, y: number, s: number, hex: string): Rect[] {
-  if (s < MIN_CUBE_PX) return [{ x, y, w: Math.ceil(s), h: Math.ceil(s), hex }]; // ceil: no seams between flat cells
+export function cubeRects(x: number, y: number, s: number, c: string | CubeShades): Rect[] {
+  const face = typeof c === 'string' ? c : c.face;
+  if (s < MIN_CUBE_PX) return [{ x, y, w: Math.ceil(s), h: Math.ceil(s), hex: face }]; // ceil: no seams between flat cells
+  const t = typeof c === 'string' ? cubeShades(c) : c;
   const gap = Math.max(0.6, s * 0.11);
   const w = s - gap;
   const hl = Math.max(0.8, w * 0.16), sh = Math.max(0.8, w * 0.18);
   return [
-    { x, y, w: s, h: s, hex: shade(hex, -0.28) },
-    { x, y, w, h: w, hex: shade(hex, -0.12) },
-    { x, y, w: w - sh * 0.5, h: w - sh, hex },
-    { x: x + w * 0.08, y, w: w * 0.78, h: hl, hex: shade(hex, 0.3) },
-    { x: x + w * 0.14, y: y + hl * 0.2, w: w * 0.28, h: hl * 0.9, hex: shade(hex, 0.55) },
+    { x, y, w: s, h: s, hex: t.seam },
+    { x, y, w, h: w, hex: t.body },
+    { x, y, w: w - sh * 0.5, h: w - sh, hex: face },
+    { x: x + w * 0.08, y, w: w * 0.78, h: hl, hex: t.hl },
+    { x: x + w * 0.14, y: y + hl * 0.2, w: w * 0.28, h: hl * 0.9, hex: t.gloss },
   ];
 }
 
 /** Draws a glossy cube for one cell. */
-export function drawCube(ctx: CanvasRenderingContext2D, x: number, y: number, s: number, hex: string): void {
-  for (const r of cubeRects(x, y, s, hex)) {
+export function drawCube(ctx: CanvasRenderingContext2D, x: number, y: number, s: number, c: string | CubeShades): void {
+  for (const r of cubeRects(x, y, s, c)) {
     ctx.fillStyle = r.hex;
     ctx.fillRect(r.x, r.y, r.w, r.h);
   }
