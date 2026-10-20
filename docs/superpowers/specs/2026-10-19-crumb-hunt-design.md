@@ -1,4 +1,4 @@
-# Crumb Hunt — Mobile Web App Design
+# Pixel Hunt (formerly Crumb Hunt) — Mobile Web App Design
 
 Date: 2026-10-19
 Status: Ready for review
@@ -14,6 +14,21 @@ The appeal of the game is watching a recognizable picture get eaten away by
 ants, one color at a time, while planning which squads to send. The scenes are
 the reward, so they need to be good pictures, with more detail than the
 prototype allows.
+
+## Revisions after the first full play-through (2026-10-20, decided with the user)
+
+- **Name:** the game is now **Pixel Hunt**. At the new cell sizes the ants read
+  as specks, which is fine, but the name shouldn't lean on them. Saves keep
+  the old storage key, so progress carries over.
+- **Taps must matter** (see Goal 4a): 5 Easy boards, then Medium and Hard
+  boards that ask for real choices.
+- **Harder boards take longer.** The fixed 30–60 tap length is dropped.
+  Squads shrink as difficulty rises, so one tap never clears a whole outline:
+  Easy about 45 taps, Medium about 75 (60–90), Hard about 120 (90–150).
+  Random mode uses the same lengths.
+- **No hints.** With a handful of lanes and free restarts they add nothing.
+  Undo (3) and restart stay.
+- **A mute button sits in the header** where the hint button was.
 
 ## The game (unchanged from the prototype)
 
@@ -54,7 +69,7 @@ The prototype's rules carry over exactly. The pure logic in the artifact
    manifest, with no code changes.
 6. **Mobile-first.** It plays one-handed in portrait on a ~390px-wide phone,
    can be installed to the home screen, and works offline.
-7. Keep **every** prototype feature: 3 undos and a restart per board, 3 hints,
+7. Keep **every** prototype feature (hints were later dropped, see Revisions): 3 undos and a restart per board, 3 hints,
    the 2× speed toggle, sound, random mode (Easy/Medium/Hard), and the daily
    scene.
 
@@ -124,9 +139,9 @@ lever. `wait` only matters while slots are mostly empty.
 
 - Grids may be portrait (e.g. 32×40) when the art needs it. The board fits
   within the stage by both width and height.
-- **Squad size scales with block count** so a board takes roughly 30–60
-  taps (about 2–5 minutes at 1×). Bigger grids get bigger squads instead of
-  more taps. Each scene's exact numbers are set in its data file and tuned by
+- **Squad size scales with block count and band** so a board takes about
+  45 taps on Easy, 75 on Medium and 120 on Hard (revised 2026-10-20; it was
+  30–60 for every band). Bigger grids get bigger squads instead of more taps. Each scene's exact numbers are set in its data file and tuned by
   the validator (below).
 - Difficulty also comes from the art itself. Hard scenes use dark outlines
   and nested shapes that wall colors inside other colors (the prototype's
@@ -170,8 +185,9 @@ any violation:
 - **Choices** (added 2026-10-20, `scripts/choices.ts`): along the recorded
   winning line, the share of turns where some other tap leads to a lost
   board (bounded depth-first search), and the win rate of a "mindless"
-  player who taps any lane whose colour is eatable. Medium needs choice ≥
-  0.12 and mindless ≤ 0.85; Hard needs choice ≥ 0.17 and mindless ≤ 0.5.
+  player who taps any lane whose colour is eatable. Gated on decisions per
+  board (choice × taps): Medium 6+ with mindless ≤ 0.85, Hard 14+ with
+  mindless ≤ 0.55. Random mode is checked against the same targets.
 - **Difficulty estimate:** win rate of the prototype's `playout()` policy
   across N deals. Each band has a target range, and the report flags scenes
   outside it so their parameters (slots, lanes, `wait`, squad size) can be

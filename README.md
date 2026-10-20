@@ -21,11 +21,13 @@ Scenes come from an SVG pipeline; do not hand-edit the generated TypeScript.
 
 1. Draw `scenes/art/<id>.svg` with `viewBox="0 0 W H"` (one unit per cell) and a `<metadata>` JSON block with: `id`, `name`, `blurb`, `band`, `W`, `H`, `slots`, `lanes`, `chunk`, `wait`, `bg`, and optionally `waitSlack`.
 2. Run `bun run build-scenes <id>`.
-3. Add the id to `src/scenes/index.ts` and `src/scenes/manifest.ts`.
+3. Add the id to `src/scenes/manifest.ts` where it should sit in the progression (`build-scenes` regenerates `src/scenes/index.ts`).
 4. Run `bun run validate <id>` and `bun run export-pngs <id>`.
-5. Check the result against the band gates in `scripts/targets.ts`.
+5. Check the result against the band gates in `src/core/targets.ts` (random mode uses the same ones).
 
-Difficulty is about choices, not speed. `validate` reports `choice`, the share of turns where a wrong tap loses the board for a player who waits for the ants to finish, and `mindless`, the win rate of a player who taps any lane whose colour is eatable right now. Easy boards (only the first 5) may have no choices. Medium needs `choice` ≥ 0.12 and Hard needs ≥ 0.17. The main lever is `waitSlack: 1`, which lets the dealer put squads whose colour is still buried into a lane while slots are scarce. Open scenes with little enclosed art produce few choices whatever the params, so give them the Easy band.
+Difficulty is about choices, not speed. `validate` reports `choice`, the share of turns where a wrong tap loses the board for a player who waits for the ants to finish, `decide`, how many such turns a board has, and `mindless`, the win rate of a player who taps any lane whose colour is eatable right now. Easy boards (only the first 5) may have no decisions. Medium needs 6+ decisions per board and Hard 14+. The main lever is `waitSlack: 1`, which lets the dealer put squads whose colour is still buried into a lane while slots are scarce. Open scenes with little enclosed art produce few choices whatever the params, so give them the Easy band.
+
+Harder boards also take longer: aim `chunk` (squad size) at a median of about 45 taps on Easy, 60–90 on Medium and 90–150 on Hard, so a single tap never clears a whole outline.
 
 Scene rules: at most 9 colours, no colour with fewer than 4 cells, colours visually distinct, recognisable at 64px. Progress is stored by scene id, so ids must stay stable once released.
 
