@@ -47,10 +47,11 @@ export function distField(grid: Int8Array, W: number, H: number, hc: number): In
 export function minAround(d: Int16Array, i: number, W: number): number {
   const EW = W + 2, e = (((i / W) | 0) + 1) * EW + (i % W) + 1;
   let b = -1;
-  for (const n of [e - EW, e + EW, e - 1, e + 1]) {
-    const v = d[n];
-    if (v >= 0 && (b < 0 || v < b)) b = v;
-  }
+  // Unrolled over the four neighbours: no per-call array allocation (hot in every deal).
+  const n = d[e - EW]; if (n >= 0) b = n;
+  const s = d[e + EW]; if (s >= 0 && (b < 0 || s < b)) b = s;
+  const w = d[e - 1]; if (w >= 0 && (b < 0 || w < b)) b = w;
+  const o = d[e + 1]; if (o >= 0 && (b < 0 || o < b)) b = o;
   return b;
 }
 
