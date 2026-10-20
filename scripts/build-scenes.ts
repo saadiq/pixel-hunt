@@ -24,7 +24,7 @@ export const ${camel(s.id)}: Scene = {
   slots: ${s.slots},
   lanes: ${s.lanes},
   chunk: [${s.chunk[0]}, ${s.chunk[1]}],
-  wait: ${s.wait},
+  wait: ${s.wait},${s.waitSlack === undefined ? '' : `\n  waitSlack: ${s.waitSlack},`}
   pal: {
 ${pal}
   },
@@ -43,7 +43,8 @@ export function buildScene(svg: string): Scene {
   const art = rasterize(svg, m.W, m.H);
   return {
     id: m.id, name: m.name, blurb: m.blurb, band: m.band,
-    slots: m.slots, lanes: m.lanes, chunk: m.chunk, wait: m.wait, ...art,
+    slots: m.slots, lanes: m.lanes, chunk: m.chunk, wait: m.wait,
+    ...(m.waitSlack === undefined ? {} : { waitSlack: m.waitSlack }), ...art,
   };
 }
 

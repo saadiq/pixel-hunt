@@ -1,8 +1,10 @@
 import { describe, expect, test } from 'bun:test';
 import { parseArt, sceneLevel } from '../../src/core/board';
 import { deal, replayLine } from '../../src/core/deal';
+import { exposedMask } from '../../src/core/path';
 import { stepSlots } from '../../src/core/step';
-import type { Level } from '../../src/core/types';
+import type { Level, Scene } from '../../src/core/types';
+import { bentoBox } from '../../src/scenes/bento-box';
 import { bridge, d20, upscale } from '../fixtures/proto';
 
 const SEEDS = Array.from({ length: 200 }, (_, i) => i + 1);
@@ -66,6 +68,35 @@ describe('deal under hostile params', () => {
     const level: Level = { ...sceneLevel(d20), wait: 0.99, slots: 1 };
     const board = parseArt(level);
     for (const s of [1, 2, 3, 4, 5]) expect(replayLine(level, board, deal(level, board, s))).toBe(true);
+  });
+});
+
+describe('waitSlack', () => {
+  const hard = (scene: Scene): Level => ({ ...sceneLevel(scene), waitSlack: 1, wait: 0.9, slots: 3 });
+
+  test.each([['d20', d20], ['bento', bentoBox]])('waitSlack 1 on %s replays to a win for seeds 1..200', (_n, scene) => {
+    const level = hard(scene);
+    const board = parseArt(level);
+    const failed = SEEDS.filter((s) => !replayLine(level, board, deal(level, board, s)));
+    expect(failed).toEqual([]);
+  }, SLOW);
+
+  test('waitSlack 1 lets the first squad of a 2-slot deal wait on a hidden colour', () => {
+    const level: Level = { ...hard(d20), slots: 2 };
+    const board = parseArt(level);
+    const exp = exposedMask(board.grid, board.W, board.H);
+    const exposed = new Set(board.grid.filter((v, i) => v >= 0 && exp[i]));
+    const firstHidden = (lv: Level) => SEEDS.slice(0, 50).filter((s) => {
+      const d = deal(lv, board, s);
+      return !exposed.has(d.lanes[d.line[0]][0].color);
+    }).length;
+    expect(firstHidden({ ...level, waitSlack: undefined })).toBe(0);
+    expect(firstHidden(level)).toBeGreaterThan(0);
+  });
+
+  test('sceneLevel carries waitSlack through', () => {
+    expect(sceneLevel({ ...d20, waitSlack: 1 }).waitSlack).toBe(1);
+    expect('waitSlack' in sceneLevel(d20)).toBe(false);
   });
 });
 

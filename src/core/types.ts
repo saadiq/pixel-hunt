@@ -1,5 +1,9 @@
 export type Band = 'easy' | 'medium' | 'hard';
-export interface Params { slots: number; lanes: number; chunk: [number, number]; wait: number }
+export interface Params {
+  slots: number; lanes: number; chunk: [number, number]; wait: number;
+  /** Waiting squads may be dealt while fewer than `slots - waitSlack` slots are in use. Default 2. */
+  waitSlack?: number;
+}
 export interface Art { rows: string[]; pal: Record<string, string> }
 export interface Scene extends Art, Params { id: string; name: string; blurb: string; band: Band }
 export interface Level extends Art, Params { key: string; name: string; band: Band }

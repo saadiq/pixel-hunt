@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'bun:test';
+import { buildScene, sceneSource } from '../../scripts/build-scenes';
 import { parseMeta, rasterize, svgPalette, type SceneMeta } from '../../scripts/raster';
 
 const svg = (w: number, h: number, body: string) =>
@@ -72,5 +73,22 @@ describe('parseMeta', () => {
 
   test('throws when the metadata is missing', () => {
     expect(() => parseMeta(svg(2, 2, ''))).toThrow(/metadata/i);
+  });
+});
+
+describe('buildScene waitSlack', () => {
+  const meta = (extra: object) => JSON.stringify({ id: 'x', name: 'X', blurb: 'b', band: 'hard', W: 2, H: 2, slots: 3, lanes: 4, chunk: [1, 2], wait: 0.9, bg: '#ffffff', ...extra });
+  const body = '<rect width="2" height="2" fill="#ffffff"/>';
+
+  test('passes waitSlack from metadata into the scene and its source', () => {
+    const s = buildScene(svg(2, 2, `<metadata>${meta({ waitSlack: 1 })}</metadata>${body}`));
+    expect(s.waitSlack).toBe(1);
+    expect(sceneSource(s)).toContain('waitSlack: 1,');
+  });
+
+  test('omits waitSlack when the metadata has none', () => {
+    const s = buildScene(svg(2, 2, `<metadata>${meta({})}</metadata>${body}`));
+    expect('waitSlack' in s).toBe(false);
+    expect(sceneSource(s)).not.toContain('waitSlack');
   });
 });

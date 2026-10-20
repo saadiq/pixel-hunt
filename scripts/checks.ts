@@ -40,6 +40,7 @@ function checkParams(s: Scene): string[] {
   else if (s.slots < slo || s.slots > shi) errs.push(`slots ${s.slots} outside ${s.band} band ${slo}-${shi}`);
   if (!Number.isInteger(s.lanes) || s.lanes < 1) errs.push(`bad lanes ${s.lanes}`);
   if (s.chunk[0] < 1 || s.chunk[1] < s.chunk[0]) errs.push(`bad chunk ${s.chunk.join('-')}`);
+  if (s.waitSlack !== undefined && (!Number.isInteger(s.waitSlack) || s.waitSlack < 0)) errs.push(`bad waitSlack ${s.waitSlack}`);
   return errs;
 }
 

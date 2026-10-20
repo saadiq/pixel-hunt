@@ -13,5 +13,6 @@ export function sceneLevel(s: Scene): Level {
   return {
     key: s.id, name: s.name, band: s.band, rows: s.rows, pal: s.pal,
     slots: s.slots, lanes: s.lanes, chunk: s.chunk, wait: s.wait,
+    ...(s.waitSlack === undefined ? {} : { waitSlack: s.waitSlack }),
   };
 }

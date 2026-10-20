@@ -6,6 +6,7 @@ import { hexRgb } from '../src/render/cube';
 export interface SceneMeta {
   id: string; name: string; blurb: string; band: Band;
   W: number; H: number; slots: number; lanes: number; chunk: [number, number]; wait: number; bg: string;
+  waitSlack?: number;
 }
 
 const CHARS = 'abcdefghijklmnopqrstuvwxyz';

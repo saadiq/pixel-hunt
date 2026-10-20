@@ -25,7 +25,7 @@ const protoPick: Picker = (level, v, rng) => {
   // a waiting squad: a color with nothing reachable yet (it will block a slot)
   const hidden = v.unassigned.map((_, c) => c).filter((c) => v.unassigned[c] > 0 && !v.cnt[c]);
   const chunk = cmin + Math.floor(rng() * (cmax - cmin + 1));
-  const waiting = v.used < level.slots - 2 && rng() < level.wait;
+  const waiting = v.used < level.slots - (level.waitSlack ?? 2) && rng() < level.wait;
   let c: number, cap: number;
   if (waiting && hidden.length) {
     c = hidden[Math.floor(rng() * hidden.length)];
