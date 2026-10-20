@@ -113,16 +113,17 @@ describe('perf', () => {
     return (t[Math.floor((t.length - 1) / 2)] + t[Math.ceil((t.length - 1) / 2)]) / 2;
   };
 
-  test('median deal on a 56-wide bridge is under 80ms', () => {
+  test('median deal on a 56-wide bridge is under 30ms', () => {
     const level: Level = { ...sceneLevel(bridge), ...upscale(bridge, 56) };
     const board = parseArt(level);
+    deal(level, board, 99); // warm-up: JIT and geometry caches
     const times: number[] = [];
     for (let s = 1; s <= 20; s++) {
       const t0 = performance.now();
       deal(level, board, s);
       times.push(performance.now() - t0);
     }
-    expect(median(times)).toBeLessThan(80);
+    expect(median(times)).toBeLessThan(30);
   });
 
   test('median stepSlots tick with 4 occupied slots on a 56x56 board is under 2ms', () => {
@@ -133,7 +134,11 @@ describe('perf', () => {
     const times: number[] = [];
     for (let n = 0; n < 40; n++) {
       const g = board.grid.slice();
-      const slots = Array.from({ length: 4 }, (_, k) => ({ color: (k + n) % board.colors.length, cap: 50, total: 50 }));
+      const mk = (cap: number) => Array.from({ length: 4 }, (_, k) => ({ color: (k + n) % board.colors.length, cap, total: cap }));
+      // open up a large region first so the tick has real search work to do
+      const warm = mk(400);
+      for (let t = 0; t < 400; t++) stepSlots(g, W, H, warm);
+      const slots = mk(50);
       const t0 = performance.now();
       stepSlots(g, W, H, slots);
       times.push(performance.now() - t0);
