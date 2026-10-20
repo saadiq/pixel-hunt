@@ -44,7 +44,7 @@ describe('searchHint', () => {
     await searchHint({ grid, W: board.W, H: board.H, slots: emptySlots(), lanes: d.lanes }, { budgetMs: 60, rng: mulberry(2) });
     expect(performance.now() - t0).toBeLessThan(500);
     expect(JSON.stringify(d.lanes)).toBe(before);
-    expect(grid).toEqual(board.grid);
+    expect(Array.from(grid)).toEqual(Array.from(board.grid));
   });
 });
 
