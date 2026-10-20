@@ -1,0 +1,18 @@
+{
+  "name": "crumb-hunt",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "test": "bun test",
+    "lint": "bunx eslint ."
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.3",
+    "eslint": "^10.13.0",
+    "typescript": "^6",
+    "typescript-eslint": "^8.71.2",
+    "vite": "^8.3.4"
+  }
+}
