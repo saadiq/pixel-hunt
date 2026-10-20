@@ -18,7 +18,6 @@ import { bite, ensureAudio, setEnabled, tone } from './sound';
 const SPEAKER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
 const MUTED = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 6 6M22 9l-6 6"/></svg>';
 
-const TIP = 'Tap a squad. Ants run the track and eat from any side.';
 const TICK_MS = 95;
 
 let save: SaveV1;
@@ -60,9 +59,7 @@ function begin(game: Game, s: number): void {
   renderer.reset(g);
   closeSheets();
   setTag(g.meta, g.level);
-  const h = $('hint');
-  h.textContent = TIP;
-  h.hidden = !(g.meta.kind === 'campaign' && g.meta.id === MANIFEST[0] && !save.cleared.length && g.taps === 0);
+  $('tip').hidden = !(g.meta.kind === 'campaign' && g.meta.id === MANIFEST[0] && !save.cleared.length && g.taps === 0);
   renderAll();
   persist();
 }
@@ -99,7 +96,7 @@ function onTap(lane: number): void {
   const r = tapLane(g, lane);
   if (r === 'full') { shakeSlots(); tone([180], 0.08, 'square', 0.05); return; }
   if (r !== 'ok') return;
-  $('hint').hidden = true;
+  $('tip').hidden = true;
   tone([520, 780], 0.05);
   renderAll();
   persist();

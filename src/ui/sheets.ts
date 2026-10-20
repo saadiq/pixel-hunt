@@ -37,6 +37,15 @@ function syncRandom(ctx: ScenesCtx, band: Band): void {
   $('randBtn').onclick = () => { closeSheets(); ctx.onRandom(band); };
 }
 
+// Cleared art never changes, so each thumbnail is drawn once per session.
+const thumbs = new Map<string, HTMLCanvasElement>();
+
+function thumbFor(s: Scene): HTMLCanvasElement {
+  let c = thumbs.get(s.id);
+  if (!c) { c = el('canvas'); drawThumb(c, s, 128); thumbs.set(s.id, c); }
+  return c;
+}
+
 function sceneItem(ctx: ScenesCtx, id: string, num: number, next: string): HTMLButtonElement {
   const s = ctx.scenes[id];
   const cleared = ctx.cleared.has(id), open = isUnlocked(id, ctx.manifest, ctx.cleared);
@@ -44,9 +53,7 @@ function sceneItem(ctx: ScenesCtx, id: string, num: number, next: string): HTMLB
   b.setAttribute('aria-current', id === next && !cleared ? 'true' : 'false');
   b.disabled = !open;
   if (cleared) {
-    const c = el('canvas');
-    drawThumb(c, s, 128);
-    b.appendChild(c);
+    b.appendChild(thumbFor(s));
   } else {
     const ph = el('div', 'ph');
     if (open) ph.textContent = '?'; else ph.innerHTML = LOCK_SVG;

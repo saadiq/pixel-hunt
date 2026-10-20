@@ -57,7 +57,7 @@ function patch(L: Layer, geo: Geom, cells: Cells, shades: CubeShades[], i: numbe
   c.beginPath();
   c.rect(x0, y0, x1 - x0, y1 - y0);
   c.clip();
-  c.drawImage(L.ground, 0, 0);
+  c.drawImage(L.ground, x0, y0, x1 - x0, y1 - y0, x0, y0, x1 - x0, y1 - y0);
   c.setTransform(d, 0, 0, d, 0, 0);
   const reach = Math.ceil(1 / cs) + 1, r0 = (i / W) | 0, c0 = i % W;
   for (let r = Math.max(0, r0 - reach); r <= Math.min(H - 1, r0 + reach); r++) {
