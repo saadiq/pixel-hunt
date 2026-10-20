@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 60" width="54" height="60">
+  <metadata>{"id":"northern-lights","name":"Northern Lights over a Cabin","blurb":"A snowy cabin under the aurora, in a snow globe.","band":"hard","W":54,"H":60,"slots":3,"lanes":5,"chunk":[80,112],"wait":0.8,"waitSlack":1,"bg":"#c9b6ff"}</metadata>
+  <defs>
+    <clipPath id="glass"><circle cx="27" cy="27.5" r="22"/></clipPath>
+    <g id="pine">
+      <path d="M0,-11 L4.5,-4 L2.5,-4 L6,2 L-6,2 L-2.5,-4 L-4.5,-4 Z" fill="#2b8a4a" stroke="#1d1b33" stroke-width="1" stroke-linejoin="round"/>
+      <path d="M0,-11 L2,-7.8 L-2,-7.8 Z M-2.5,-4 L2.5,-4 L3.4,-2.5 L-3.4,-2.5 Z" fill="#ffffff"/>
+    </g>
+    <pattern id="knit" x="1" y="1" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="1" height="6" fill="#ffffff"/><rect x="0" y="0" width="6" height="1" fill="#ffffff"/>
+      <rect x="3" y="3" width="1" height="1" fill="#ffffff"/>
+    </pattern>
+  </defs>
+  <!-- wallpaper -->
+  <rect width="54" height="60" fill="#c9b6ff"/>
+  <g fill="#ffffff">
+    <rect x="3" y="3" width="1" height="1"/><rect x="50" y="3" width="1" height="1"/><rect x="3" y="50" width="1" height="1"/><rect x="50" y="50" width="1" height="1"/>
+  </g>
+
+  <!-- wooden base -->
+  <path d="M8.5,48.5 H45.5 L48.5,57.5 H5.5 Z" fill="#8a5a3c" stroke="#1d1b33" stroke-width="1" stroke-linejoin="round"/>
+  <rect x="20.5" y="52.5" width="13" height="3" fill="#ffd23f" stroke="#1d1b33" stroke-width="1"/>
+
+  <!-- the globe -->
+  <circle cx="27" cy="27.5" r="25.6" fill="#1d1b33"/>
+  <circle cx="27" cy="27.5" r="24.6" fill="#c9b6ff"/>
+  <circle cx="27" cy="27.5" r="23" fill="#1d1b33"/>
+  <g clip-path="url(#glass)">
+    <rect width="54" height="60" fill="#24306b"/>
+    <!-- aurora ribbons -->
+    <path d="M-2,27 C10,16 18,24 27,15 C34,8 42,14 56,6" stroke="#5cf2a0" stroke-width="5" fill="none"/>
+    <path d="M-2,19 C9,12 16,17 24,10 C30,5 38,8 50,2" stroke="#ff6fb5" stroke-width="2.4" fill="none"/>
+    <g fill="#24306b"><rect x="11" y="14" width="1" height="14"/><rect x="19" y="10" width="1" height="14"/><rect x="35" y="3" width="1" height="14"/></g>
+    <!-- stars and falling snow -->
+    <g fill="#ffffff">
+      <rect x="12" y="7" width="1" height="1"/><rect x="36" y="19" width="1" height="1"/><rect x="45" y="21" width="1" height="1"/>
+      <rect x="17" y="28" width="1" height="1"/><rect x="6" y="31" width="1" height="1"/><rect x="42" y="27" width="1" height="1"/>
+      <rect x="23" y="23" width="1" height="1"/><rect x="48" y="31" width="1" height="1"/><rect x="31" y="21" width="1" height="1"/>
+    </g>
+    <g fill="#ffd23f"><rect x="16" y="5" width="1" height="1"/><rect x="29" y="5" width="1" height="1"/><rect x="7" y="13" width="1" height="1"/><rect x="40" y="3" width="1" height="1"/><rect x="49" y="15" width="1" height="1"/><rect x="11" y="25" width="1" height="1"/></g>
+    <!-- snowy hills -->
+    <path d="M-1,41 C9,34 19,34 29,38 C37,35 45,34 55,37 L55,58 L-1,58 Z" fill="#ffffff" stroke="#1d1b33" stroke-width="1"/>
+    <!-- pines -->
+    <use href="#pine" x="8.5" y="38.5"/><use href="#pine" x="15.5" y="41"/><use href="#pine" x="46" y="39.5"/>
+    <!-- cabin -->
+    <g stroke="#1d1b33" stroke-width="1" stroke-linejoin="round">
+      <rect x="34.5" y="25.5" width="3" height="6" fill="#8a5a3c"/>
+      <rect x="23.5" y="33.5" width="16" height="10" fill="#8a5a3c"/>
+      <path d="M21,34.5 L31.5,26 L42,34.5 Z" fill="#ffffff"/>
+      <rect x="25.5" y="36.5" width="5" height="4" fill="#ffd23f"/>
+      <rect x="33.5" y="36.5" width="4" height="7" fill="#24306b"/>
+    </g>
+    <rect x="28" y="37" width="1" height="3" fill="#1d1b33"/>
+    <rect x="26" y="38" width="4" height="1" fill="#1d1b33"/>
+    <rect x="34" y="24" width="4" height="1.6" fill="#ffffff"/>
+    <!-- window glow on the snow -->
+    <g fill="#ffd23f"><rect x="25" y="45" width="6" height="1"/><rect x="26" y="46" width="4" height="1"/></g>
+    <!-- glass shine -->
+    <path d="M6.5,22 C6.5,14 11,8 17,4.5" stroke="#ffffff" stroke-width="1.3" fill="none"/>
+  </g>
+</svg>

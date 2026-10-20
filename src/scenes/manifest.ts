@@ -25,4 +25,5 @@ export const MANIFEST: string[] = [
   'peacock',
   'santorini-rooftops',
   'golden-gate',
+  'northern-lights',
 ];
