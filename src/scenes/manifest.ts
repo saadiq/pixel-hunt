@@ -7,6 +7,7 @@ export const MANIFEST: string[] = [
   'lighthouse-at-dusk',
   'sleeping-fox',
   'toucan',
+  'desert-cactus',
   'brooklyn-bridge',
   'birthday-cake',
   'coral-reef',
