@@ -3,10 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
     <title>Crumb Hunt</title>
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Figtree:wght@500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body>
-    <div id="app"></div>
+    <div class="app">
+      <header class="top">
+        <button class="brand" id="menuBtn" aria-label="Scenes and rules">
+          <span class="logo"><svg viewBox="0 0 14 14" aria-hidden="true"><rect y="2" width="14" height="2" fill="currentColor"/><rect y="6" width="14" height="2" fill="currentColor"/><rect y="10" width="14" height="2" fill="currentColor"/></svg>CRUMB HUNT</span>
+          <span class="lvl" id="lvlName"></span>
+        </button>
+        <div class="tools">
+          <button class="icon" id="undoBtn" aria-label="Undo last tap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg><span class="badge" id="undoN">3</span></button>
+          <button class="icon" id="hintBtn" aria-label="Show a good next lane"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21.5h4"/><path d="M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.7.5 1.1 1.3 1.1 2.2h5.4c0-.9.4-1.7 1.1-2.2A6.5 6.5 0 0 0 12 2.5z"/></svg><span class="badge" id="hintN">3</span></button>
+          <button class="icon" id="restartBtn" aria-label="Restart scene"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+          <button class="icon txt" id="speedBtn" aria-label="Ant speed" aria-pressed="false">1×</button>
+        </div>
+      </header>
+
+      <div class="stage" id="stage">
+        <div class="boardWrap" id="boardWrap">
+          <canvas id="board" aria-label="Pixel art puzzle board"></canvas>
+          <div class="hint" id="hint" hidden>Tap a squad. Ants run the track and eat from any side.</div>
+        </div>
+      </div>
+
+      <div class="meter"><span id="left"></span><span id="hold"></span></div>
+      <div class="slots" id="slots"></div>
+      <div class="lanes" id="lanes"></div>
+    </div>
+
+    <div class="sheet" id="levelsSheet" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="lvTitle">
+        <h2 id="lvTitle">Crumb Hunt</h2>
+        <ol class="rules">
+          <li>Tap a lane to send its <b>top squad</b> to a holding slot.</li>
+          <li>Ants leave the nest, run the <b>track around the board</b>, and tunnel through eaten gaps to reach blocks of their color from any side.</li>
+          <li>A squad leaves when its ants are fed. If every slot is full and nobody can reach food, <b>you're stuck</b>.</li>
+          <li>Every deal has at least one winning order. Use <b>undo</b> or a <b>hint</b> when you're boxed in.</li>
+        </ol>
+        <div class="secHead"><h3>Scenes</h3><span id="campStat"></span></div>
+        <div class="levels" id="levelList"></div>
+        <section class="endless" aria-labelledby="endH">
+          <div class="secHead"><h3 id="endH">Random</h3><span id="endStat"></span></div>
+          <div class="seg" role="radiogroup" aria-label="Difficulty" id="diffSeg">
+            <button role="radio" data-d="easy" disabled>Easy</button><button role="radio" data-d="medium" disabled>Medium</button><button role="radio" data-d="hard" disabled>Hard</button>
+          </div>
+          <p class="segNote" id="diffNote">Random scenes are coming soon.</p>
+          <div class="row"><button class="btn" id="randBtn" disabled>New scene</button></div>
+        </section>
+        <section class="endless" aria-labelledby="dayH">
+          <div class="secHead"><h3 id="dayH">Daily</h3><span id="dayStat"></span></div>
+          <div class="row"><button class="btn primary" id="dailyBtn">Today's scene</button></div>
+        </section>
+        <div class="row"><button class="btn" id="soundBtn" aria-pressed="true">Sound: on</button><button class="btn" id="closeLevels">Back to the board</button></div>
+      </div>
+    </div>
+
+    <div class="sheet" id="resultSheet" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="resTitle">
+        <div class="resultArt" id="resArt"></div>
+        <h2 id="resTitle"></h2>
+        <p id="resText"></p>
+        <div class="row" id="resBtns"></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
