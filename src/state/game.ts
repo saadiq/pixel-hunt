@@ -7,7 +7,7 @@ export interface Snapshot { grid: Int8Array; lanes: Lanes; slots: Slots; remaini
 
 export interface Game {
   meta: Meta; level: Level; board: Board; grid: Int8Array; lanes: Lanes; slots: Slots;
-  hist: Snapshot[]; undos: number; hints: number; usedUndo: number; usedHint: number;
+  hist: Snapshot[]; undos: number; usedUndo: number;
   taps: number; remaining: number; stuck: boolean; idle: boolean; line: number[]; onLine: boolean;
 }
 
@@ -22,7 +22,7 @@ export function newGame(meta: Meta, level: Level, seed: number): Game {
   const grid = board.grid.slice();
   return {
     meta, level, board, grid, lanes: d.lanes, slots: Array(level.slots).fill(null),
-    hist: [], undos: 3, hints: 3, usedUndo: 0, usedHint: 0, taps: 0,
+    hist: [], undos: 3, usedUndo: 0, taps: 0,
     remaining: grid.reduce((a, v) => a + (v >= 0 ? 1 : 0), 0),
     stuck: false, idle: true, line: d.line, onLine: true,
   };

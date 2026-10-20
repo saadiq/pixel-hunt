@@ -3,12 +3,12 @@ import type { Squad } from '../core/types';
 import type { Game } from '../state/game';
 import { $, ANT_SVG, el, textOn } from './dom';
 
-export function renderLanes(g: Game, onTap: (lane: number) => void, hintLane: number | null): void {
+export function renderLanes(g: Game, onTap: (lane: number) => void): void {
   const box = $('lanes');
   box.style.setProperty('--l', String(g.lanes.length));
   box.innerHTML = '';
   g.lanes.forEach((lane, l) => {
-    const b = el('button', 'lane' + (l === hintLane ? ' hinted' : ''));
+    const b = el('button', 'lane');
     b.disabled = !lane.length;
     b.setAttribute('aria-label', lane.length ? `Send squad of ${lane[0].cap}` : 'Empty lane');
     if (!lane.length) {
@@ -52,8 +52,8 @@ export function renderSlots(g: Game): void {
   });
 }
 
-/** Pixels left, holding count, and the undo/hint badges. `over` disables hints once the board ends. */
-export function renderMeter(g: Game, over = false): void {
+/** Pixels left, holding count, and the undo badge. */
+export function renderMeter(g: Game): void {
   $('left').textContent = `${g.remaining} pixels left`;
   const used = g.slots.filter(Boolean).length, n = g.slots.length;
   const h = $('hold');
@@ -61,8 +61,6 @@ export function renderMeter(g: Game, over = false): void {
   h.className = g.stuck || used >= n - 1 ? 'warn' : '';
   $('undoN').textContent = String(g.undos);
   ($('undoBtn') as HTMLButtonElement).disabled = !g.undos || !g.hist.length;
-  $('hintN').textContent = String(g.hints);
-  ($('hintBtn') as HTMLButtonElement).disabled = !g.hints || over;
 }
 
 /** Brief shake of the slot row when every slot is full. */

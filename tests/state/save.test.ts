@@ -55,7 +55,6 @@ describe('toRun/fromRun', () => {
     tick(g);
     tapLane(g, g.line[1]);
     g.undos = 2;
-    g.hints = 1;
     const r = JSON.parse(JSON.stringify(toRun(g, 7)));
     const h = fromRun(r, scenes);
     expect(h).not.toBeNull();
@@ -64,7 +63,7 @@ describe('toRun/fromRun', () => {
     expect(h.lanes).toEqual(g.lanes);
     expect(h.slots).toEqual(g.slots);
     expect(h.hist.length).toBe(g.hist.length);
-    expect([h.undos, h.hints, h.taps, h.onLine, h.remaining]).toEqual([2, 1, g.taps, g.onLine, g.remaining]);
+    expect([h.undos, h.taps, h.onLine, h.remaining]).toEqual([2, g.taps, g.onLine, g.remaining]);
     expect(h.board.W).toBe(g.board.W);
   });
 
@@ -97,7 +96,7 @@ describe('toRun/fromRun', () => {
   test('bad scalars and out-of-range values return null', () => {
     const r = toRun(mk(), 7);
     expect(fromRun({ ...r, undos: 'x' as unknown as number }, scenes)).toBeNull();
-    expect(fromRun({ ...r, hints: 4 }, scenes)).toBeNull();
+    expect(fromRun({ ...r, undos: 4 }, scenes)).toBeNull();
     expect(fromRun({ ...r, onLine: 1 as unknown as boolean }, scenes)).toBeNull();
     expect(fromRun({ ...r, line: [99] }, scenes)).toBeNull();
     expect(fromRun({ ...r, grid: r.grid.map(() => 99) }, scenes)).toBeNull();

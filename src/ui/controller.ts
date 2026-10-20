@@ -1,7 +1,6 @@
-// Game controller: owns the current board, the tick loop, input, hints, saving and end-of-board sheets.
+// Game controller: owns the current board, the tick loop, input, saving and end-of-board sheets.
 import { sceneLevel } from '../core/board';
-import { lineHint, searchHint } from '../core/hint';
-import { hashStr, mulberry } from '../core/rng';
+import { hashStr } from '../core/rng';
 import type { Band, Level, Meta } from '../core/types';
 import { randomLevel } from '../random/level';
 import { createRenderer, type Renderer } from '../render/board';
@@ -16,6 +15,9 @@ import { lose, win } from './outcome';
 import { closeSheets, openScenes, wireSheets } from './sheets';
 import { bite, ensureAudio, setEnabled, tone } from './sound';
 
+const SPEAKER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+const MUTED = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 6 6M22 9l-6 6"/></svg>';
+
 const TIP = 'Tap a squad. Ants run the track and eat from any side.';
 const TICK_MS = 95;
 
@@ -24,10 +26,7 @@ let renderer: Renderer;
 let g: Game | null = null;
 let seed = 0;
 let over = false;
-let hintLane: number | null = null;
-let hinting = false;
-let version = 0; // bumps on every tap, undo and new board so stale hint searches are dropped
-let acc = 0, last = 0, sayT = 0;
+let acc = 0, last = 0;
 
 const newSeed = (): number => 1 + Math.floor(Math.random() * 0x7ffffffe);
 const fast = (): boolean => save.prefs.fast;
@@ -51,25 +50,16 @@ function persist(): void {
 
 function renderAll(): void {
   if (!g) return;
-  renderLanes(g, onTap, hintLane);
+  renderLanes(g, onTap);
   renderSlots(g);
-  renderMeter(g, over);
-}
-
-function say(text: string, ms = 2800): void {
-  const h = $('hint');
-  h.textContent = text;
-  h.hidden = false;
-  clearTimeout(sayT);
-  sayT = window.setTimeout(() => { h.hidden = true; }, ms);
+  renderMeter(g);
 }
 
 function begin(game: Game, s: number): void {
-  g = game; seed = s; over = false; hintLane = null; version++;
+  g = game; seed = s; over = false;
   renderer.reset(g);
   closeSheets();
   setTag(g.meta, g.level);
-  clearTimeout(sayT);
   const h = $('hint');
   h.textContent = TIP;
   h.hidden = !(g.meta.kind === 'campaign' && g.meta.id === MANIFEST[0] && !save.cleared.length && g.taps === 0);
@@ -109,8 +99,6 @@ function onTap(lane: number): void {
   const r = tapLane(g, lane);
   if (r === 'full') { shakeSlots(); tone([180], 0.08, 'square', 0.05); return; }
   if (r !== 'ok') return;
-  version++;
-  hintLane = null;
   $('hint').hidden = true;
   tone([520, 780], 0.05);
   renderAll();
@@ -120,52 +108,22 @@ function onTap(lane: number): void {
 function doUndo(): void {
   ensureAudio();
   if (!g || status(g) === 'won' || !undo(g)) return;
-  over = false; hintLane = null; version++;
+  over = false;
   renderer.reset(g);
   closeSheets();
   renderAll();
   persist();
 }
 
-function useHint(lane: number): void {
-  if (!g) return;
-  g.hints--;
-  g.usedHint++;
-  hintLane = lane;
-  renderAll();
-  persist();
-}
-
-async function hint(): Promise<void> {
-  ensureAudio();
-  if (!g || over || hinting || g.hints <= 0) return;
-  if (!g.slots.includes(null)) { say('All slots are busy. Wait for a squad to finish.'); return; }
-  const line = lineHint(g.onLine, g.idle, g.line, g.taps);
-  if (line !== null && g.lanes[line]?.length) { useHint(line); return; }
-  const v = version, btn = $('hintBtn');
-  hinting = true;
-  btn.classList.add('busy');
-  const snap = {
-    grid: g.grid.slice(), W: g.board.W, H: g.board.H,
-    slots: g.slots.map((q) => (q ? { ...q } : null)), lanes: g.lanes.map((q) => q.map((s) => ({ ...s }))),
-  };
-  const lane = await searchHint(snap, { budgetMs: 3000, rng: mulberry(newSeed()) });
-  hinting = false;
-  btn.classList.remove('busy');
-  if (!g || over || v !== version) return;
-  if (lane === null) { say('No clear path from here. Try undoing a tap or two.', 3600); return; }
-  useHint(lane);
-}
-
 function step(game: Game): void {
   const was = game.stuck;
-  if (tick(game, renderer.bite) || was !== game.stuck) { renderSlots(game); renderMeter(game, over); }
+  if (tick(game, renderer.bite) || was !== game.stuck) { renderSlots(game); renderMeter(game); }
 }
 
 function endBoard(game: Game, st: 'won' | 'stuck'): void {
   over = true;
   save.run = null;
-  renderMeter(game, over);
+  renderMeter(game);
   const ctx = { game, save, replay: () => start(game.meta), undo: doUndo, start, openScenes: showScenes, random: playRandom };
   if (st === 'won') win(ctx); else lose(ctx);
   store(save);
@@ -190,6 +148,22 @@ function loop(now: number): void {
   }
 }
 
+function syncMute(): void {
+  const b = $('muteBtn'), on = save.prefs.sound;
+  b.innerHTML = on ? SPEAKER : MUTED;
+  b.setAttribute('aria-pressed', String(!on));
+  b.setAttribute('aria-label', on ? 'Mute sound' : 'Unmute sound');
+}
+
+function toggleSound(): void {
+  ensureAudio();
+  save.prefs.sound = !save.prefs.sound;
+  setEnabled(save.prefs.sound);
+  store(save);
+  syncMute();
+  if (save.prefs.sound) bite();
+}
+
 function syncSpeed(): void {
   const b = $('speedBtn');
   b.textContent = fast() ? '2×' : '1×';
@@ -200,27 +174,19 @@ export function showScenes(): void {
   ensureAudio();
   openScenes({
     manifest: MANIFEST, scenes: SCENES, cleared: new Set(save.cleared), daily: save.daily,
-    currentId: g && g.meta.kind !== 'random' ? g.meta.id : null, sound: save.prefs.sound,
+    currentId: g && g.meta.kind !== 'random' ? g.meta.id : null,
     band: save.prefs.band, wins: save.wins,
     onBand: (b) => { save.prefs.band = b; store(save); },
     onRandom: playRandom,
     onScene: (id) => start({ kind: 'campaign', id }),
     onDaily: playDaily,
-    onSound: () => {
-      ensureAudio();
-      save.prefs.sound = !save.prefs.sound;
-      setEnabled(save.prefs.sound);
-      store(save);
-      if (save.prefs.sound) bite();
-      return save.prefs.sound;
-    },
   });
 }
 
 function wire(): void {
   $('menuBtn').onclick = showScenes;
   $('undoBtn').onclick = doUndo;
-  $('hintBtn').onclick = () => { void hint(); };
+  $('muteBtn').onclick = toggleSound;
   $('restartBtn').onclick = () => { ensureAudio(); if (g) start(g.meta); };
   $('speedBtn').onclick = () => { save.prefs.fast = !save.prefs.fast; store(save); syncSpeed(); };
   wireSheets();
@@ -239,5 +205,6 @@ export function init(s: SaveV1): void {
   renderer.onChew = bite;
   wire();
   syncSpeed();
+  syncMute();
   requestAnimationFrame(loop);
 }

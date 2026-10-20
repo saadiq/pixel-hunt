@@ -21,8 +21,7 @@ const plural = (n: number, w: string): string => `${n} ${w}${n > 1 ? 's' : ''}`;
 
 function stats(g: Game): string {
   const undos = g.usedUndo ? plural(g.usedUndo, 'undo') : 'no undos';
-  const hints = g.usedHint ? ` · ${plural(g.usedHint, 'hint')}` : '';
-  return `${g.taps} squads sent · ${undos}${hints}.`;
+  return `${g.taps} squads sent · ${undos}.`;
 }
 
 function markCleared(save: SaveV1, id: string): void {

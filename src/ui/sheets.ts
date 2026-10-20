@@ -1,4 +1,4 @@
-// The scenes sheet (bands, daily, random, sound) and the result sheet.
+// The scenes sheet (bands, daily, random) and the result sheet.
 import type { Art, Band, Scene } from '../core/types';
 import { drawThumb } from '../render/thumb';
 import { isUnlocked, nextScene, todayKey } from '../state/progress';
@@ -10,14 +10,12 @@ export interface ScenesCtx {
   cleared: Set<string>;
   daily: string | null;
   currentId: string | null;
-  sound: boolean;
   band: Band;
   wins: Record<Band, number>;
   onScene(id: string): void;
   onDaily(): void;
   onBand(b: Band): void;
   onRandom(b: Band): void;
-  onSound(): boolean; // toggles; returns the new value
 }
 
 export interface ResultButton { label: string; fn: () => void; primary?: boolean; disabled?: boolean }
@@ -64,12 +62,6 @@ function sceneItem(ctx: ScenesCtx, id: string, num: number, next: string): HTMLB
   return b;
 }
 
-function syncSound(on: boolean): void {
-  const b = $('soundBtn');
-  b.setAttribute('aria-pressed', String(on));
-  b.textContent = on ? 'Sound: on' : 'Sound: off';
-}
-
 export function openScenes(ctx: ScenesCtx): void {
   const list = $('levelList');
   list.innerHTML = '';
@@ -91,8 +83,6 @@ export function openScenes(ctx: ScenesCtx): void {
   $('dayStat').textContent = doneToday ? 'Done for today' : 'A new pick each day';
   $('dailyBtn').onclick = () => { closeSheets(); ctx.onDaily(); };
   syncRandom(ctx, ctx.band);
-  syncSound(ctx.sound);
-  $('soundBtn').onclick = () => syncSound(ctx.onSound());
   $('levelsSheet').hidden = false;
 }
 

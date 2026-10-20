@@ -104,7 +104,6 @@ canvas#board{display:block;border-radius:8px}
 .seg button[aria-checked="true"]{background:var(--accent);color:var(--accent-ink)}
 .seg button:disabled{opacity:.5;cursor:default}
 .segNote{font-size:13px!important}
-.lane.hinted{outline:3px solid var(--accent);outline-offset:2px;animation:pulse 1s ease-in-out infinite}
 @keyframes pulse{50%{outline-offset:6px}}
 .icon.busy svg{animation:blink .6s ease-in-out infinite}
 @keyframes blink{50%{opacity:.25}}

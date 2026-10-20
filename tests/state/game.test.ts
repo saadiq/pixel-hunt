@@ -13,7 +13,7 @@ const settle = (g: Game) => { let n = 0; while (tick(g) && n++ < 10000); };
 describe('game', () => {
   test('newGame starts fresh', () => {
     const g = newGame(meta, level, 7);
-    expect(g).toMatchObject({ idle: true, onLine: true, undos: 3, hints: 3, taps: 0, stuck: false });
+    expect(g).toMatchObject({ idle: true, onLine: true, undos: 3, taps: 0, stuck: false });
     expect(g.remaining).toBe(count(g));
     expect(status(g)).toBe('playing');
   });
@@ -126,12 +126,11 @@ describe('game undo and end states', () => {
     expect(g.idle).toBe(false); // the first squad still holds a slot
   });
 
-  test('newGame on the same meta resets undos and hints', () => {
+  test('newGame on the same meta resets undos', () => {
     const g = newGame(meta, level, 7);
     tapLane(g, g.line[0]);
     undo(g);
-    g.hints = 0;
     const h = newGame(meta, level, 8);
-    expect([h.undos, h.hints, h.usedUndo, h.usedHint, h.hist.length]).toEqual([3, 3, 0, 0, 0]);
+    expect([h.undos, h.usedUndo, h.hist.length]).toEqual([3, 0, 0]);
   });
 });
