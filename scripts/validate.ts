@@ -21,19 +21,22 @@ for (const id of ids.length ? ids : MANIFEST) {
     continue;
   }
   const flags: string[] = [];
-  const errs = [...checkStructure(s), ...checkColors(s)];
+  const structure = checkStructure(s);
+  const errs = [...structure, ...checkColors(s)];
   let taps = '-', ms = '-', win = '-';
-  if (!checkStructure(s).length) {
+  if (!structure.length) {
     const d = checkDeals(s, DEALS);
     if (d.failures) errs.push(`${d.failures}/${DEALS} deals failed`);
     taps = String(d.medianTaps);
     ms = d.medianMs.toFixed(1);
     const [tlo, thi] = TARGETS[s.band].taps;
     if (d.medianTaps < tlo || d.medianTaps > thi) flags.push(`WARN taps ${d.medianTaps} outside ${tlo}-${thi}`);
-    const w = estimateWinRate(s, PLAYOUTS);
-    win = w.toFixed(2);
-    const [wlo, whi] = TARGETS[s.band].winRate;
-    if (w < wlo || w > whi) flags.push(`WARN win rate ${win} outside ${wlo}-${whi}`);
+    if (!d.failures) {
+      const w = estimateWinRate(s, PLAYOUTS);
+      win = w.toFixed(2);
+      const [wlo, whi] = TARGETS[s.band].winRate;
+      if (w < wlo || w > whi) flags.push(`WARN win rate ${win} outside ${wlo}-${whi}`);
+    }
   }
   if (errs.length) failed = true;
   const colours = new Set(s.rows.join('')).size;

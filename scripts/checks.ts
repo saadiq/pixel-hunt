@@ -105,9 +105,13 @@ export function estimateWinRate(s: Scene, n: number): number {
   const level = sceneLevel(s), board = parseArt(s);
   let wins = 0;
   for (let seed = 1; seed <= n; seed++) {
-    const d = deal(level, board, seed);
-    const rng = mulberry(seed * 7919 + 1);
-    if (playout(board.grid, board.W, board.H, Array(level.slots).fill(null), d.lanes, rng, null)) wins++;
+    try {
+      const d = deal(level, board, seed);
+      const rng = mulberry(seed * 7919 + 1);
+      if (playout(board.grid, board.W, board.H, Array(level.slots).fill(null), d.lanes, rng, null)) wins++;
+    } catch {
+      // a throwing deal counts as a loss
+    }
   }
   return n ? wins / n : 0;
 }

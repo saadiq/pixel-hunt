@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { checkColors, checkDeals, checkStructure } from '../../scripts/checks';
+import { checkColors, checkDeals, checkStructure, estimateWinRate } from '../../scripts/checks';
 import type { Scene } from '../../src/core/types';
 import { bridge } from '../fixtures/proto';
 
@@ -46,6 +46,13 @@ describe('checkColors', () => {
     chars.forEach((c, i) => { pal[c] = `#${(i * 25).toString(16).padStart(2, '0')}${((i * 90) % 256).toString(16).padStart(2, '0')}00`; });
     const rows = [chars.map((c) => c.repeat(4)).join('')];
     expect(checkColors({ ...base, rows, pal }).some((e) => /too many/i.test(e))).toBe(true);
+  });
+});
+
+describe('estimateWinRate', () => {
+  test('counts a throwing deal as a loss instead of throwing', () => {
+    const broken = { ...base, lanes: 0, rows: ['aaaabbbb'] };
+    expect(estimateWinRate(broken, 5)).toBe(0);
   });
 });
 
