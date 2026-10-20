@@ -3,6 +3,7 @@ export const MANIFEST: string[] = [
   'hot-air-balloon',
   'rubber-duck',
   'goldfish-bowl',
+  'record-player',
   'lighthouse-at-dusk',
   'brooklyn-bridge',
   'birthday-cake',
