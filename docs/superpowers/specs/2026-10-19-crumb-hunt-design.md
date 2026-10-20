@@ -102,9 +102,12 @@ across, drawn as small raised cubes at ~6–7px. So:
 
 | Band   | Grid width (height 36–60) | Slots | Lanes | Squad size | `wait` |
 |--------|---------------------------|-------|-------|------------|--------|
-| Easy   | 40–44 wide                | 5     | 3     | scaled     | ~0.3   |
-| Medium | 46–50 wide                | 4     | 4     | scaled     | ~0.5–0.7 |
-| Hard   | 52–56 wide                | 3–4   | 4–5   | scaled     | ~0.8–0.95 |
+| Easy   | 40–44 wide                | 4–5   | 3     | scaled     | ~0.3   |
+| Medium | 46–50 wide                | 3–4   | 4     | scaled     | ~0.5–0.7 |
+| Hard   | 52–56 wide                | 2–3   | 4–5   | scaled     | ~0.8–0.95 |
+
+Slot counts revised after the spike: slots are the strongest difficulty
+lever. `wait` only matters while slots are mostly empty.
 
 - Cell size may be fractional and goes down to ~6px (56 wide on a 390px
   phone). The track around the board is thin, as in the reference games.
@@ -179,14 +182,12 @@ Mixed across places, animals, objects and moments, with each band roughly
 balanced. The Brooklyn Bridge is redrawn at the larger size. No other
 prototype scenes carry over.
 
-- **Easy:** Hot Air Balloon, Goldfish Bowl, Lighthouse at Dusk, Birthday
-  Candles, Sleeping Fox, Record Player, Desert Cactus at Noon, Paper Boat in
+- **Easy:** Hot Air Balloon, Goldfish Bowl, Lighthouse at Dusk, Rubber Duck, Sleeping Fox, Record Player, Desert Cactus at Noon, Paper Boat in
   the Rain, Toucan, Ice Cream Truck
-- **Medium:** Brooklyn Bridge, Koi Pond, Mount Fuji in Bloom, First Snow at
-  the Bus Stop, Arcade Cabinet, Night Owl, Venice Canal, Campfire Under the
+- **Medium:** Brooklyn Bridge, Koi Pond, Mount Fuji in Bloom, Birthday Cake, Arcade Cabinet, Night Owl, Venice Canal, Campfire Under the
   Stars, Typewriter, Jellyfish
 - **Hard:** Golden Gate in Fog, Coral Reef, Northern Lights over a Cabin,
-  Peacock, Rose Window, Tokyo Street in the Rain, Fireworks over the Harbor,
+  Peacock, Rose Window, Bento Box, Fireworks over the Harbor,
   Chameleon, Hummingbird & Flowers, Santorini Rooftops
 
 Every scene must read as its subject at thumbnail size (64px).
@@ -222,6 +223,24 @@ Every scene must read as its subject at thumbnail size (64px).
 - **Checkpoint:** draw 3 scenes first, one per band (my call: Hot Air
   Balloon, Brooklyn Bridge, Coral Reef). Stop for the user's review, then
   draw the other 27 with that feedback in mind.
+- **Check-in 2 + spike result (2026-10-19):** better, but not loved. A
+  throwaway spike compared cube styles and two busier scenes. The user
+  picked **style B**: soft glossy cubes, where each seam is a darker tone of the
+  cube's own colour, with a top highlight and a soft bottom shade, no dark
+  grout. They loved the **bento** (Hard) and liked the **cake** (Medium)
+  *without* a decorative border: a border that doesn't belong to the subject
+  "chokes" the picture, so scenes get no decorative frames (a bento box's own
+  walls are fine).
+- **What drives difficulty (measured in the spike):** busyness alone does
+  not; *enclosure depth* does (the fewest colour changes from the board edge to
+  a cell), together with the slot count. The cake has 136 regions and wins
+  83%. The bento (average depth 3.1) wins 45% at 3 slots and 29% at 2.
+- **Variety across the 30 (user: "every scene doesn't have to be riddled
+  with complexity, but variety is preferred"):** rotate three layouts:
+  - open subject on a plain background (shallow, mostly Easy)
+  - subject on a patterned background like the prototype's gingham or subway
+    tile (Medium)
+  - boxed or compartmented subjects like the bento (deep, Hard)
 - **Check-in 1 result (2026-10-19):** rejected, because the resolution was
   too low and the scenes didn't look good. This led to the revised grid
   sizes, art direction and SVG pipeline above. The same three scenes get
