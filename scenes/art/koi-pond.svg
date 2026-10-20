@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <metadata>{"id":"koi-pond","name":"Koi Pond","blurb":"Two koi chasing each other round the lily pads.","band":"medium","W":48,"H":48,"slots":3,"lanes":4,"chunk":[66,98],"wait":0.6,"bg":"#2b8fb3"}</metadata>
+  <defs>
+    <pattern id="ripples" width="12" height="10" patternUnits="userSpaceOnUse">
+      <rect x="1" y="3" width="3" height="1" fill="#8fdde0"/>
+      <rect x="4" y="2" width="2" height="1" fill="#8fdde0"/>
+      <rect x="7" y="8" width="3" height="1" fill="#8fdde0"/>
+      <rect x="10" y="7" width="2" height="1" fill="#8fdde0"/>
+    </pattern>
+    <!-- koi seen from above: head up, body curving away to the right -->
+    <path id="koiBody" d="M0,-13 C4.6,-13 5.4,-6 5,-2 C4.6,2 5.6,6 8.6,8.8 L7,10.6 C3,8.2 -1.4,4.6 -4,0 C-5.6,-3 -5,-13 0,-13 Z"/>
+    <path id="koiTail" d="M6.2,8.2 C9,8.6 12,8.4 15,10 C13,11 11.6,11.8 11,12.6 C10.8,13.6 10.6,15 9.6,17.2 C8,14.5 7.6,12 6.2,8.2 Z"/>
+    <g id="koiFins">
+      <path d="M4.4,-6.2 C7,-6.6 8.2,-4.6 8,-3 C6.6,-3.2 5.3,-3.8 4.4,-4.2 Z"/>
+      <path d="M-4.4,-6.2 C-7,-6.6 -8.2,-4.6 -8,-3 C-6.6,-3.2 -5.3,-3.8 -4.4,-4.2 Z"/>
+    </g>
+    <clipPath id="koiClip"><use href="#koiBody"/></clipPath>
+    <!-- lily pad: circle with a notch -->
+    <path id="pad" d="M0,0 L5.5,-2.5 A6,6 0 1,1 2.5,-5.5 Z"/>
+    <clipPath id="padClip"><use href="#pad"/></clipPath>
+    <g id="lilyPad">
+      <use href="#pad" fill="#1e2633" stroke="#1e2633" stroke-width="2.6"/>
+      <use href="#pad" fill="#63c74d"/>
+      <g clip-path="url(#padClip)"><circle cx="-2.5" cy="3.5" r="6" fill="#2e8b4a"/></g>
+    </g>
+    <g id="koiOutline" fill="#1e2633" stroke="#1e2633" stroke-width="2.6" stroke-linejoin="round">
+      <use href="#koiTail"/><use href="#koiFins"/><use href="#koiBody"/>
+    </g>
+  </defs>
+  <!-- water -->
+  <rect width="48" height="48" fill="#2b8fb3"/>
+  <rect width="48" height="48" fill="url(#ripples)"/>
+
+  <!-- lily pads -->
+  <use href="#lilyPad" transform="translate(6 42) rotate(10)"/>
+  <use href="#lilyPad" transform="translate(41 8) rotate(160)"/>
+  <use href="#lilyPad" transform="translate(42 41) rotate(250) scale(0.72)"/>
+  <use href="#lilyPad" transform="translate(6 6) rotate(80) scale(0.62)"/>
+
+  <!-- lotus flower on the top-right pad -->
+  <g transform="translate(40.5 9.5) scale(1.35)" fill="#ff8fc0" stroke="#1e2633" stroke-width="0.9" stroke-linejoin="round">
+    <path d="M6.5,-1.5 C5,2.5 2,3.5 0,2.5 C0,-1 3,-3 6.5,-1.5 Z"/>
+    <path d="M-6.5,-1.5 C-5,2.5 -2,3.5 0,2.5 C0,-1 -3,-3 -6.5,-1.5 Z"/>
+    <path d="M0,-6.5 C3.2,-3.5 3.2,1 0,2.5 C-3.2,1 -3.2,-3.5 0,-6.5 Z"/>
+  </g>
+
+  <!-- kohaku koi: white with red-orange patches, swimming up the left side -->
+  <g transform="translate(13 23) rotate(18)">
+    <use href="#koiOutline"/>
+    <use href="#koiTail" fill="#ffffff"/>
+    <use href="#koiFins" fill="#ffffff"/>
+    <use href="#koiBody" fill="#ffffff"/>
+    <g clip-path="url(#koiClip)" fill="#ff6a2b">
+      <ellipse cx="0" cy="-10" rx="3.6" ry="2.8"/>
+      <ellipse cx="-1.5" cy="-1.5" rx="4" ry="3.4"/>
+      <ellipse cx="4.5" cy="5.5" rx="2.6" ry="2.4"/>
+    </g>
+  </g>
+
+  <!-- golden koi with orange patches, swimming down the right side -->
+  <g transform="translate(35 26) rotate(198)">
+    <use href="#koiOutline"/>
+    <use href="#koiTail" fill="#ff6a2b"/>
+    <use href="#koiFins" fill="#ff6a2b"/>
+    <use href="#koiBody" fill="#ffc23d"/>
+    <g clip-path="url(#koiClip)" fill="#ff6a2b">
+      <ellipse cx="2" cy="-3" rx="3.4" ry="3"/>
+      <ellipse cx="2" cy="6" rx="2.8" ry="2.4"/>
+    </g>
+    <g clip-path="url(#koiClip)" fill="#ffffff">
+      <ellipse cx="0" cy="-11" rx="3.2" ry="2.2"/>
+    </g>
+  </g>
+  <!-- eyes, on the cell grid so they survive rasterising -->
+  <g fill="#1e2633">
+    <rect x="14" y="12" width="1" height="2"/><rect x="18" y="14" width="1" height="2"/>
+    <rect x="33" y="35" width="1" height="2"/><rect x="29" y="33" width="1" height="2"/>
+  </g>
+</svg>

@@ -12,6 +12,7 @@ export const MANIFEST: string[] = [
   'ice-cream-truck',
   'brooklyn-bridge',
   'birthday-cake',
+  'koi-pond',
   'coral-reef',
   'bento-box',
 ];
