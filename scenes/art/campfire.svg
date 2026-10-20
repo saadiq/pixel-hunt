@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 46" width="50" height="46">
+  <metadata>{"id":"campfire","name":"Campfire Under the Stars","blurb":"Marshmallows, ghost stories and a sky full of stars.","band":"medium","W":50,"H":46,"slots":3,"lanes":4,"chunk":[66,98],"wait":0.6,"bg":"#3b2c6e"}</metadata>
+  <defs>
+    <pattern id="stars" x="1" y="0" width="10" height="9" patternUnits="userSpaceOnUse">
+      <rect x="2" y="2" width="1" height="1" fill="#fff1b0"/>
+      <rect x="7" y="5" width="1" height="3" fill="#fff1b0"/>
+      <rect x="6" y="6" width="3" height="1" fill="#fff1b0"/>
+    </pattern>
+    <!-- a two-tier pine, trunk at the origin -->
+    <path id="pine" d="M0,-20 L5,-11 L3,-11 L7,-3 L-7,-3 L-3,-11 L-5,-11 Z"/>
+  </defs>
+  <!-- night sky with a crescent moon -->
+  <rect width="50" height="46" fill="#3b2c6e"/>
+  <rect width="50" height="30" fill="url(#stars)"/>
+  <circle cx="23" cy="8" r="5" fill="#fff1b0"/>
+  <circle cx="25.5" cy="6.5" r="4.4" fill="#3b2c6e"/>
+
+  <!-- pine forest behind the clearing -->
+  <g fill="#1f5a5a">
+    <use href="#pine" transform="translate(3 33) scale(1.1)"/>
+    <use href="#pine" transform="translate(17 33) scale(0.8)"/>
+    <use href="#pine" transform="translate(45 33) scale(1.2)"/>
+    <use href="#pine" transform="translate(35 33) scale(0.85)"/>
+    <rect y="29" width="50" height="17"/>
+  </g>
+  <!-- clearing -->
+  <path d="M-1,39 C8,34.5 40,34 51,38 L51,47 L-1,47 Z" fill="#8a5a3c" stroke="#1d1630" stroke-width="1.2"/>
+  <g fill="#1f5a5a"><rect x="3" y="42" width="1" height="2"/><rect x="4" y="43" width="2" height="1"/><rect x="46" y="41" width="1" height="2"/><rect x="47" y="42" width="2" height="1"/><rect x="18" y="44" width="2" height="1"/></g>
+
+  <!-- tent with a warm glow inside -->
+  <path d="M1.5,38.5 L11,19 L20.5,38.5 Z" fill="#ff8a3d" stroke="#1d1630" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M11,19.5 L20,38 L17,38 Z" fill="#e8433a"/>
+  <path d="M11,26 L6,38.5 L16,38.5 Z" fill="#1d1630"/>
+  <path d="M11,29 L8,38.5 L14,38.5 Z" fill="#ffd23f"/>
+  <path d="M11,19 L11,15.5" stroke="#1d1630" stroke-width="1.2"/>
+  <rect x="11.5" y="15.5" width="3" height="2" fill="#e8433a"/>
+
+  <!-- the fire: crossed logs, flames, ring of stones -->
+  <g stroke="#1d1630" stroke-width="1" stroke-linejoin="round" fill="#8a5a3c">
+    <path d="M25,40 L41,34.5 L42,37 L26,42.5 Z"/>
+    <path d="M43,40 L27,34.5 L26,37 L42,42.5 Z"/>
+  </g>
+  <path d="M34,15 C38,20 42.5,25.5 42,31 C41.5,36 38,38.5 34,38.5 C30,38.5 26.5,36 26,31 C25.5,27 28.5,24.5 29.5,21.5 C30.8,24.5 31.8,25.5 33,25.5 C33,21.5 33.5,18.5 34,15 Z" fill="#e8433a" stroke="#1d1630" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M34,21.5 C37.5,25.5 39.2,29 38.8,32.5 C38.4,35.5 36.2,37.2 34,37.2 C31.5,37.2 29.3,35.5 29.3,32.5 C29.3,30.5 30.8,29 31.3,27.5 C32.3,29 33.3,29.5 34,29.5 C34,27 34,24.5 34,21.5 Z" fill="#ff8a3d"/>
+  <path d="M34,28 C36,30.5 36.6,32.5 36.1,34 C35.6,35.6 34.8,36.2 34,36.2 C33,36.2 31.9,35.6 31.9,34 C31.9,32 33,30.5 34,28 Z" fill="#ffd23f"/>
+  <g fill="#a8b3c2" stroke="#1d1630" stroke-width="1">
+    <ellipse cx="24" cy="42" rx="2.4" ry="1.8"/><ellipse cx="34" cy="43.8" rx="2.4" ry="1.8"/><ellipse cx="44" cy="42" rx="2.4" ry="1.8"/>
+    <ellipse cx="29" cy="43.6" rx="2" ry="1.5"/><ellipse cx="39" cy="43.6" rx="2" ry="1.5"/>
+  </g>
+  <!-- sparks drifting up, fireflies in the trees -->
+  <g fill="#ffd23f">
+    <rect x="2" y="25" width="1" height="1"/><rect x="6" y="30" width="1" height="1"/><rect x="17" y="27" width="1" height="1"/>
+    <rect x="21" y="32" width="1" height="1"/><rect x="45" y="24" width="1" height="1"/><rect x="47" y="31" width="1" height="1"/>
+    <rect x="44" y="35" width="1" height="1"/><rect x="24" y="30" width="1" height="1"/>
+    <rect x="30" y="13" width="1" height="1"/><rect x="38" y="11" width="1" height="1"/><rect x="33" y="8" width="1" height="1"/><rect x="41" y="16" width="1" height="1"/>
+  </g>
+</svg>

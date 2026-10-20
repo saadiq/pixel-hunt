@@ -19,5 +19,6 @@ export const MANIFEST: string[] = [
   'night-owl',
   'coral-reef',
   'arcade-cabinet',
+  'campfire',
   'bento-box',
 ];
