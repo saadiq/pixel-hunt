@@ -8,7 +8,7 @@ export const sleepingFox: Scene = {
   band: "medium",
   slots: 3,
   lanes: 4,
-  chunk: [44, 62],
+  chunk: [23, 33],
   wait: 0.8,
   waitSlack: 1,
   pal: {

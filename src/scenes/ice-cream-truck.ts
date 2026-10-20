@@ -8,7 +8,7 @@ export const iceCreamTruck: Scene = {
   band: "medium",
   slots: 4,
   lanes: 4,
-  chunk: [46, 66],
+  chunk: [26, 37],
   wait: 0.8,
   waitSlack: 1,
   pal: {

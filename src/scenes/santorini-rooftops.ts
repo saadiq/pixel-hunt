@@ -8,7 +8,7 @@ export const santoriniRooftops: Scene = {
   band: "hard",
   slots: 3,
   lanes: 5,
-  chunk: [80, 112],
+  chunk: [25, 35],
   wait: 0.8,
   waitSlack: 1,
   pal: {

@@ -8,7 +8,7 @@ export const chameleon: Scene = {
   band: "hard",
   slots: 3,
   lanes: 5,
-  chunk: [90, 126],
+  chunk: [26, 37],
   wait: 0.8,
   waitSlack: 1,
   pal: {

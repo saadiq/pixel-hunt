@@ -8,7 +8,7 @@ export const birthdayCake: Scene = {
   band: "medium",
   slots: 3,
   lanes: 5,
-  chunk: [60, 90],
+  chunk: [33, 48],
   wait: 0.8,
   waitSlack: 1,
   pal: {

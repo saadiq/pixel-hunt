@@ -8,7 +8,7 @@ export const lighthouseAtDusk: Scene = {
   band: "medium",
   slots: 3,
   lanes: 5,
-  chunk: [46, 66],
+  chunk: [31, 46],
   wait: 0.8,
   waitSlack: 1,
   pal: {

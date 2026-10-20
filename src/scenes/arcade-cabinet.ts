@@ -8,7 +8,7 @@ export const arcadeCabinet: Scene = {
   band: "hard",
   slots: 3,
   lanes: 5,
-  chunk: [66, 98],
+  chunk: [22, 32],
   wait: 0.8,
   waitSlack: 1,
   pal: {

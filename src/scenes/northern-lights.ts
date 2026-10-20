@@ -8,7 +8,7 @@ export const northernLights: Scene = {
   band: "hard",
   slots: 3,
   lanes: 5,
-  chunk: [80, 112],
+  chunk: [28, 39],
   wait: 0.8,
   waitSlack: 1,
   pal: {

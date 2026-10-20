@@ -8,7 +8,7 @@ export const toucan: Scene = {
   band: "medium",
   slots: 3,
   lanes: 5,
-  chunk: [46, 66],
+  chunk: [29, 42],
   wait: 0.7,
   waitSlack: 1,
   pal: {

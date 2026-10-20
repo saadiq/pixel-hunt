@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="54" height="54">
-  <metadata>{"id":"rose-window","name":"Rose Window","blurb":"Sunlight pouring through a cathedral's stained glass.","band":"hard","W":54,"H":54,"slots":3,"lanes":5,"chunk":[70,100],"wait":0.8,"waitSlack":1,"bg":"#dcc9a6"}</metadata>
+  <metadata>{"id":"rose-window","name":"Rose Window","blurb":"Sunlight pouring through a cathedral's stained glass.","band":"hard","W":54,"H":54,"slots":3,"lanes":5,"chunk":[25,35],"wait":0.8,"waitSlack":1,"bg":"#dcc9a6"}</metadata>
   <defs>
     <!-- one 30-degree wedge of the outer ring, pointing up -->
     <path id="wedge" d="M27,27 L21.15,5.17 A22.6,22.6 0 0 1 32.85,5.17 Z"/>

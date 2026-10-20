@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-  <metadata>{"id":"koi-pond","name":"Koi Pond","blurb":"Two koi chasing each other round the lily pads.","band":"hard","W":48,"H":48,"slots":3,"lanes":5,"chunk":[66,98],"wait":0.8,"waitSlack":1,"bg":"#2b8fb3"}</metadata>
+  <metadata>{"id":"koi-pond","name":"Koi Pond","blurb":"Two koi chasing each other round the lily pads.","band":"hard","W":48,"H":48,"slots":3,"lanes":5,"chunk":[21,32],"wait":0.8,"waitSlack":1,"bg":"#2b8fb3"}</metadata>
   <defs>
     <pattern id="ripples" width="12" height="10" patternUnits="userSpaceOnUse">
       <rect x="1" y="3" width="3" height="1" fill="#8fdde0"/>

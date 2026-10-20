@@ -8,7 +8,7 @@ export const peacock: Scene = {
   band: "hard",
   slots: 3,
   lanes: 5,
-  chunk: [82, 114],
+  chunk: [27, 36],
   wait: 0.8,
   waitSlack: 1,
   pal: {

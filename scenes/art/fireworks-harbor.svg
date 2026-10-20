@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 58" width="56" height="58">
-  <metadata>{"id":"fireworks-harbor","name":"Fireworks over the Harbor","blurb":"A snapshot of the big night, pinned to the corkboard.","band":"hard","W":56,"H":58,"slots":3,"lanes":5,"chunk":[80,112],"wait":0.8,"waitSlack":1,"bg":"#c98f5a"}</metadata>
+  <metadata>{"id":"fireworks-harbor","name":"Fireworks over the Harbor","blurb":"A snapshot of the big night, pinned to the corkboard.","band":"hard","W":56,"H":58,"slots":3,"lanes":5,"chunk":[26,37],"wait":0.8,"waitSlack":1,"bg":"#c98f5a"}</metadata>
   <defs>
     <clipPath id="photo"><rect x="7" y="7" width="42" height="36"/></clipPath>
     <pattern id="cork" width="5" height="5" patternUnits="userSpaceOnUse">

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 56" width="54" height="56">
-  <metadata>{"id":"santorini-rooftops","name":"Santorini Rooftops","blurb":"Blue domes stacked above the sea at sunset.","band":"hard","W":54,"H":56,"slots":3,"lanes":5,"chunk":[80,112],"wait":0.8,"waitSlack":1,"bg":"#2a62c9"}</metadata>
+  <metadata>{"id":"santorini-rooftops","name":"Santorini Rooftops","blurb":"Blue domes stacked above the sea at sunset.","band":"hard","W":54,"H":56,"slots":3,"lanes":5,"chunk":[25,35],"wait":0.8,"waitSlack":1,"bg":"#2a62c9"}</metadata>
   <defs>
     <pattern id="tiles" width="4" height="4" patternUnits="userSpaceOnUse">
       <rect x="1" y="1" width="2" height="2" fill="#ffffff"/>

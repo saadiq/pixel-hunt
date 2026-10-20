@@ -8,7 +8,7 @@ export const goldfishBowl: Scene = {
   band: "medium",
   slots: 3,
   lanes: 4,
-  chunk: [46, 66],
+  chunk: [26, 38],
   wait: 0.8,
   waitSlack: 1,
   pal: {

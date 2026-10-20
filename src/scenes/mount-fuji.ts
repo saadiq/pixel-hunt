@@ -8,7 +8,7 @@ export const mountFuji: Scene = {
   band: "hard",
   slots: 3,
   lanes: 5,
-  chunk: [60, 90],
+  chunk: [17, 25],
   wait: 0.9,
   waitSlack: 1,
   pal: {

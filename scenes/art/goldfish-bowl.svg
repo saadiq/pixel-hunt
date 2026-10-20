@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 44" width="42" height="44">
-  <metadata>{"id":"goldfish-bowl","name":"Goldfish Bowl","blurb":"Round and round, one bubble at a time.","band":"medium","W":42,"H":44,"slots":3,"lanes":4,"chunk":[46,66],"wait":0.8,"waitSlack":1,"bg":"#ffd6e0"}</metadata>
+  <metadata>{"id":"goldfish-bowl","name":"Goldfish Bowl","blurb":"Round and round, one bubble at a time.","band":"medium","W":42,"H":44,"slots":3,"lanes":4,"chunk":[26,38],"wait":0.8,"waitSlack":1,"bg":"#ffd6e0"}</metadata>
   <defs>
     <path id="bowl" d="M12.6,8 A18.5,18.5 0 0,0 13.7,41.5 L28.3,41.5 A18.5,18.5 0 0,0 29.4,8 Z"/>
     <clipPath id="inside"><use href="#bowl"/></clipPath>

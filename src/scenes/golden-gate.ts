@@ -8,7 +8,7 @@ export const goldenGate: Scene = {
   band: "hard",
   slots: 2,
   lanes: 5,
-  chunk: [100, 140],
+  chunk: [26, 37],
   wait: 0.9,
   waitSlack: 1,
   pal: {

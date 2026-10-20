@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 56" width="54" height="56">
-  <metadata>{"id":"golden-gate","name":"Golden Gate in Fog","blurb":"The towers peek out of the fog, on a postage stamp.","band":"hard","W":54,"H":56,"slots":2,"lanes":5,"chunk":[100,140],"wait":0.9,"waitSlack":1,"bg":"#d9b48a"}</metadata>
+  <metadata>{"id":"golden-gate","name":"Golden Gate in Fog","blurb":"The towers peek out of the fog, on a postage stamp.","band":"hard","W":54,"H":56,"slots":2,"lanes":5,"chunk":[26,37],"wait":0.9,"waitSlack":1,"bg":"#d9b48a"}</metadata>
   <defs>
     <clipPath id="pic"><rect x="6" y="6" width="42" height="44"/></clipPath>
     <pattern id="holesH" x="0.5" y="0" width="3" height="56" patternUnits="userSpaceOnUse">

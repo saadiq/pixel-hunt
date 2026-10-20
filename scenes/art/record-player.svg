@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 46" width="44" height="46">
-  <metadata>{"id":"record-player","name":"Record Player","blurb":"Drop the needle on a favourite song.","band":"medium","W":44,"H":46,"slots":3,"lanes":4,"chunk":[46,66],"wait":0.8,"waitSlack":1,"bg":"#ffc94a"}</metadata>
+  <metadata>{"id":"record-player","name":"Record Player","blurb":"Drop the needle on a favourite song.","band":"medium","W":44,"H":46,"slots":3,"lanes":4,"chunk":[27,39],"wait":0.8,"waitSlack":1,"bg":"#ffc94a"}</metadata>
   <defs>
     <pattern id="dots" width="8" height="8" patternUnits="userSpaceOnUse">
       <rect x="1" y="1" width="2" height="2" fill="#ffffff"/>

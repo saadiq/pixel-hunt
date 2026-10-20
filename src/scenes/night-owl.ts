@@ -8,7 +8,7 @@ export const nightOwl: Scene = {
   band: "medium",
   slots: 3,
   lanes: 4,
-  chunk: [66, 98],
+  chunk: [34, 50],
   wait: 0.8,
   waitSlack: 1,
   pal: {

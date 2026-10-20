@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-  <metadata>{"id":"coral-reef","name":"Coral Reef","blurb":"A clownfish peeking out of its anemone, safe in its tank.","band":"medium","W":48,"H":48,"slots":3,"lanes":4,"chunk":[60,95],"wait":0.8,"waitSlack":1,"bg":"#9fe0f7"}</metadata>
+  <metadata>{"id":"coral-reef","name":"Coral Reef","blurb":"A clownfish peeking out of its anemone, safe in its tank.","band":"medium","W":48,"H":48,"slots":3,"lanes":4,"chunk":[32,50],"wait":0.8,"waitSlack":1,"bg":"#9fe0f7"}</metadata>
   <defs>
     <path id="body" d="M6,23 C6,14 15,9 26,9 C36,9 42,14 45,19 L45,27 C42,32 36,35 26,35 C15,35 6,31 6,23 Z"/>
     <clipPath id="bodyClip"><use href="#body"/></clipPath>
