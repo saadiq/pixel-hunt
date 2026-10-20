@@ -1,0 +1,104 @@
+import { describe, expect, test } from 'bun:test';
+import { parseArt, sceneLevel } from '../../src/core/board';
+import { deal, replayLine } from '../../src/core/deal';
+import type { Level } from '../../src/core/types';
+import { bridge, d20, upscale } from '../fixtures/proto';
+
+const SEEDS = Array.from({ length: 200 }, (_, i) => i + 1);
+const SLOW = 30_000; // 200-seed sweeps take a few seconds; bun's default timeout is 5s
+
+describe.each([
+  ['bridge', sceneLevel(bridge)],
+  ['d20', sceneLevel(d20)],
+])('deal on %s', (_name, level: Level) => {
+  const board = parseArt(level);
+
+  test('replaying the recorded line clears the board for seeds 1..200', () => {
+    const failed = SEEDS.filter((s) => !replayLine(level, board, deal(level, board, s)));
+    expect(failed).toEqual([]);
+  }, SLOW);
+
+  test('the same seed deals identical lanes and line', () => {
+    expect(deal(level, board, 7)).toEqual(deal(level, board, 7));
+  });
+
+  test('line has one entry per squad and matches lane lengths', () => {
+    const d = deal(level, board, 3);
+    const squads = d.lanes.reduce((a, l) => a + l.length, 0);
+    expect(d.line.length).toBe(squads);
+    d.lanes.forEach((l, k) => expect(d.line.filter((x) => x === k).length).toBe(l.length));
+  });
+
+  test('caps per colour sum to that colour cell count', () => {
+    for (const s of [1, 2, 3, 50, 199]) {
+      const d = deal(level, board, s);
+      const caps = board.colors.map(() => 0);
+      for (const lane of d.lanes) for (const sq of lane) {
+        caps[sq.color] += sq.cap;
+        expect(sq.total).toBe(sq.cap);
+      }
+      const cells = board.colors.map((_, c) => board.grid.filter((v) => v === c).length);
+      expect(caps).toEqual(cells);
+    }
+  });
+
+  test('deal does not mutate the board grid', () => {
+    const before = board.grid.slice();
+    deal(level, board, 11);
+    expect(board.grid).toEqual(before);
+  });
+});
+
+describe('deal under hostile params', () => {
+  test('wait 0.99 with 3 slots never throws and still solves', () => {
+    for (const scene of [bridge, d20]) {
+      const level: Level = { ...sceneLevel(scene), wait: 0.99, slots: 3 };
+      const board = parseArt(level);
+      for (const s of SEEDS) {
+        const d = deal(level, board, s);
+        expect(replayLine(level, board, d)).toBe(true);
+      }
+    }
+  }, SLOW);
+
+  test('a single slot still deals a solvable line', () => {
+    const level: Level = { ...sceneLevel(d20), wait: 0.99, slots: 1 };
+    const board = parseArt(level);
+    for (const s of [1, 2, 3, 4, 5]) expect(replayLine(level, board, deal(level, board, s))).toBe(true);
+  });
+});
+
+describe('replayLine', () => {
+  test('an invalid line fails rather than throwing', () => {
+    const level = sceneLevel(d20);
+    const board = parseArt(level);
+    const d = deal(level, board, 1);
+    const bad = d.line.map(() => d.lanes.length); // lane index out of range
+    expect(replayLine(level, board, { lanes: d.lanes, line: bad })).toBe(false);
+  });
+
+  test('replay does not consume the deal lanes', () => {
+    const level = sceneLevel(bridge);
+    const board = parseArt(level);
+    const d = deal(level, board, 5);
+    const copy = JSON.parse(JSON.stringify(d));
+    replayLine(level, board, d);
+    expect(d).toEqual(copy);
+  });
+});
+
+describe('perf', () => {
+  test('median deal on a 40-wide bridge is under 60ms', () => {
+    const level: Level = { ...sceneLevel(bridge), ...upscale(bridge, 40) };
+    const board = parseArt(level);
+    const times: number[] = [];
+    for (let s = 1; s <= 20; s++) {
+      const t0 = performance.now();
+      deal(level, board, s);
+      times.push(performance.now() - t0);
+    }
+    times.sort((a, b) => a - b);
+    const median = (times[9] + times[10]) / 2;
+    expect(median).toBeLessThan(60);
+  });
+});
