@@ -1,4 +1,4 @@
-// Dev-only scene preview: every manifest scene at 8px/cell, as a 64px thumb, with validator stats.
+// Dev-only scene preview: every manifest scene as raised cubes at 10px/cell and as a 64px thumb, with validator stats.
 import { checkColors, checkDeals, checkStructure } from '../scripts/checks';
 import { TARGETS } from '../scripts/targets';
 import { drawThumb } from './render/thumb';
@@ -42,7 +42,7 @@ function card(id: string): HTMLElement {
   box.append(el('h2', '', `${MANIFEST.indexOf(id) + 1}. ${s.name} (${s.id})`), el('p', 'blurb', s.blurb));
   const art = el('div', 'art');
   const full = el('canvas'), thumb = el('canvas');
-  drawThumb(full, s, (s.rows[0]?.length ?? 0) * 8);
+  drawThumb(full, s, (s.rows[0]?.length ?? 0) * 10);
   drawThumb(thumb, s, 64);
   art.append(full, thumb);
   const out = el('div', 'stats', '');
