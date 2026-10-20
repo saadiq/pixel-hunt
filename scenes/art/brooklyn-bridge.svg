@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <metadata>{"id":"brooklyn-bridge","name":"Brooklyn Bridge","blurb":"The old stone tower glowing as the sun goes down.","band":"medium","W":48,"H":48,"slots":4,"lanes":4,"chunk":[50,80],"wait":0.6,"bg":"#6b4fa0"}</metadata>
+  <defs>
+    <!-- pointed (gothic) arches, 5 cells inside -->
+    <path id="arches" d="M6.5,37 V17 A8,8 0 0 1 9.5,9 A8,8 0 0 1 12.5,17 V37 Z M17.5,37 V17 A8,8 0 0 1 20.5,9 A8,8 0 0 1 23.5,17 V37 Z"/>
+    <clipPath id="archClip"><use href="#arches"/></clipPath>
+    <g id="sky">
+      <rect width="48" height="48" fill="#6b4fa0"/>
+      <rect y="11" width="48" height="9" fill="#f07aa0"/>
+      <rect y="20" width="48" height="16" fill="#ffb35c"/>
+      <circle cx="41" cy="24" r="6" fill="#ffe08a"/>
+    </g>
+    <g id="deck">
+      <rect x="0" y="30" width="48" height="3" fill="#2a1f33"/>
+      <rect x="0" y="31" width="48" height="1" fill="#a87f5c"/>
+    </g>
+  </defs>
+  <use href="#sky"/>
+  <!-- first stars -->
+  <g fill="#ffe08a">
+    <rect x="33" y="3" width="1" height="1"/>
+    <rect x="43" y="2" width="1" height="1"/>
+    <rect x="39" y="7" width="1" height="1"/>
+    <rect x="46" y="9" width="1" height="1"/>
+  </g>
+  <!-- water with glints -->
+  <rect y="36" width="48" height="12" fill="#2f4f8f"/>
+  <rect x="34" y="38" width="10" height="1" fill="#ffe08a"/>
+  <rect x="36" y="41" width="6" height="1" fill="#ffb35c"/>
+  <rect x="31" y="44" width="5" height="1" fill="#f07aa0"/>
+  <rect x="40" y="46" width="4" height="1" fill="#ffb35c"/>
+  <!-- main cable sagging away from the tower, with vertical suspenders -->
+  <g fill="none" stroke="#2a1f33">
+    <path d="M27,5 Q32,21 49,24" stroke-width="1.7"/>
+    <path d="M2,4.5 Q0.5,9 -1,11" stroke-width="1.8"/>
+  </g>
+  <g fill="#2a1f33">
+    <rect x="31" y="15" width="1" height="15"/>
+    <rect x="34" y="18" width="1" height="12"/>
+    <rect x="37" y="20" width="1" height="10"/>
+    <rect x="40" y="21" width="1" height="9"/>
+    <rect x="43" y="22" width="1" height="8"/>
+    <rect x="46" y="23" width="1" height="7"/>
+  </g>
+  <use href="#deck"/>
+  <!-- tower: 2-cell outline, a shade band on the right of each pier -->
+  <rect x="2" y="2" width="26" height="46" fill="#2a1f33"/>
+  <rect x="4" y="4" width="22" height="44" fill="#d8b48a"/>
+  <rect x="5" y="8" width="1" height="40" fill="#a87f5c"/>
+  <rect x="16" y="8" width="1" height="40" fill="#a87f5c"/>
+  <rect x="25" y="4" width="1" height="44" fill="#a87f5c"/>
+  <rect x="4" y="6" width="22" height="1" fill="#a87f5c"/>
+  <rect x="4" y="7" width="22" height="1" fill="#2a1f33"/>
+  <!-- arches: sky and deck seen through them -->
+  <g clip-path="url(#archClip)">
+    <use href="#sky"/>
+    <use href="#deck"/>
+    <rect y="36" width="48" height="1" fill="#2f4f8f"/>
+  </g>
+  <use href="#arches" fill="none" stroke="#2a1f33" stroke-width="1"/>
+  <!-- stone courses -->
+  <rect x="4" y="37" width="22" height="1" fill="#2a1f33"/>
+  <rect x="4" y="42" width="22" height="1" fill="#2a1f33"/>
+</svg>
