@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 44" width="42" height="44">
+  <metadata>{"id":"hot-air-balloon","name":"Hot Air Balloon","blurb":"Drifting up through a bright morning sky.","band":"easy","W":42,"H":44,"slots":5,"lanes":3,"chunk":[46,66],"wait":0.3,"bg":"#8fd3f5"}</metadata>
+  <defs>
+    <path id="envelope" d="M21,1.5 C31.5,1.5 39,8.5 39,17 C39,23 35,26.5 30.5,29.5 L28.5,31.5 L13.5,31.5 L11.5,29.5 C7,26.5 3,23 3,17 C3,8.5 10.5,1.5 21,1.5 Z"/>
+    <clipPath id="env"><use href="#envelope"/></clipPath>
+    <clipPath id="shade">
+      <path clip-rule="evenodd" d="M0,0 H42 V44 H0 Z M0,15 a16.5,16.5 0 1,0 33,0 a16.5,16.5 0 1,0 -33,0 Z"/>
+    </clipPath>
+  </defs>
+  <rect width="42" height="44" fill="#8fd3f5"/>
+  <!-- clouds -->
+  <g fill="#ffffff">
+    <ellipse cx="3" cy="6" rx="6" ry="2.6"/>
+    <ellipse cx="38" cy="37" rx="7" ry="3"/>
+    <ellipse cx="35" cy="40.5" rx="7" ry="2.8"/>
+    <ellipse cx="4" cy="39" rx="7" ry="3"/>
+    <ellipse cx="8" cy="41.5" rx="6" ry="2.5"/>
+  </g>
+  <!-- envelope: lens-shaped gores, a darker band on the right -->
+  <g clip-path="url(#env)">
+    <rect width="42" height="44" fill="#e8433a"/>
+    <ellipse cx="21" cy="16.5" rx="15" ry="15.5" fill="#ffd23f"/>
+    <ellipse cx="21" cy="16.5" rx="10" ry="15.5" fill="#e8433a"/>
+    <ellipse cx="21" cy="16.5" rx="4.5" ry="15.5" fill="#ffd23f"/>
+    <g clip-path="url(#shade)">
+      <rect width="42" height="44" fill="#b52b35"/>
+      <ellipse cx="21" cy="16.5" rx="15" ry="15.5" fill="#f39c2c"/>
+      <ellipse cx="21" cy="16.5" rx="10" ry="15.5" fill="#b52b35"/>
+      <ellipse cx="21" cy="16.5" rx="4.5" ry="15.5" fill="#f39c2c"/>
+    </g>
+    <ellipse cx="9.5" cy="10" rx="1.5" ry="3.2" fill="#ffffff" transform="rotate(35 9.5 10)"/>
+  </g>
+  <use href="#envelope" fill="none" stroke="#2a1f33" stroke-width="1.6" stroke-linejoin="round"/>
+  <!-- skirt, ropes and basket, drawn on whole cells -->
+  <rect x="13" y="30" width="16" height="4" fill="#2a1f33"/>
+  <rect x="14" y="31" width="14" height="2" fill="#ffd23f"/>
+  <rect x="15" y="34" width="1" height="2" fill="#2a1f33"/>
+  <rect x="26" y="34" width="1" height="2" fill="#2a1f33"/>
+  <rect x="14" y="36" width="14" height="7" fill="#2a1f33"/>
+  <rect x="15" y="37" width="12" height="2" fill="#f39c2c"/>
+  <rect x="15" y="40" width="12" height="2" fill="#9a5b2e"/>
+</svg>
