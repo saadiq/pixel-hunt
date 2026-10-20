@@ -1,4 +1,4 @@
-// The scenes sheet (bands, daily, random placeholder, sound) and the result sheet.
+// The scenes sheet (bands, daily, random, sound) and the result sheet.
 import type { Art, Band, Scene } from '../core/types';
 import { drawThumb } from '../render/thumb';
 import { isUnlocked, nextScene, todayKey } from '../state/progress';
@@ -11,14 +11,33 @@ export interface ScenesCtx {
   daily: string | null;
   currentId: string | null;
   sound: boolean;
+  band: Band;
+  wins: Record<Band, number>;
   onScene(id: string): void;
   onDaily(): void;
+  onBand(b: Band): void;
+  onRandom(b: Band): void;
   onSound(): boolean; // toggles; returns the new value
 }
 
 export interface ResultButton { label: string; fn: () => void; primary?: boolean; disabled?: boolean }
 
 const BANDS: [Band, string][] = [['easy', 'Easy'], ['medium', 'Medium'], ['hard', 'Hard']];
+const BAND_NOTE: Record<Band, string> = {
+  easy: 'Roomy: 5 holding slots, 3 lanes, a gentle wait.',
+  medium: 'Balanced: 4 holding slots, 4 lanes.',
+  hard: 'Tight: 3 holding slots and a long wait.',
+};
+
+function syncRandom(ctx: ScenesCtx, band: Band): void {
+  document.querySelectorAll<HTMLButtonElement>('#diffSeg button').forEach((b) => {
+    b.setAttribute('aria-checked', String(b.dataset.d === band));
+    b.onclick = () => { ctx.onBand(b.dataset.d as Band); syncRandom(ctx, b.dataset.d as Band); };
+  });
+  $('diffNote').textContent = BAND_NOTE[band];
+  $('endStat').textContent = `${ctx.wins[band]} cleared`;
+  $('randBtn').onclick = () => { closeSheets(); ctx.onRandom(band); };
+}
 
 function sceneItem(ctx: ScenesCtx, id: string, num: number, next: string): HTMLButtonElement {
   const s = ctx.scenes[id];
@@ -71,6 +90,7 @@ export function openScenes(ctx: ScenesCtx): void {
   $('dailyBtn').textContent = doneToday ? "Today's scene ✓" : "Today's scene";
   $('dayStat').textContent = doneToday ? 'Done for today' : 'A new pick each day';
   $('dailyBtn').onclick = () => { closeSheets(); ctx.onDaily(); };
+  syncRandom(ctx, ctx.band);
   syncSound(ctx.sound);
   $('soundBtn').onclick = () => syncSound(ctx.onSound());
   $('levelsSheet').hidden = false;

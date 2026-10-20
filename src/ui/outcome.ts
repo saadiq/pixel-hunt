@@ -1,5 +1,5 @@
 // Win and stuck sheets: progress bookkeeping plus the prototype's copy.
-import type { Meta } from '../core/types';
+import type { Band, Meta } from '../core/types';
 import { SCENES } from '../scenes';
 import { MANIFEST } from '../scenes/manifest';
 import type { Game } from '../state/game';
@@ -14,6 +14,7 @@ export interface OutcomeCtx {
   undo(): void;
   start(meta: Meta): void;
   openScenes(): void;
+  random(band: Band): void;
 }
 
 const plural = (n: number, w: string): string => `${n} ${w}${n > 1 ? 's' : ''}`;
@@ -36,7 +37,7 @@ function campaignWin(c: OutcomeCtx, id: string): void {
       [{ label: `Next: ${SCENES[nextId].name}`, fn: () => c.start({ kind: 'campaign', id: nextId }), primary: true }, replay], g.level);
     return;
   }
-  showResult('Every scene cleared', `${stats(g)} Random mode, which deals a new scene every time, is coming soon.`,
+  showResult('Every scene cleared', `${stats(g)} Try Random mode for a new scene every time.`,
     [{ label: 'All scenes', fn: c.openScenes, primary: true }, replay], g.level);
 }
 
@@ -51,6 +52,11 @@ export function win(c: OutcomeCtx): void {
     markCleared(save, m.id);
     showResult("Today's scene, cleared", `${stats(g)} A new one appears tomorrow.`,
       [{ label: 'All scenes', fn: c.openScenes, primary: true }, { label: 'Replay', fn: c.replay }], g.level);
+  } else {
+    save.wins[m.band]++;
+    showResult(`${g.level.name}, gone`, `${stats(g)} ${plural(save.wins[m.band], 'random scene')} cleared on ${m.band}.`,
+      [{ label: 'New scene', fn: () => c.random(m.band), primary: true }, { label: 'Replay', fn: c.replay },
+        { label: 'All scenes', fn: c.openScenes }], g.level);
   }
 }
 
@@ -58,8 +64,10 @@ export function lose(c: OutcomeCtx): void {
   const g = c.game;
   tone([330, 247, 196], 0.12, 'sine', 0.08);
   const can = g.undos > 0 && g.hist.length > 0;
+  const m = g.meta;
+  const fresh: ResultButton[] = m.kind === 'random' ? [{ label: 'New scene', fn: () => c.random(m.band) }] : [];
   showResult('Your ants are stuck',
     'Every holding slot is full and none of those colors can be reached from the track or a tunnel. Undo your last tap or start over.',
     [{ label: can ? `Undo last tap (${g.undos} left)` : 'No undos left', fn: c.undo, primary: true, disabled: !can },
-      { label: 'Restart', fn: c.replay }]);
+      { label: 'Restart', fn: c.replay }, ...fresh]);
 }

@@ -2,7 +2,8 @@
 import { sceneLevel } from '../core/board';
 import { lineHint, searchHint } from '../core/hint';
 import { hashStr, mulberry } from '../core/rng';
-import type { Level, Meta } from '../core/types';
+import type { Band, Level, Meta } from '../core/types';
+import { randomLevel } from '../random/level';
 import { createRenderer, type Renderer } from '../render/board';
 import { SCENES } from '../scenes';
 import { MANIFEST } from '../scenes/manifest';
@@ -34,12 +35,12 @@ const fast = (): boolean => save.prefs.fast;
 export const current = (): Game | null => g;
 
 function levelFor(meta: Meta): Level | null {
-  if (meta.kind === 'random') return null; // Task 10 wires random mode
+  if (meta.kind === 'random') return randomLevel(meta.band, meta.seed);
   return Object.hasOwn(SCENES, meta.id) ? sceneLevel(SCENES[meta.id]) : null;
 }
 
 function setTag(meta: Meta, level: Level): void {
-  const lead = meta.kind === 'daily' ? 'Daily' : `${MANIFEST.indexOf(level.key) + 1}/${MANIFEST.length}`;
+  const lead = meta.kind === 'daily' ? 'Daily' : meta.kind === 'random' ? 'Random' : `${MANIFEST.indexOf(level.key) + 1}/${MANIFEST.length}`;
   $('lvlName').replaceChildren(el('b', '', lead), ` · ${level.name}`);
 }
 
@@ -88,6 +89,12 @@ export function start(meta: Meta, s: number = newSeed()): void {
 
 export function resume(game: Game, s: number): void {
   begin(game, s);
+}
+
+/** A new random scene in `band`; restarts of it deal a fresh random order on the same picture. */
+export function playRandom(band: Band): void {
+  const s = newSeed();
+  start({ kind: 'random', band, seed: s }, s);
 }
 
 export function playDaily(): void {
@@ -159,7 +166,7 @@ function endBoard(game: Game, st: 'won' | 'stuck'): void {
   over = true;
   save.run = null;
   renderMeter(game, over);
-  const ctx = { game, save, replay: () => start(game.meta), undo: doUndo, start, openScenes: showScenes };
+  const ctx = { game, save, replay: () => start(game.meta), undo: doUndo, start, openScenes: showScenes, random: playRandom };
   if (st === 'won') win(ctx); else lose(ctx);
   store(save);
 }
@@ -194,6 +201,9 @@ export function showScenes(): void {
   openScenes({
     manifest: MANIFEST, scenes: SCENES, cleared: new Set(save.cleared), daily: save.daily,
     currentId: g && g.meta.kind !== 'random' ? g.meta.id : null, sound: save.prefs.sound,
+    band: save.prefs.band, wins: save.wins,
+    onBand: (b) => { save.prefs.band = b; store(save); },
+    onRandom: playRandom,
     onScene: (id) => start({ kind: 'campaign', id }),
     onDaily: playDaily,
     onSound: () => {
