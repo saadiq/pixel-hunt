@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="54" height="54">
+  <metadata>{"id":"rose-window","name":"Rose Window","blurb":"Sunlight pouring through a cathedral's stained glass.","band":"hard","W":54,"H":54,"slots":3,"lanes":5,"chunk":[70,100],"wait":0.8,"waitSlack":1,"bg":"#dcc9a6"}</metadata>
+  <defs>
+    <!-- one 30-degree wedge of the outer ring, pointing up -->
+    <path id="wedge" d="M27,27 L21.15,5.17 A22.6,22.6 0 0 1 32.85,5.17 Z"/>
+    <path id="petal" d="M27,21.8 C20,19.5 20,12.5 27,10.2 C34,12.5 34,19.5 27,21.8 Z"/>
+    <path id="inner" d="M27,19.5 C24,18 24,15 27,13.5 C30,15 30,18 27,19.5 Z"/>
+    <g id="jewel"><circle cx="27" cy="8" r="2"/></g>
+    <path id="leaf" d="M27,20.5 C25,18 25,15 27,12.5 C29,15 29,18 27,20.5 Z"/>
+  </defs>
+  <!-- stone wall -->
+  <rect width="54" height="54" fill="#dcc9a6"/>
+  <!-- corner quatrefoils -->
+  <g stroke="#2a2233" stroke-width="1" fill="#8a4fc8">
+    <circle cx="4.5" cy="4.5" r="3.2"/><circle cx="49.5" cy="4.5" r="3.2"/>
+    <circle cx="4.5" cy="49.5" r="3.2"/><circle cx="49.5" cy="49.5" r="3.2"/>
+  </g>
+  <g fill="#ffc93c">
+    <rect x="4" y="4" width="1" height="1"/><rect x="49" y="4" width="1" height="1"/>
+    <rect x="4" y="49" width="1" height="1"/><rect x="49" y="49" width="1" height="1"/>
+  </g>
+  <!-- outer stone ring -->
+  <circle cx="27" cy="27" r="26.6" fill="#2a2233"/>
+  <circle cx="27" cy="27" r="25.3" fill="#dcc9a6"/>
+  <circle cx="27" cy="27" r="23.6" fill="#2a2233"/>
+  <!-- outer ring: twelve glass wedges, alternating red and blue, each with a gold jewel -->
+  <g fill="#e0403c">
+    <use href="#wedge" transform="rotate(0 27 27)"/><use href="#wedge" transform="rotate(60 27 27)"/>
+    <use href="#wedge" transform="rotate(120 27 27)"/><use href="#wedge" transform="rotate(180 27 27)"/>
+    <use href="#wedge" transform="rotate(240 27 27)"/><use href="#wedge" transform="rotate(300 27 27)"/>
+  </g>
+  <g fill="#2f5fc4">
+    <use href="#wedge" transform="rotate(30 27 27)"/><use href="#wedge" transform="rotate(90 27 27)"/>
+    <use href="#wedge" transform="rotate(150 27 27)"/><use href="#wedge" transform="rotate(210 27 27)"/>
+    <use href="#wedge" transform="rotate(270 27 27)"/><use href="#wedge" transform="rotate(330 27 27)"/>
+  </g>
+  <g fill="#ffc93c">
+    <use href="#jewel" transform="rotate(0 27 27)"/><use href="#jewel" transform="rotate(60 27 27)"/>
+    <use href="#jewel" transform="rotate(120 27 27)"/><use href="#jewel" transform="rotate(180 27 27)"/>
+    <use href="#jewel" transform="rotate(240 27 27)"/><use href="#jewel" transform="rotate(300 27 27)"/>
+  </g>
+  <g fill="#ffffff">
+    <use href="#jewel" transform="rotate(30 27 27)"/><use href="#jewel" transform="rotate(90 27 27)"/>
+    <use href="#jewel" transform="rotate(150 27 27)"/><use href="#jewel" transform="rotate(210 27 27)"/>
+    <use href="#jewel" transform="rotate(270 27 27)"/><use href="#jewel" transform="rotate(330 27 27)"/>
+  </g>
+  <!-- lead lines between the wedges -->
+  <g stroke="#2a2233" stroke-width="1.2" transform="rotate(15 27 27)">
+    <path d="M27,4 L27,50 M4,27 L50,27 M15.5,7.1 L38.5,46.9 M38.5,7.1 L15.5,46.9 M7.1,15.5 L46.9,38.5 M7.1,38.5 L46.9,15.5"/>
+  </g>
+  <!-- inner ring of sky glass -->
+  <circle cx="27" cy="27" r="16.8" fill="#2a2233"/>
+  <circle cx="27" cy="27" r="15.6" fill="#7fd3f5"/>
+  <!-- six petals -->
+  <g fill="#8a4fc8" stroke="#2a2233" stroke-width="1" stroke-linejoin="round">
+    <use href="#petal" transform="rotate(0 27 27)"/><use href="#petal" transform="rotate(60 27 27)"/>
+    <use href="#petal" transform="rotate(120 27 27)"/><use href="#petal" transform="rotate(180 27 27)"/>
+    <use href="#petal" transform="rotate(240 27 27)"/><use href="#petal" transform="rotate(300 27 27)"/>
+  </g>
+  <g fill="#e0403c">
+    <use href="#inner" transform="rotate(0 27 27)"/><use href="#inner" transform="rotate(60 27 27)"/>
+    <use href="#inner" transform="rotate(120 27 27)"/><use href="#inner" transform="rotate(180 27 27)"/>
+    <use href="#inner" transform="rotate(240 27 27)"/><use href="#inner" transform="rotate(300 27 27)"/>
+  </g>
+  <!-- green leaves between the petals -->
+  <g fill="#45b04a" stroke="#2a2233" stroke-width="0.8">
+    <use href="#leaf" transform="rotate(30 27 27)"/><use href="#leaf" transform="rotate(90 27 27)"/>
+    <use href="#leaf" transform="rotate(150 27 27)"/><use href="#leaf" transform="rotate(210 27 27)"/>
+    <use href="#leaf" transform="rotate(270 27 27)"/><use href="#leaf" transform="rotate(330 27 27)"/>
+  </g>
+  <!-- centre rosette -->
+  <circle cx="27" cy="27" r="5.4" fill="#2a2233"/>
+  <circle cx="27" cy="27" r="4.3" fill="#ffc93c"/>
+  <circle cx="27" cy="27" r="2.1" fill="#e0403c"/>
+  <rect x="25" y="24" width="1" height="1" fill="#ffffff"/>
+</svg>
