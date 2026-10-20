@@ -98,7 +98,7 @@ describe('game undo and end states', () => {
     expect(g.idle).toBe(false);
   });
 
-  test('history is capped at 40', () => {
+  test('history keeps only as many snapshots as undos (3)', () => {
     const g = newGame(meta, level, 7);
     for (let i = 0; i < 60; i++) {
       g.slots.fill(null);
@@ -106,7 +106,7 @@ describe('game undo and end states', () => {
       if (l < 0) break;
       tapLane(g, l);
     }
-    expect(g.hist.length).toBeLessThanOrEqual(40);
+    expect(g.hist.length).toBe(3);
   });
 
   test('stuck is detected and undo recovers', () => {

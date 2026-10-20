@@ -1,7 +1,7 @@
 import { parseArt, sceneLevel } from '../core/board';
 import { randomLevel } from '../random/level';
 import type { Band, Lanes, Level, Meta, Scene, Slots } from '../core/types';
-import type { Game, Snapshot } from './game';
+import { type Game, HIST_MAX, type Snapshot } from './game';
 import type { DailyChoice } from './progress';
 
 const KEY = 'crumbhunt.v1';
@@ -100,7 +100,7 @@ export function fromRun(r: SavedRun, scenes: Record<string, Scene>): Game | null
     if (!Array.isArray(r.hist) || !r.hist.every((h) => validState(h, d))) return null;
     if (!isInt(r.undos, 0, 3) || !isInt(r.hints, 0, 3) || !isInt(r.usedUndo, 0) || !isInt(r.usedHint, 0)) return null;
     if (!Array.isArray(r.line) || !r.line.every((x) => isInt(x, 0, level.lanes - 1))) return null;
-    const hist: Snapshot[] = r.hist.map((h) => ({ ...h, grid: Int8Array.from(h.grid) }));
+    const hist: Snapshot[] = r.hist.slice(-HIST_MAX).map((h) => ({ ...h, grid: Int8Array.from(h.grid) }));
     const grid = Int8Array.from(r.grid);
     return {
       meta: r.meta, level, board, grid, lanes: r.lanes, slots: r.slots, hist,

@@ -11,7 +11,7 @@ export interface Game {
   taps: number; remaining: number; stuck: boolean; idle: boolean; line: number[]; onLine: boolean;
 }
 
-const HIST_MAX = 40;
+export const HIST_MAX = 3; // only 3 undos per board, so older snapshots are never used (and bloat saves)
 const copy = (s: Squad): Squad => ({ ...s });
 const copyLanes = (l: Lanes): Lanes => l.map((q) => q.map(copy));
 const copySlots = (s: Slots): Slots => s.map((q) => (q ? copy(q) : null));
