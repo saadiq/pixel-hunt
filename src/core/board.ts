@@ -10,9 +10,7 @@ export function parseArt(a: Art): Board {
 }
 
 export function sceneLevel(s: Scene): Level {
-  return {
-    key: s.id, name: s.name, band: s.band, rows: s.rows, pal: s.pal,
-    slots: s.slots, lanes: s.lanes, chunk: s.chunk, wait: s.wait,
-    ...(s.waitSlack === undefined ? {} : { waitSlack: s.waitSlack }),
-  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- the blurb is display-only, not part of a level
+  const { id, blurb, ...rest } = s;
+  return { key: id, ...rest };
 }

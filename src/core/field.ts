@@ -128,6 +128,12 @@ export function nearest(f: Field, g: Int8Array, hc: number, color: number): { i:
   return { i: best, d };
 }
 
+/** Exposed block count per colour (blocks touching the track region), read from the live cache. */
+export function exposedCounts(g: Int8Array, W: number, H: number, nColors: number): number[] {
+  const f = fieldOf(g, W, H);
+  return Array.from({ length: nColors }, (_, c) => f.exposed[c]?.length ?? 0);
+}
+
 /** Eat cell i: clears it in the grid and repairs every cached field. */
 export function eat(f: Field, g: Int8Array, i: number): void {
   removeExposed(f, i);

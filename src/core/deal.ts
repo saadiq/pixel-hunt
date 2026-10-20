@@ -1,6 +1,7 @@
-import { exposedMask } from './path';
+import { exposedCounts } from './field';
 import { mulberry } from './rng';
-import { stepSlots } from './step';
+import { copyLanes } from './squads';
+import { cleared, settle } from './step';
 import type { Board, Deal, Lanes, Level, Slots } from './types';
 
 type Rng = () => number;
@@ -56,10 +57,9 @@ function buildSeq(level: Level, board: Board, rng: Rng, pick: Picker): Pick[] {
   const slots: Slots = Array(level.slots).fill(null);
   const seq: Pick[] = [];
   for (let guard = 0; guard < 4000; guard++) {
-    while (stepSlots(g, W, H, slots));
-    if (g.every((v) => v < 0)) return seq;
-    const exp = exposedMask(g, W, H), cnt = colors.map(() => 0);
-    for (let i = 0; i < W * H; i++) if (exp[i] && g[i] >= 0) cnt[g[i]]++;
+    settle(g, W, H, slots);
+    if (cleared(g)) return seq;
+    const cnt = exposedCounts(g, W, H, colors.length);
     const used = slots.filter(Boolean).length;
     const p = pick(level, { cnt, unassigned, used }, rng);
     seq.push(p);
@@ -108,15 +108,15 @@ export function deal(level: Level, board: Board, seed: number): Deal {
 /** Taps `line` in order, settling before each tap. True if the board clears. */
 export function replayLine(level: Level, board: Board, d: Deal): boolean {
   const { W, H } = board, g = board.grid.slice();
-  const lanes = d.lanes.map((l) => l.map((s) => ({ ...s })));
+  const lanes = copyLanes(d.lanes);
   const slots: Slots = Array(level.slots).fill(null);
   for (const li of d.line) {
-    while (stepSlots(g, W, H, slots));
+    settle(g, W, H, slots);
     const free = slots.indexOf(null);
     const sq = lanes[li]?.shift();
     if (free < 0 || !sq) return false;
     slots[free] = sq;
   }
-  while (stepSlots(g, W, H, slots));
-  return g.every((v) => v < 0);
+  settle(g, W, H, slots);
+  return cleared(g);
 }

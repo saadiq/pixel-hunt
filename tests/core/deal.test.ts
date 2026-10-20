@@ -5,6 +5,7 @@ import { exposedMask } from '../../src/core/path';
 import { stepSlots } from '../../src/core/step';
 import type { Level, Scene } from '../../src/core/types';
 import { bentoBox } from '../../src/scenes/bento-box';
+import { median } from '../../scripts/checks';
 import { bridge, d20, upscale } from '../fixtures/proto';
 
 const SEEDS = Array.from({ length: 200 }, (_, i) => i + 1);
@@ -139,11 +140,6 @@ describe('deal regression snapshot', () => {
 });
 
 describe('perf', () => {
-  const median = (times: number[]) => {
-    const t = [...times].sort((a, b) => a - b);
-    return (t[Math.floor((t.length - 1) / 2)] + t[Math.ceil((t.length - 1) / 2)]) / 2;
-  };
-
   test('median deal on a 56-wide bridge is under 30ms', () => {
     const level: Level = { ...sceneLevel(bridge), ...upscale(bridge, 56) };
     const board = parseArt(level);

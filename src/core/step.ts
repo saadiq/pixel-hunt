@@ -18,3 +18,10 @@ export function stepSlots(g: Int8Array, W: number, H: number, slots: Slots, onBi
   });
   return ate;
 }
+
+/** Ticks until no slot can eat. */
+export function settle(g: Int8Array, W: number, H: number, slots: Slots): void {
+  while (stepSlots(g, W, H, slots));
+}
+
+export const cleared = (g: Int8Array): boolean => g.every((v) => v < 0);
