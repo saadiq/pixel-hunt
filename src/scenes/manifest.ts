@@ -5,6 +5,7 @@ export const MANIFEST: string[] = [
   'goldfish-bowl',
   'record-player',
   'lighthouse-at-dusk',
+  'sleeping-fox',
   'brooklyn-bridge',
   'birthday-cake',
   'coral-reef',
