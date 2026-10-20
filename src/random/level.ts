@@ -7,8 +7,8 @@ type BandSpec = Omit<Params, 'chunk'> & { size: number };
 
 export const RANDOM_BANDS: Record<Band, BandSpec> = {
   easy: { size: 42, slots: 5, lanes: 3, wait: 0.3 },
-  medium: { size: 48, slots: 4, lanes: 4, wait: 0.5 },
-  hard: { size: 54, slots: 3, lanes: 4, wait: 0.85 },
+  medium: { size: 48, slots: 4, lanes: 4, wait: 0.8, waitSlack: 1 },
+  hard: { size: 54, slots: 3, lanes: 5, wait: 0.7, waitSlack: 1 },
 };
 
 export const randomKey = (band: Band, seed: number): string => `r-${band}-${seed}`;
@@ -24,10 +24,10 @@ interface Built { level: Level; spread: number; ok: boolean; loose: boolean }
 
 /** Builds a level for one scene variant, calibrating squad size so a deal takes about 45 taps. */
 function build(band: Band, seed: number, variant: number): Built {
-  const { size, slots, lanes, wait } = RANDOM_BANDS[band];
+  const { size, ...params } = RANDOM_BANDS[band];
   const art = makeScene(seed + variant * 104729, size);
   const make = (avg: number): Level =>
-    ({ key: randomKey(band, seed), name: art.name, band, rows: art.rows, pal: art.pal, slots, lanes, wait, chunk: chunkFor(avg) });
+    ({ key: randomKey(band, seed), name: art.name, band, rows: art.rows, pal: art.pal, ...params, chunk: chunkFor(avg) });
   const board = parseArt(art);
   // A single deal's tap count is noisy, so probe several deals.
   const probe = (l: Level, n: number): number[] => Array.from({ length: n }, (_, k) => deal(l, board, seed + k * 7919).line.length);

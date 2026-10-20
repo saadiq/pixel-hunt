@@ -25,8 +25,8 @@ export interface ResultButton { label: string; fn: () => void; primary?: boolean
 const BANDS: [Band, string][] = [['easy', 'Easy'], ['medium', 'Medium'], ['hard', 'Hard']];
 const BAND_NOTE: Record<Band, string> = {
   easy: 'Roomy: 5 holding slots, 3 lanes, a gentle wait.',
-  medium: 'Balanced: 4 holding slots, 4 lanes.',
-  hard: 'Tight: 3 holding slots and a long wait.',
+  medium: 'Balanced: 4 holding slots, 4 lanes. Some taps matter.',
+  hard: 'Tight: 3 holding slots, 5 lanes. Choose carefully.',
 };
 
 function syncRandom(ctx: ScenesCtx, band: Band): void {
