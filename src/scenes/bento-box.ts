@@ -9,7 +9,8 @@ export const bentoBox: Scene = {
   slots: 3,
   lanes: 5,
   chunk: [70, 100],
-  wait: 0.95,
+  wait: 0.8,
+  waitSlack: 1,
   pal: {
     a: '#ffffff',
     b: '#2a2233',

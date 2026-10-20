@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="54" height="54">
-  <metadata>{"id":"bento-box","name":"Bento Box","blurb":"Lunch with a smiling rice ball.","band":"hard","W":54,"H":54,"slots":3,"lanes":5,"chunk":[70,100],"wait":0.95,"bg":"#3d8fe0"}</metadata>
+  <metadata>{"id":"bento-box","name":"Bento Box","blurb":"Lunch with a smiling rice ball.","band":"hard","W":54,"H":54,"slots":3,"lanes":5,"chunk":[70,100],"wait":0.8,"waitSlack":1,"bg":"#3d8fe0"}</metadata>
   <defs>
     <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
       <rect x="1" y="1" width="2" height="2" fill="#ffffff"/>
