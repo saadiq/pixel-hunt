@@ -1,14 +1,12 @@
 // Game controller: owns the current board, the tick loop, input, saving and end-of-board sheets.
-import { sceneLevel } from '../core/board';
 import { hashStr } from '../core/rng';
 import type { Band, Level, Meta } from '../core/types';
-import { randomLevel } from '../random/level';
 import { createRenderer, type Renderer } from '../render/board';
 import { SCENES } from '../scenes';
 import { MANIFEST } from '../scenes/manifest';
 import { type Game, newGame, status, tapLane, tick, undo } from '../state/game';
 import { dailyFor, nextScene, todayKey } from '../state/progress';
-import { type SaveV1, store, toRun } from '../state/save';
+import { findLevel, type SaveV1, store, toRun } from '../state/save';
 import { $, el } from './dom';
 import { renderLanes, renderMeter, renderSlots, shakeSlots } from './hud';
 import { lose, win } from './outcome';
@@ -32,10 +30,7 @@ const fast = (): boolean => save.prefs.fast;
 
 export const current = (): Game | null => g;
 
-function levelFor(meta: Meta): Level | null {
-  if (meta.kind === 'random') return randomLevel(meta.band, meta.seed);
-  return Object.hasOwn(SCENES, meta.id) ? sceneLevel(SCENES[meta.id]) : null;
-}
+const levelFor = (meta: Meta): Level | null => findLevel(meta, SCENES);
 
 function setTag(meta: Meta, level: Level): void {
   const lead = meta.kind === 'daily' ? 'Daily' : meta.kind === 'random' ? 'Random' : `${MANIFEST.indexOf(level.key) + 1}/${MANIFEST.length}`;
@@ -64,12 +59,14 @@ function begin(game: Game, s: number): void {
   persist();
 }
 
-/** Starts a fresh deal. A meta whose scene is gone falls back to the next campaign scene. */
+/** Starts a fresh deal. A meta whose scene is gone falls back to the next campaign scene, then any built one. */
 export function start(meta: Meta, s: number = newSeed()): void {
   let level = levelFor(meta);
   if (!level) {
-    meta = { kind: 'campaign', id: nextScene(MANIFEST, new Set(save.cleared)) };
-    level = levelFor(meta) as Level;
+    const id = nextScene(MANIFEST, new Set(save.cleared));
+    meta = { kind: 'campaign', id: Object.hasOwn(SCENES, id) ? id : MANIFEST.find((m) => Object.hasOwn(SCENES, m)) ?? id };
+    level = levelFor(meta);
+    if (!level) throw new Error('no playable scene');
   }
   begin(newGame(meta, level, s), s);
 }

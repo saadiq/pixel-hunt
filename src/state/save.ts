@@ -85,7 +85,7 @@ const validState = (st: unknown, d: Dims): boolean =>
 
 const count = (g: Int8Array): number => g.reduce((a, v) => a + (v >= 0 ? 1 : 0), 0);
 
-function findLevel(meta: Meta, scenes: Record<string, Scene>): Level | null {
+export function findLevel(meta: Meta, scenes: Record<string, Scene>): Level | null {
   if (meta.kind === 'random') {
     return BANDS.includes(meta.band) && isInt(meta.seed, 1) ? randomLevel(meta.band, meta.seed) : null;
   }
