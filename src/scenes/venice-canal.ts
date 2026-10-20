@@ -7,9 +7,10 @@ export const veniceCanal: Scene = {
   blurb: "A gondola slips past the painted houses.",
   band: "medium",
   slots: 3,
-  lanes: 4,
+  lanes: 5,
   chunk: [66, 98],
-  wait: 0.6,
+  wait: 0.8,
+  waitSlack: 1,
   pal: {
     a: '#8fe0dc',
     b: '#3fa36b',

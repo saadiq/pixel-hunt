@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 44" width="50" height="44">
-  <metadata>{"id":"mount-fuji","name":"Mount Fuji in Bloom","blurb":"Cherry blossom season, seen through the moon window.","band":"medium","W":50,"H":44,"slots":3,"lanes":4,"chunk":[60,90],"wait":0.6,"bg":"#ffcf8f"}</metadata>
+  <metadata>{"id":"mount-fuji","name":"Mount Fuji in Bloom","blurb":"Cherry blossom season, seen through the moon window.","band":"hard","W":50,"H":44,"slots":3,"lanes":5,"chunk":[60,90],"wait":0.9,"waitSlack":1,"bg":"#ffcf8f"}</metadata>
   <defs>
     <clipPath id="window"><circle cx="25" cy="22" r="19.5"/></clipPath>
     <pattern id="petals" x="2" y="0" width="6" height="5" patternUnits="userSpaceOnUse">

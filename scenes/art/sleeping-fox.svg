@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 44" width="42" height="44">
-  <metadata>{"id":"sleeping-fox","name":"Sleeping Fox","blurb":"Curled up tight with a tail for a blanket.","band":"easy","W":42,"H":44,"slots":5,"lanes":3,"chunk":[44,62],"wait":0.3,"bg":"#c4ebc9"}</metadata>
+  <metadata>{"id":"sleeping-fox","name":"Sleeping Fox","blurb":"Curled up tight with a tail for a blanket.","band":"medium","W":42,"H":44,"slots":3,"lanes":4,"chunk":[44,62],"wait":0.8,"waitSlack":1,"bg":"#c4ebc9"}</metadata>
   <defs>
     <ellipse id="body" cx="25" cy="25" rx="13" ry="9.5"/>
     <clipPath id="bodyClip"><use href="#body"/></clipPath>

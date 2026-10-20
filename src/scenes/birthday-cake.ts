@@ -7,9 +7,10 @@ export const birthdayCake: Scene = {
   blurb: "Make a wish and blow!",
   band: "medium",
   slots: 3,
-  lanes: 4,
+  lanes: 5,
   chunk: [60, 90],
-  wait: 0.6,
+  wait: 0.8,
+  waitSlack: 1,
   pal: {
     a: '#ffffff',
     b: '#ffc2d4',

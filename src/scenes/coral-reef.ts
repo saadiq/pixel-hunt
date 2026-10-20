@@ -9,7 +9,8 @@ export const coralReef: Scene = {
   slots: 3,
   lanes: 4,
   chunk: [60, 95],
-  wait: 0.6,
+  wait: 0.8,
+  waitSlack: 1,
   pal: {
     a: '#9fe0f7',
     b: '#1d1a2e',

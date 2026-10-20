@@ -9,7 +9,8 @@ export const nightOwl: Scene = {
   slots: 3,
   lanes: 4,
   chunk: [66, 98],
-  wait: 0.6,
+  wait: 0.8,
+  waitSlack: 1,
   pal: {
     a: '#ffffff',
     b: '#233a7a',

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 46" width="44" height="46">
-  <metadata>{"id":"ice-cream-truck","name":"Ice Cream Truck","blurb":"You can hear the jingle from three streets away.","band":"easy","W":44,"H":46,"slots":5,"lanes":3,"chunk":[46,66],"wait":0.3,"bg":"#e3d7ff"}</metadata>
+  <metadata>{"id":"ice-cream-truck","name":"Ice Cream Truck","blurb":"You can hear the jingle from three streets away.","band":"medium","W":44,"H":46,"slots":4,"lanes":4,"chunk":[46,66],"wait":0.8,"waitSlack":1,"bg":"#e3d7ff"}</metadata>
   <defs>
     <path id="truck" d="M3.5,38 L3.5,18 C3.5,16.5 4.5,15.5 6,15.5 L29.5,15.5 L29.5,23 L36,23 C37.5,23 38.5,23.5 39,25 L41,30.5 L41,38 Z"/>
     <clipPath id="truckClip"><use href="#truck"/></clipPath>

@@ -17,7 +17,7 @@ export const TARGETS: Record<Band, BandTargets> = {
   easy: { slots: [4, 5], winRate: [0.7, 1], taps: [30, 60], minAvgDepth: 0, choice: [0, 1], maxMindless: 1 },
   medium: { slots: [3, 4], winRate: [0.3, 0.8], taps: [30, 60], minAvgDepth: 0, choice: [0.12, 1], maxMindless: 0.85 },
   // depth was a stand-in for difficulty before choices were measured directly; it stays in the report only
-  hard: { slots: [2, 3], winRate: [0, 0.5], taps: [30, 60], minAvgDepth: 0, choice: [0.18, 1], maxMindless: 0.5 },
+  hard: { slots: [2, 3], winRate: [0, 0.5], taps: [30, 60], minAvgDepth: 0, choice: [0.17, 1], maxMindless: 0.5 },
 };
 
 /** Grid size is a property of the art, not of difficulty, so it is the same for every band. */

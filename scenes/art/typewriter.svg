@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 46" width="48" height="46">
-  <metadata>{"id":"typewriter","name":"Typewriter","blurb":"Clack, clack, clack... ding!","band":"medium","W":48,"H":46,"slots":3,"lanes":4,"chunk":[66,98],"wait":0.6,"bg":"#ffb3a7"}</metadata>
+  <metadata>{"id":"typewriter","name":"Typewriter","blurb":"Clack, clack, clack... ding!","band":"hard","W":48,"H":46,"slots":3,"lanes":5,"chunk":[66,98],"wait":0.8,"waitSlack":1,"bg":"#ffb3a7"}</metadata>
   <defs>
     <pattern id="stripes" width="6" height="8" patternUnits="userSpaceOnUse">
       <rect width="3" height="8" fill="#ffd9cf"/>

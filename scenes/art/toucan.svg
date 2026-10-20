@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 48" width="42" height="48">
-  <metadata>{"id":"toucan","name":"Toucan","blurb":"All beak and no apologies.","band":"easy","W":42,"H":48,"slots":5,"lanes":3,"chunk":[46,66],"wait":0.3,"bg":"#bfe6ff"}</metadata>
+  <metadata>{"id":"toucan","name":"Toucan","blurb":"All beak and no apologies.","band":"medium","W":42,"H":48,"slots":3,"lanes":5,"chunk":[46,66],"wait":0.7,"waitSlack":1,"bg":"#bfe6ff"}</metadata>
   <defs>
     <path id="beak" d="M21,8.5 C12,5 3,8 0.8,15.5 C0.3,18 2,19.5 4.5,19 C10,17.5 15,19.5 21,22.5 Z"/>
     <clipPath id="beakClip"><use href="#beak"/></clipPath>

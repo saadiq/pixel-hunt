@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 50" width="46" height="50">
-  <metadata>{"id":"night-owl","name":"Night Owl","blurb":"Wide awake while everyone else is asleep.","band":"medium","W":46,"H":50,"slots":3,"lanes":4,"chunk":[66,98],"wait":0.6,"bg":"#233a7a"}</metadata>
+  <metadata>{"id":"night-owl","name":"Night Owl","blurb":"Wide awake while everyone else is asleep.","band":"medium","W":46,"H":50,"slots":3,"lanes":4,"chunk":[66,98],"wait":0.8,"waitSlack":1,"bg":"#233a7a"}</metadata>
   <defs>
     <pattern id="stars" x="0" y="0" width="9" height="8" patternUnits="userSpaceOnUse">
       <rect x="2" y="2" width="1" height="1" fill="#ffffff"/>
