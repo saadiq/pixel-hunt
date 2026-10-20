@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
-import { cubeRects, type Rect } from '../src/render/cube';
+import { cubeRects, hexRgb, type Rect } from '../src/render/cube';
 import { SCENES } from '../src/scenes';
 import { MANIFEST } from '../src/scenes/manifest';
 import type { Scene } from '../src/core/types';
@@ -10,13 +10,9 @@ const SCALE = 12;
 const THUMB = 64;
 const BOARD = '#d6dde3'; // prototype --board token (light theme), shows through the gaps
 
-function rgb(hex: string): [number, number, number] {
-  return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)) as [number, number, number];
-}
-
 /** Paints a fractional rect, blending edge pixels by their coverage. */
 function fill(png: PNG, r: Rect): void {
-  const [cr, cg, cb] = rgb(r.hex);
+  const [cr, cg, cb] = hexRgb(r.hex);
   const x1 = Math.min(png.width, r.x + r.w), y1 = Math.min(png.height, r.y + r.h);
   for (let y = Math.floor(r.y); y < y1; y++) {
     const fy = Math.min(y + 1, y1) - Math.max(y, r.y);

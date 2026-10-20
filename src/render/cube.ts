@@ -5,13 +5,15 @@ export interface Rect { x: number; y: number; w: number; h: number; hex: string 
 /** Below this cell size the bevel and gap cannot be seen, so a cube is drawn as a flat square. */
 export const MIN_CUBE_PX = 4;
 
+/** Splits a #rrggbb colour into its [r, g, b] channels (0-255). */
+export function hexRgb(hex: string): [number, number, number] {
+  return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)) as [number, number, number];
+}
+
 /** Mixes a #rrggbb colour toward white (t > 0) or black (t < 0) by |t|. */
 export function shade(hex: string, t: number): string {
   const target = t > 0 ? 255 : 0, k = Math.abs(t);
-  return '#' + [1, 3, 5].map((i) => {
-    const v = parseInt(hex.slice(i, i + 2), 16);
-    return Math.round(v + (target - v) * k).toString(16).padStart(2, '0');
-  }).join('');
+  return '#' + hexRgb(hex).map((v) => Math.round(v + (target - v) * k).toString(16).padStart(2, '0')).join('');
 }
 
 /**

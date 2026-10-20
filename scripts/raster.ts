@@ -1,6 +1,7 @@
 // Node-only: rasterises a scene SVG to a cell grid. Never import from src/ (browser code).
 import { Resvg } from '@resvg/resvg-js';
 import type { Art, Band } from '../src/core/types';
+import { hexRgb } from '../src/render/cube';
 
 export interface SceneMeta {
   id: string; name: string; blurb: string; band: Band;
@@ -27,11 +28,17 @@ function metaBg(svg: string): string | undefined {
   }
 }
 
-/** Distinct fill/stroke #rrggbb colours in order of first appearance, then the background if new. */
+/**
+ * Distinct fill/stroke #rrggbb colours in order of first appearance, then the background if new.
+ * Throws on any other colour form (#rgb, rgb(), names) so the palette is always exact.
+ */
 export function svgPalette(svg: string): string[] {
   const out: string[] = [];
-  for (const m of svg.matchAll(/(?:fill|stroke)\s*[:=]\s*["']?(#[0-9a-fA-F]{6})\b/g)) {
-    const hex = m[1].toLowerCase();
+  for (const m of svg.matchAll(/\b(?:fill|stroke)\s*[:=]\s*["']?([^"';\s>]+)/g)) {
+    const v = m[1];
+    if (v === 'none' || v.startsWith('url(')) continue;
+    if (!/^#[0-9a-fA-F]{6}$/.test(v)) throw new Error(`colour "${v}" is not #rrggbb`);
+    const hex = v.toLowerCase();
     if (!out.includes(hex)) out.push(hex);
   }
   const bg = metaBg(svg);
@@ -39,7 +46,6 @@ export function svgPalette(svg: string): string[] {
   return out;
 }
 
-const rgb = (hex: string): RGB => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)) as RGB;
 const luma = ([r, g, b]: RGB) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
 
 function nearest(c: RGB, pal: RGB[]): number {
@@ -82,7 +88,7 @@ export function rasterize(svg: string, W: number, H: number, opts: { ss?: number
   const ss = opts.ss ?? 8;
   const hexes = svgPalette(svg);
   if (!hexes.length) throw new Error('SVG has no fill/stroke colours');
-  const pal = hexes.map(rgb);
+  const pal = hexes.map(hexRgb);
   const bg = metaBg(svg);
   const snap = snapper(pal, bg ? hexes.indexOf(bg) : -1);
   const img = new Resvg(svg, { fitTo: { mode: 'width', value: W * ss }, shapeRendering: 0 }).render();
