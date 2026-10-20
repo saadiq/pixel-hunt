@@ -11,6 +11,12 @@ describe('scene manifest', () => {
     }
   });
 
+  test('bands run easy, then medium, then hard', () => {
+    const rank = { easy: 0, medium: 1, hard: 2 };
+    const ranks = MANIFEST.map((id) => rank[SCENES[id].band]);
+    expect(ranks).toEqual([...ranks].sort((a, b) => a - b));
+  });
+
   test('every registered scene is in the manifest', () => {
     for (const id of Object.keys(SCENES)) expect(MANIFEST).toContain(id);
   });
