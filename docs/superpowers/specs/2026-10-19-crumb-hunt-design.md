@@ -38,13 +38,18 @@ The prototype's rules carry over exactly. The pure logic in the artifact
 
 ## Goals
 
-1. **30 hand-drawn scenes** in a fixed progression: 10 Easy, then 10 Medium,
-   then 10 Hard. Each one unlocks when the scene before it is cleared.
+1. **30 hand-drawn scenes** in a fixed progression: 5 Easy, then 10 Medium,
+   then 15 Hard. Each one unlocks when the scene before it is cleared.
 2. **Smaller pixels, so the scenes can be more varied.** Grids are bigger than
    the prototype's 22–28 cells.
 3. **Every board is solvable.** Every deal the player sees has at least one
    winning order.
 4. **Easy, Medium and Hard** feel clearly different.
+4a. **Taps must matter** (decided with the user after a full play-through,
+   2026-10-20). A board where any order wins is a speed test, not a game.
+   Only the first 5 boards may play that way. From board 6 on, the player
+   regularly faces a turn where one tap is clearly better than another. It
+   should not become a brain-teaser either.
 5. **Easy to add more scenes.** Scene 31 is a new data file plus one line in a
    manifest, with no code changes.
 6. **Mobile-first.** It plays one-handed in portrait on a ~390px-wide phone,
@@ -102,9 +107,13 @@ across, drawn as small raised cubes at ~6–7px. So:
 
 | Band   | Grid width (height 36–60) | Slots | Lanes | Squad size | `wait` |
 |--------|---------------------------|-------|-------|------------|--------|
-| Easy   | 40–44 wide                | 4–5   | 3     | scaled     | ~0.3   |
-| Medium | 46–50 wide                | 3–4   | 4     | scaled     | ~0.5–0.7 |
-| Hard   | 52–56 wide                | 2–3   | 4–5   | scaled     | ~0.8–0.95 |
+| Easy   | 40–56 wide                | 4–5   | 3     | scaled     | ~0.3   |
+| Medium | 40–56 wide                | 3–4   | 4–5   | scaled     | 0.8, `waitSlack` 1 |
+| Hard   | 40–56 wide                | 2–3   | 5     | scaled     | 0.8–0.9, `waitSlack` 1 |
+
+Revised 2026-10-20: grid width belongs to the art, not the band. Choices
+only appear with `waitSlack: 1` (buried-colour squads dealt while slots are
+scarce); with the default of 2, no tap ever loses for a player who waits.
 
 Slot counts revised after the spike: slots are the strongest difficulty
 lever. `wait` only matters while slots are mostly empty.
@@ -158,6 +167,11 @@ any violation:
 - Colors are visually distinct from each other (a minimum color-distance
   threshold) so lane tiles and blocks can be told apart.
 - 500 seeded deals all succeed, and the recorded sequence replays to a win.
+- **Choices** (added 2026-10-20, `scripts/choices.ts`): along the recorded
+  winning line, the share of turns where some other tap leads to a lost
+  board (bounded depth-first search), and the win rate of a "mindless"
+  player who taps any lane whose colour is eatable. Medium needs choice ≥
+  0.12 and mindless ≤ 0.85; Hard needs choice ≥ 0.17 and mindless ≤ 0.5.
 - **Difficulty estimate:** win rate of the prototype's `playout()` policy
   across N deals. Each band has a target range, and the report flags scenes
   outside it so their parameters (slots, lanes, `wait`, squad size) can be
@@ -178,19 +192,22 @@ any violation:
 - Saved data has a schema version so it can be migrated later.
 
 ### The 30 scenes (as shipped, in progression order; see `src/scenes/manifest.ts`)
-Mixed across places, animals, objects and moments, ten per band. The
+Mixed across places, animals, objects and moments. The
 Brooklyn Bridge is redrawn at the larger size. No other prototype scenes
 carry over. Against the draft list, Coral Reef (reframed as a clownfish in
 an anemone) moved from Hard to Medium, and Jellyfish became Jellyfish
 Aquarium and moved from Medium to Hard.
 
-- **Easy:** Hot Air Balloon, Rubber Duck, Goldfish Bowl, Record Player,
-  Lighthouse at Dusk, Sleeping Fox, Toucan, Desert Cactus at Noon, Paper
-  Boat in the Rain, Ice Cream Truck
-- **Medium:** Brooklyn Bridge, Typewriter, Coral Reef, Venice Canal, Mount
-  Fuji in Bloom, Arcade Cabinet, Birthday Cake, Night Owl, Koi Pond,
-  Campfire Under the Stars
-- **Hard:** Bento Box, Golden Gate in Fog, Peacock, Northern Lights over a
+Re-banded 2026-10-20 (taps must matter): Brooklyn Bridge is open art that
+produces no choices, so it closes the Easy set; Goldfish Bowl moved up.
+
+- **Easy (1–5):** Hot Air Balloon, Rubber Duck, Paper Boat in the Rain,
+  Desert Cactus at Noon, Brooklyn Bridge
+- **Medium (6–15):** Goldfish Bowl, Lighthouse at Dusk, Toucan, Sleeping
+  Fox, Record Player, Venice Canal, Night Owl, Ice Cream Truck, Coral Reef,
+  Birthday Cake
+- **Hard (16–30):** Mount Fuji in Bloom, Typewriter, Koi Pond, Campfire
+  Under the Stars, Arcade Cabinet, Bento Box, Golden Gate in Fog, Peacock, Northern Lights over a
   Cabin, Santorini Rooftops, Chameleon, Fireworks over the Harbor,
   Hummingbird & Flowers, Rose Window, Jellyfish Aquarium
 
