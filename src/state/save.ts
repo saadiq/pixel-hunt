@@ -1,5 +1,5 @@
 import { parseArt, sceneLevel } from '../core/board';
-import type { Band, Lanes, Meta, Scene, Slots, Squad } from '../core/types';
+import type { Band, Lanes, Meta, Scene, Slots } from '../core/types';
 import type { Game, Snapshot } from './game';
 
 const KEY = 'crumbhunt.v1';
@@ -64,12 +64,16 @@ export function toRun(g: Game, seed: number): SavedRun {
   };
 }
 
-const isSquad = (s: unknown): s is Squad => isObj(s) && [s.color, s.cap, s.total].every((n) => typeof n === 'number');
-const validState = (st: unknown, n: number, nl: number, ns: number): boolean =>
+const isInt = (x: unknown, lo: number, hi = Infinity): boolean => Number.isInteger(x) && (x as number) >= lo && (x as number) <= hi;
+interface Dims { n: number; nl: number; ns: number; nc: number }
+const isSquad = (s: unknown, nc: number): boolean =>
+  isObj(s) && isInt(s.color, 0, nc - 1) && isInt(s.cap, 1) && isInt(s.total, 1);
+const validState = (st: unknown, d: Dims): boolean =>
   isObj(st)
-  && Array.isArray(st.grid) && st.grid.length === n && st.grid.every((v) => Number.isInteger(v))
-  && Array.isArray(st.lanes) && st.lanes.length === nl && st.lanes.every((q) => Array.isArray(q) && q.every(isSquad))
-  && Array.isArray(st.slots) && st.slots.length === ns && st.slots.every((s) => s === null || isSquad(s));
+  && Array.isArray(st.grid) && st.grid.length === d.n && st.grid.every((v) => isInt(v, -1, d.nc - 1))
+  && Array.isArray(st.lanes) && st.lanes.length === d.nl && st.lanes.every((q) => Array.isArray(q) && q.every((s) => isSquad(s, d.nc)))
+  && Array.isArray(st.slots) && st.slots.length === d.ns && st.slots.every((s) => s === null || isSquad(s, d.nc))
+  && isInt(st.taps, 0) && typeof st.onLine === 'boolean';
 
 function findScene(meta: Meta, scenes: Record<string, Scene>): Scene | null {
   if (meta.kind === 'random') return null; // Task 10 adds randomLevel
@@ -84,9 +88,11 @@ export function fromRun(r: SavedRun, scenes: Record<string, Scene>): Game | null
     const level = sceneLevel(scene);
     const board = parseArt(level);
     const n = board.W * board.H;
-    if (!validState(r, n, level.lanes, level.slots)) return null;
-    if (!Array.isArray(r.hist) || !r.hist.every((h) => validState(h, n, level.lanes, level.slots))) return null;
-    if (!Array.isArray(r.line)) return null;
+    const d: Dims = { n, nl: level.lanes, ns: level.slots, nc: board.colors.length };
+    if (!validState(r, d)) return null;
+    if (!Array.isArray(r.hist) || !r.hist.every((h) => validState(h, d))) return null;
+    if (!isInt(r.undos, 0, 3) || !isInt(r.hints, 0, 3) || !isInt(r.usedUndo, 0) || !isInt(r.usedHint, 0)) return null;
+    if (!Array.isArray(r.line) || !r.line.every((x) => isInt(x, 0, level.lanes - 1))) return null;
     const hist: Snapshot[] = r.hist.map((h) => ({ ...h, grid: Int8Array.from(h.grid) }));
     const grid = Int8Array.from(r.grid);
     return {

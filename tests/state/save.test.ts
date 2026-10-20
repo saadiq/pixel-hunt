@@ -72,4 +72,15 @@ describe('toRun/fromRun', () => {
     expect(fromRun({ ...r, slots: [] }, scenes)).toBeNull();
     expect(fromRun({} as never, scenes)).toBeNull();
   });
+
+  test('bad scalars and out-of-range values return null', () => {
+    const r = toRun(mk(), 7);
+    expect(fromRun({ ...r, undos: 'x' as unknown as number }, scenes)).toBeNull();
+    expect(fromRun({ ...r, hints: 4 }, scenes)).toBeNull();
+    expect(fromRun({ ...r, onLine: 1 as unknown as boolean }, scenes)).toBeNull();
+    expect(fromRun({ ...r, line: [99] }, scenes)).toBeNull();
+    expect(fromRun({ ...r, grid: r.grid.map(() => 99) }, scenes)).toBeNull();
+    const lanes = r.lanes.map((q) => q.map((s) => ({ ...s, color: 99 })));
+    expect(fromRun({ ...r, lanes }, scenes)).toBeNull();
+  });
 });
