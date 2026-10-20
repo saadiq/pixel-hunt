@@ -6,9 +6,9 @@ export const brooklynBridge: Scene = {
   name: "Brooklyn Bridge",
   blurb: "The old stone tower glowing as the sun goes down.",
   band: "medium",
-  slots: 4,
+  slots: 3,
   lanes: 4,
-  chunk: [50, 80],
+  chunk: [90, 130],
   wait: 0.6,
   pal: {
     a: '#6b4fa0',

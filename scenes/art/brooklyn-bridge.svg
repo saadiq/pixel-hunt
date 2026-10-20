@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-  <metadata>{"id":"brooklyn-bridge","name":"Brooklyn Bridge","blurb":"The old stone tower glowing as the sun goes down.","band":"medium","W":48,"H":48,"slots":4,"lanes":4,"chunk":[50,80],"wait":0.6,"bg":"#6b4fa0"}</metadata>
+  <metadata>{"id":"brooklyn-bridge","name":"Brooklyn Bridge","blurb":"The old stone tower glowing as the sun goes down.","band":"medium","W":48,"H":48,"slots":3,"lanes":4,"chunk":[90,130],"wait":0.6,"bg":"#6b4fa0"}</metadata>
   <defs>
     <!-- pointed (gothic) arches, 5 cells inside -->
     <path id="arches" d="M6.5,37 V17 A8,8 0 0 1 9.5,9 A8,8 0 0 1 12.5,17 V37 Z M17.5,37 V17 A8,8 0 0 1 20.5,9 A8,8 0 0 1 23.5,17 V37 Z"/>
