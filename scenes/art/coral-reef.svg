@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="54" height="54">
+  <metadata>{"id":"coral-reef","name":"Coral Reef","blurb":"A clownfish peeking out of its anemone.","band":"hard","W":54,"H":54,"slots":4,"lanes":5,"chunk":[60,95],"wait":0.9,"bg":"#2a74b8"}</metadata>
+  <defs>
+    <path id="body" d="M6,23 C6,14 15,9 26,9 C36,9 42,14 45,19 L45,27 C42,32 36,35 26,35 C15,35 6,31 6,23 Z"/>
+    <clipPath id="bodyClip"><use href="#body"/></clipPath>
+    <g id="back" fill="none" stroke-linecap="round">
+      <path d="M1,58 C1,48 -1,40 2,31 M53,58 C53,48 55,40 52,31 M12,58 C10,48 7,42 8,34 M42,58 C44,48 47,42 46,34"/>
+    </g>
+    <g id="front" fill="none" stroke-linecap="round">
+      <path d="M6,58 C6,52 0,47 3,41 M6,58 C6,52 12,42 9,36 M17,58 C17,52 13,46 15,40 M18,58 C18,52 24,41 21,35 M30,58 C30,52 24,45 27,39 M31,58 C31,52 35,41 33,35 M42,58 C42,52 36,46 39,40 M42,58 C42,52 48,42 45,36 M53,58 C53,52 49,48 51,42"/>
+    </g>
+  </defs>
+  <rect width="54" height="54" fill="#2a74b8"/>
+  <!-- bubbles -->
+  <g fill="#9fe0f7">
+    <circle cx="48" cy="6" r="2.4"/>
+    <circle cx="51" cy="12" r="1.4"/>
+    <circle cx="44" cy="2" r="1.3"/>
+    <circle cx="5" cy="8" r="1.8"/>
+    <circle cx="3" cy="15" r="1.2"/>
+  </g>
+  <g fill="#ffffff"><rect x="47" y="5" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/></g>
+  <!-- anemone, back tentacles in shade -->
+  <use href="#back" stroke="#1d1a2e" stroke-width="6.4"/>
+  <use href="#back" stroke="#8e3a9e" stroke-width="3.9"/>
+  <rect x="0" y="48" width="54" height="6" fill="#8e3a9e"/>
+  <!-- clownfish -->
+  <g transform="translate(0 4)">
+    <path d="M43,22 L52,13 C54,18 54,27 52,32 Z" fill="#ff7a1f" stroke="#1d1a2e" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M51,14.5 C52.6,19 52.6,26 51,30.5" fill="none" stroke="#1d1a2e" stroke-width="1.5"/>
+    <path d="M18,10.5 C22,4 32,3 38,8 C39,10 38,11 37,12 Z" fill="#ff7a1f" stroke="#1d1a2e" stroke-width="1.6" stroke-linejoin="round"/>
+    <g clip-path="url(#bodyClip)">
+      <rect width="54" height="54" fill="#ff7a1f"/>
+      <rect y="28" width="54" height="10" fill="#d9531e"/>
+      <path d="M17.5,8 C14,15 14,29 17.5,36 L22.5,36 C19.5,29 19.5,15 22.5,8 Z" fill="#ffffff" stroke="#1d1a2e" stroke-width="1.4"/>
+      <path d="M27,8 C25,15 25,29 27,36 L32,36 C30,29 30,15 32,8 Z" fill="#ffffff" stroke="#1d1a2e" stroke-width="1.4"/>
+      <path d="M38.5,8 L43,8 L43,36 L38.5,36 Z" fill="#ffffff" stroke="#1d1a2e" stroke-width="1.4"/>
+    </g>
+    <use href="#body" fill="none" stroke="#1d1a2e" stroke-width="1.8"/>
+    <circle cx="11" cy="17.5" r="3" fill="#ffffff"/>
+    <circle cx="10.5" cy="18" r="1.6" fill="#1d1a2e"/>
+  </g>
+  <!-- anemone, front tentacles hugging the fish -->
+  <use href="#front" stroke="#1d1a2e" stroke-width="6.4"/>
+  <use href="#front" stroke="#c75bd1" stroke-width="3.9"/>
+  <g fill="#f29be6">
+    <circle cx="3" cy="41.6" r="1.7"/>
+    <circle cx="9" cy="36.6" r="1.7"/>
+    <circle cx="15" cy="40.6" r="1.7"/>
+    <circle cx="21" cy="35.6" r="1.7"/>
+    <circle cx="27" cy="39.6" r="1.7"/>
+    <circle cx="33" cy="35.6" r="1.7"/>
+    <circle cx="39" cy="40.6" r="1.7"/>
+    <circle cx="45" cy="36.6" r="1.7"/>
+    <circle cx="51" cy="42.6" r="1.7"/>
+  </g>
+</svg>
