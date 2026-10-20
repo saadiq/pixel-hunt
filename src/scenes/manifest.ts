@@ -1,2 +1,2 @@
-/** Ordered scene ids. Filled from Task 7. */
-export const MANIFEST: string[] = [];
+/** Ordered scene ids. This order is the progression. */
+export const MANIFEST: string[] = ['hot-air-balloon'];
