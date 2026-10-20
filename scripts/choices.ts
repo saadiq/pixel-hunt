@@ -3,22 +3,17 @@
 // a board to create pressure in, so a board that scores here scores in real play too.
 import { parseArt, sceneLevel } from '../src/core/board';
 import { deal } from '../src/core/deal';
-import { exposedMask } from '../src/core/path';
+import { fieldOf } from '../src/core/field';
 import { mulberry } from '../src/core/rng';
-import { stepSlots } from '../src/core/step';
+import { copySlots } from '../src/core/squads';
+import { cleared, settle } from '../src/core/step';
 import type { Board, Lanes, Level, Scene, Slots } from '../src/core/types';
 
 interface State { g: Int8Array; slots: Slots; pos: number[] }
 
-function settle(b: Board, s: State): void {
-  while (stepSlots(s.g, b.W, b.H, s.slots));
-}
-
-function clone(s: State): State {
-  return { g: s.g.slice(), slots: s.slots.map((q) => (q ? { ...q } : null)), pos: s.pos.slice() };
-}
-
-const won = (s: State) => s.g.every((v) => v < 0);
+const settleState = (b: Board, s: State): void => settle(s.g, b.W, b.H, s.slots);
+const clone = (s: State): State => ({ g: s.g.slice(), slots: copySlots(s.slots), pos: s.pos.slice() });
+const won = (s: State): boolean => cleared(s.g);
 
 /** Taps lane li (state already settled), then settles. False if the tap is impossible. */
 function tap(b: Board, lanes: Lanes, s: State, li: number): boolean {
@@ -26,16 +21,15 @@ function tap(b: Board, lanes: Lanes, s: State, li: number): boolean {
   if (free < 0 || !sq) return false;
   s.slots[free] = { ...sq };
   s.pos[li]++;
-  settle(b, s);
+  settleState(b, s);
   return true;
 }
 
 /** Open lanes, those whose front colour can be eaten right now first. */
 function options(b: Board, lanes: Lanes, s: State): { open: number[]; eatable: Set<number> } {
-  const exp = exposedMask(s.g, b.W, b.H), has = new Set<number>();
-  for (let i = 0; i < s.g.length; i++) if (exp[i] && s.g[i] >= 0) has.add(s.g[i]);
+  const exposed = fieldOf(s.g, b.W, b.H).exposed;
   const open = lanes.map((_, k) => k).filter((k) => s.pos[k] < lanes[k].length);
-  const eatable = new Set(open.filter((k) => has.has(lanes[k][s.pos[k]].color)));
+  const eatable = new Set(open.filter((k) => exposed[lanes[k][s.pos[k]].color]?.length));
   open.sort((a, c) => Number(eatable.has(c)) - Number(eatable.has(a)));
   return { open, eatable };
 }
@@ -66,6 +60,8 @@ function solvable(b: Board, lanes: Lanes, s: State, budget = 3000): boolean {
 export interface Choices {
   /** Share of turns with 2+ options where at least one option loses the board. */
   choice: number;
+  /** Average number of such turns per board. */
+  decisions: number;
   /** Share of turns where an option that looks fine (its colour is eatable now) loses the board. */
   trap: number;
   /** Win rate of a player who always taps a random eatable-looking lane. */
@@ -76,7 +72,7 @@ function walkLine(b: Board, lanes: Lanes, line: number[], slotN: number): { turn
   const s: State = { g: b.grid.slice(), slots: Array(slotN).fill(null), pos: lanes.map(() => 0) };
   let turns = 0, choice = 0, trap = 0;
   for (const li of line) {
-    settle(b, s);
+    settleState(b, s);
     const { open, eatable } = options(b, lanes, s);
     if (open.length > 1) {
       turns++;
@@ -99,7 +95,7 @@ function walkLine(b: Board, lanes: Lanes, line: number[], slotN: number): { turn
 function mindlessWin(b: Board, lanes: Lanes, slotN: number, rng: () => number): boolean {
   const s: State = { g: b.grid.slice(), slots: Array(slotN).fill(null), pos: lanes.map(() => 0) };
   for (let guard = 0; guard < 2000; guard++) {
-    settle(b, s);
+    settleState(b, s);
     if (won(s)) return true;
     const { open, eatable } = options(b, lanes, s);
     const pool = eatable.size ? [...eatable] : open;
@@ -123,5 +119,5 @@ export function measureLevel(level: Level, n: number): Choices {
     const rng = mulberry(seed * 104729 + 7);
     for (let k = 0; k < 4; k++, games++) if (mindlessWin(b, d.lanes, level.slots, rng)) wins++;
   }
-  return { choice: turns ? choice / turns : 0, trap: turns ? trap / turns : 0, mindless: games ? wins / games : 0 };
+  return { choice: turns ? choice / turns : 0, decisions: n ? choice / n : 0, trap: turns ? trap / turns : 0, mindless: games ? wins / games : 0 };
 }

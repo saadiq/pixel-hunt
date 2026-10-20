@@ -1,9 +1,10 @@
 import { parseArt, sceneLevel } from '../src/core/board';
 import { deal, replayLine } from '../src/core/deal';
-import { playout } from '../src/core/playout';
 import { mulberry } from '../src/core/rng';
+import { hexRgb } from '../src/render/cube';
 import type { Scene } from '../src/core/types';
-import { HEIGHT_RANGE, TARGETS, WIDTH_RANGE } from './targets';
+import { playout } from './playout';
+import { HEIGHT_RANGE, TARGETS, WIDTH_RANGE } from '../src/core/targets';
 
 const MAX_COLORS = 9;
 const MIN_CELLS = 4;
@@ -47,8 +48,8 @@ function checkParams(s: Scene): string[] {
 type Lab = [number, number, number];
 
 function toLab(hex: string): Lab {
-  const lin = [1, 3, 5].map((i) => {
-    const v = parseInt(hex.slice(i, i + 2), 16) / 255;
+  const lin = hexRgb(hex).map((c) => {
+    const v = c / 255;
     return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
   });
   const [r, g, b] = lin;
@@ -83,7 +84,7 @@ export function checkColors(s: Scene): string[] {
   return errs;
 }
 
-function median(xs: number[]): number {
+export function median(xs: number[]): number {
   if (!xs.length) return 0;
   const a = [...xs].sort((x, y) => x - y), m = a.length >> 1;
   return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
@@ -99,7 +100,7 @@ export function checkDeals(s: Scene, n: number): { failures: number; medianTaps:
     try {
       const d = deal(level, board, seed);
       ms.push(performance.now() - t0);
-      taps.push(d.lanes.reduce((a, l) => a + l.length, 0));
+      taps.push(d.line.length);
       if (!replayLine(level, board, d)) failures++;
     } catch {
       failures++;
@@ -116,7 +117,7 @@ export function estimateWinRate(s: Scene, n: number): number {
     try {
       const d = deal(level, board, seed);
       const rng = mulberry(seed * 7919 + 1);
-      if (playout(board.grid, board.W, board.H, Array(level.slots).fill(null), d.lanes, rng, null)) wins++;
+      if (playout(board.grid, board.W, board.H, Array(level.slots).fill(null), d.lanes, rng)) wins++;
     } catch {
       // a throwing deal counts as a loss
     }

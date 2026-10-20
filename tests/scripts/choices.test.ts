@@ -10,14 +10,14 @@ describe('measureChoices', () => {
     expect(c.mindless).toBeGreaterThan(0.75);
   });
 
-  test('a hard board has wrong taps that lose, and punishes mindless tapping', () => {
-    const c = measureChoices(SCENES['rose-window'], 2);
-    expect(c.choice).toBeGreaterThan(0.15);
+  test('a hard board has many wrong taps that lose, and punishes mindless tapping', () => {
+    const c = measureChoices(SCENES['rose-window'], 3);
+    expect(c.decisions).toBeGreaterThan(10);
     expect(c.trap).toBeLessThanOrEqual(c.choice);
     expect(c.mindless).toBeLessThan(0.5);
-  });
+  }, 60_000);
 
   test('is deterministic', () => {
-    expect(measureChoices(SCENES['bento-box'], 1)).toEqual(measureChoices(SCENES['bento-box'], 1));
-  });
+    expect(measureChoices(SCENES['goldfish-bowl'], 1)).toEqual(measureChoices(SCENES['goldfish-bowl'], 1));
+  }, 60_000);
 });
