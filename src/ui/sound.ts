@@ -10,8 +10,15 @@ export function setEnabled(on: boolean): void {
   enabled = on;
 }
 
+/** iOS suspends (or "interrupts") the context after calls, locking and backgrounding; a tap may resume it. */
+function wake(ac: AudioContext): void {
+  const st = ac.state as AudioContextState | 'interrupted';
+  if (st === 'suspended' || st === 'interrupted') ac.resume().catch(() => { /* best effort */ });
+}
+
+/** Creates the audio context on the first tap and wakes it on every later one. */
 export function ensureAudio(): void {
-  if (actx) return;
+  if (actx) { wake(actx); return; }
   try {
     const Ctor = (window.AudioContext ?? (window as unknown as { webkitAudioContext?: AC }).webkitAudioContext) as AC | undefined;
     if (!Ctor) return;
@@ -20,6 +27,7 @@ export function ensureAudio(): void {
     noise = actx.createBuffer(1, len, actx.sampleRate);
     const d = noise.getChannelData(0);
     for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+    wake(actx);
   } catch {
     actx = null;
   }
