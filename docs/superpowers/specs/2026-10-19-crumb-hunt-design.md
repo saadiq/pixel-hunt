@@ -95,15 +95,20 @@ The prototype's rules carry over exactly. The pure logic in the artifact
 - ESLint with `max-lines: 300` (error) per file, `max-lines-per-function: 100`,
   and `complexity: 15` (warn). This follows the user's global preferences.
 
-### Grid sizes and difficulty bands
-On a 390px phone with 16px gutters and the track, ~40 columns gives ~8px
-cells, the smallest that stays readable. So:
+### Grid sizes and difficulty bands (revised after the art check-in)
+The first art check-in (30–38 wide) was rejected as too low-resolution. The
+reference games (Colony Flow, Food Hunt: Pixel Puzzle) use ~48–60 cubes
+across, drawn as small raised cubes at ~6–7px. So:
 
-| Band   | Grid (W×H, may be non-square) | Slots | Lanes | Squad size | `wait` |
-|--------|-------------------------------|-------|-------|------------|--------|
-| Easy   | 28–32 wide                    | 5     | 3     | scaled     | ~0.3   |
-| Medium | 32–36 wide                    | 4     | 4     | scaled     | ~0.5–0.7 |
-| Hard   | 36–40 wide                    | 3–4   | 4–5   | scaled     | ~0.8–0.95 |
+| Band   | Grid width (height 36–60) | Slots | Lanes | Squad size | `wait` |
+|--------|---------------------------|-------|-------|------------|--------|
+| Easy   | 40–44 wide                | 5     | 3     | scaled     | ~0.3   |
+| Medium | 46–50 wide                | 4     | 4     | scaled     | ~0.5–0.7 |
+| Hard   | 52–56 wide                | 3–4   | 4–5   | scaled     | ~0.8–0.95 |
+
+- Cell size may be fractional and goes down to ~6px (56 wide on a 390px
+  phone). The track around the board is thin, as in the reference games.
+- Squads are correspondingly large (roughly 30–90 per squad).
 
 - Grids may be portrait (e.g. 32×40) when the art needs it. The board fits
   within the stage by both width and height.
@@ -184,8 +189,31 @@ prototype scenes carry over.
   Peacock, Rose Window, Tokyo Street in the Rain, Fireworks over the Harbor,
   Chameleon, Hummingbird & Flowers, Santorini Rooftops
 
-Every scene must read as its subject at thumbnail size (64px), with a
-foreground, background and some depth, the way the bridge does.
+Every scene must read as its subject at thumbnail size (64px).
+
+### Art direction (decided with the user after the first check-in)
+- Reference: the iOS games Colony Flow and Food Hunt: Pixel Puzzle.
+- One bold subject, close-up and centred, filling most of the frame (a
+  bento box, a rainbow tongue, a pile of pencils), on a simple background.
+  Cartoon-sticker look, not a wide landscape with tiny details.
+- Clean dark outlines, flat fills, 5–9 colours, with one lighter or darker
+  band for shading on curves.
+- Blocks render as small raised cubes with a gap, in the game, the preview
+  page and the PNG export alike.
+- Subjects in the list above may be reframed as close-ups (e.g. Coral Reef
+  becomes a clownfish in an anemone), and weak subjects swapped for bolder
+  ones in the same category; swaps are shown at the next check-in.
+
+### How scenes are made (revised)
+- Each scene is drawn as an SVG illustration (`scenes/art/<id>.svg`) with
+  flat fills and strokes at least one cell wide, plus a small metadata block
+  (name, blurb, band, grid size, params).
+- `bun run build-scenes [id…]` rasterises each SVG to the grid by
+  supersampling and taking the majority colour per cell, snapped to the
+  SVG's own palette, and writes `src/scenes/<id>.ts`. Generated files are
+  committed, so the app and validator are unchanged.
+- Adding a scene: draw the SVG, run build-scenes, add it to the manifest,
+  run validate.
 
 ### Art sign-off (decided with the user)
 - Build a dev-only **scene preview page** early, before the game UI is
@@ -194,6 +222,10 @@ foreground, background and some depth, the way the bridge does.
 - **Checkpoint:** draw 3 scenes first, one per band (my call: Hot Air
   Balloon, Brooklyn Bridge, Coral Reef). Stop for the user's review, then
   draw the other 27 with that feedback in mind.
+- **Check-in 1 result (2026-10-19):** rejected, because the resolution was
+  too low and the scenes didn't look good. This led to the revised grid
+  sizes, art direction and SVG pipeline above. The same three scenes get
+  redrawn the new way for a second check-in.
 
 ### Screens and UI
 - Keep the prototype's layout and visual language: header (title/scene name
@@ -213,7 +245,7 @@ foreground, background and some depth, the way the bridge does.
   scenes.
 - First launch opens scene 1 with the prototype's one-line tip.
 - On small canvases, scale the ant sprite with cell size but keep a minimum
-  size so ants stay visible. Allow cells down to ~7px before shrinking further.
+  size so ants stay visible. Cells may be fractional, down to ~6px before shrinking further.
 
 ### Undo, restart, hints
 - 3 undos per board. Restarts are unlimited, as in the prototype. A restart
