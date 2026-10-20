@@ -23,4 +23,5 @@ export const MANIFEST: string[] = [
   'bento-box',
   'rose-window',
   'peacock',
+  'santorini-rooftops',
 ];
