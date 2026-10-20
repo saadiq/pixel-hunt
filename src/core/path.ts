@@ -27,12 +27,19 @@ export function distField(grid: Int8Array, W: number, H: number, hc: number): In
   let qh = 0, qt = 0;
   q[qt++] = start;
   d[start] = 0;
-  const open = (n: number) => d[n] < 0 && (map[n] < 0 || grid[map[n]] < 0);
+  // Neighbour checks unrolled, no per-node allocation: this is the hot loop of every deal.
+  const visit = (n: number, nd: number) => {
+    if (d[n] >= 0) return;
+    const m = map[n];
+    if (m < 0 || grid[m] < 0) { d[n] = nd; q[qt++] = n; }
+  };
   while (qh < qt) {
     const e = q[qh++];
     const er = (e / EW) | 0, ec = e - er * EW, nd = d[e] + 1;
-    const nbrs = [er > 0 ? e - EW : -1, er < EH - 1 ? e + EW : -1, ec > 0 ? e - 1 : -1, ec < EW - 1 ? e + 1 : -1];
-    for (const n of nbrs) if (n >= 0 && open(n)) { d[n] = nd; q[qt++] = n; }
+    if (er > 0) visit(e - EW, nd);
+    if (er < EH - 1) visit(e + EW, nd);
+    if (ec > 0) visit(e - 1, nd);
+    if (ec < EW - 1) visit(e + 1, nd);
   }
   return d;
 }
