@@ -68,7 +68,7 @@ export function undo(g: Game): boolean {
   g.undos--;
   g.usedUndo++;
   g.stuck = false;
-  g.idle = true;
+  g.idle = g.slots.every((s) => s === null);
   return true;
 }
 

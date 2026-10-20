@@ -85,6 +85,19 @@ describe('game undo and end states', () => {
     expect(g.usedUndo).toBe(3);
   });
 
+  test('undo of a tap made mid-eat stays busy while slots are occupied', () => {
+    const eatsNow = (lane: number) => { const t = newGame(meta, level, 7); tapLane(t, lane); return tick(t); };
+    const g = newGame(meta, level, 7);
+    tapLane(g, g.lanes.findIndex((_, i) => eatsNow(i)));
+    expect(tick(g)).toBe(true);
+    expect(g.idle).toBe(false);
+    const l = g.lanes.findIndex((x) => x.length);
+    tapLane(g, l);
+    expect(undo(g)).toBe(true);
+    expect(g.slots.some(Boolean)).toBe(true);
+    expect(g.idle).toBe(false);
+  });
+
   test('history is capped at 40', () => {
     const g = newGame(meta, level, 7);
     for (let i = 0; i < 60; i++) {
@@ -110,7 +123,7 @@ describe('game undo and end states', () => {
     expect(undo(g)).toBe(true);
     expect(g.stuck).toBe(false);
     expect(status(g)).toBe('playing');
-    expect(g.idle).toBe(true);
+    expect(g.idle).toBe(false); // the first squad still holds a slot
   });
 
   test('newGame on the same meta resets undos and hints', () => {
