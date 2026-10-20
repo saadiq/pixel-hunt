@@ -25,14 +25,17 @@ export function defaults(): SaveV1 {
 const isObj = (x: unknown): x is Record<string, unknown> => typeof x === 'object' && x !== null && !Array.isArray(x);
 const BANDS: Band[] = ['easy', 'medium', 'hard'];
 
+const dailyChoice = (x: unknown): DailyChoice | null =>
+  isObj(x) && typeof x.date === 'string' && typeof x.id === 'string' ? { date: x.date, id: x.id } : null;
+
 function sanitize(raw: unknown): SaveV1 {
   const d = defaults();
   if (!isObj(raw) || raw.v !== 1) return d;
   if (Array.isArray(raw.cleared)) d.cleared = raw.cleared.filter((x): x is string => typeof x === 'string');
   if (isObj(raw.wins)) for (const b of BANDS) { const n = raw.wins[b]; if (typeof n === 'number' && n >= 0) d.wins[b] = n; }
   if (typeof raw.daily === 'string') d.daily = raw.daily;
-  const dp = raw.dailyPick;
-  if (isObj(dp) && typeof dp.date === 'string' && typeof dp.id === 'string') d.dailyPick = { date: dp.date, id: dp.id };
+  const dp = dailyChoice(raw.dailyPick);
+  if (dp) d.dailyPick = dp;
   if (isObj(raw.prefs)) {
     const p = raw.prefs;
     if (typeof p.sound === 'boolean') d.prefs.sound = p.sound;
