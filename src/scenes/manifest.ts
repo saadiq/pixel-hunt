@@ -28,4 +28,5 @@ export const MANIFEST: string[] = [
   'northern-lights',
   'fireworks-harbor',
   'chameleon',
+  'hummingbird',
 ];
