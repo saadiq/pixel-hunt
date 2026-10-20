@@ -119,7 +119,8 @@ function step(game: Game): void {
 
 function endBoard(game: Game, st: 'won' | 'stuck'): void {
   over = true;
-  save.run = null;
+  // A stuck board with undos left stays saved so closing the app on the lose sheet doesn't lose it.
+  save.run = st === 'stuck' && game.undos && game.hist.length ? toRun(game, seed) : null;
   renderMeter(game);
   const ctx = { game, save, replay: () => start(game.meta), undo: doUndo, start, openScenes: showScenes, random: playRandom };
   if (st === 'won') win(ctx); else lose(ctx);
