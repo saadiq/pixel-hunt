@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 48" width="42" height="48">
+  <metadata>{"id":"toucan","name":"Toucan","blurb":"All beak and no apologies.","band":"easy","W":42,"H":48,"slots":5,"lanes":3,"chunk":[46,66],"wait":0.3,"bg":"#bfe6ff"}</metadata>
+  <defs>
+    <path id="beak" d="M21,8.5 C12,5 3,8 0.8,15.5 C0.3,18 2,19.5 4.5,19 C10,17.5 15,19.5 21,22.5 Z"/>
+    <clipPath id="beakClip"><use href="#beak"/></clipPath>
+    <path id="body" d="M24,7.5 C30,7.5 33,12 33.5,18 C34.5,26 34,32 31,37 L23,37 C19,33 17.5,27 18,21 C18.5,13 19.5,7.5 24,7.5 Z"/>
+    <clipPath id="bodyClip"><use href="#body"/></clipPath>
+    <path id="leaf" d="M0,0 C3,-3 8,-3 10,0 C8,3 3,3 0,0 Z"/>
+  </defs>
+  <rect width="42" height="48" fill="#bfe6ff"/>
+  <!-- jungle leaves in the corners -->
+  <g fill="#4fbf4a" stroke="#1a1626" stroke-width="1.2" stroke-linejoin="round">
+    <use href="#leaf" transform="translate(32 4) rotate(-20) scale(1.1)"/>
+    <use href="#leaf" transform="translate(42 10) rotate(200) scale(1.2)"/>
+    <use href="#leaf" transform="translate(0 30) rotate(-30) scale(1.1)"/>
+  </g>
+  <!-- tail -->
+  <path d="M26,34 L36,46.5 L40,44 L32,32 Z" fill="#343a5e" stroke="#1a1626" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- body with a yellow bib and red under-tail -->
+  <use href="#body" fill="#343a5e"/>
+  <g clip-path="url(#bodyClip)">
+    <ellipse cx="19.5" cy="19" rx="7.5" ry="9.5" fill="#ffd23f"/>
+    <rect x="20" y="33" width="14" height="5" fill="#e8433a"/>
+  </g>
+  <use href="#body" fill="none" stroke="#1a1626" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M33,17 C29,20 28,27 30,32" fill="none" stroke="#1a1626" stroke-width="1.1"/>
+  <!-- branch -->
+  <rect x="-2" y="36.5" width="46" height="4" rx="2" fill="#8a5a3c" stroke="#1a1626" stroke-width="1.5"/>
+  <rect x="8" y="38" width="3" height="1" fill="#1a1626"/>
+  <rect x="31" y="38" width="2" height="1" fill="#1a1626"/>
+  <g fill="#4fbf4a" stroke="#1a1626" stroke-width="1.2" stroke-linejoin="round">
+    <use href="#leaf" transform="translate(4 40) rotate(60) scale(0.9)"/>
+    <use href="#leaf" transform="translate(13 40) rotate(100) scale(0.8)"/>
+    <use href="#leaf" transform="translate(38 40) rotate(80) scale(0.9)"/>
+  </g>
+  <!-- feet -->
+  <rect x="22" y="35" width="2" height="3" fill="#1a1626"/>
+  <rect x="27" y="35" width="2" height="3" fill="#1a1626"/>
+  <!-- beak in bands: green base, orange middle, red tip -->
+  <g clip-path="url(#beakClip)">
+    <rect width="42" height="48" fill="#ff8a2a"/>
+    <rect x="15" width="10" height="48" fill="#4fbf4a"/>
+    <rect width="6.5" height="48" fill="#e8433a"/>
+    <rect x="5" y="7" width="11" height="2.2" fill="#ffd23f"/>
+  </g>
+  <use href="#beak" fill="none" stroke="#1a1626" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- eye with a lime ring -->
+  <circle cx="24.5" cy="12.5" r="2.6" fill="#4fbf4a" stroke="#1a1626" stroke-width="1"/>
+  <rect x="24" y="12" width="2" height="2" fill="#1a1626"/>
+  <rect x="24" y="12" width="1" height="1" fill="#bfe6ff"/>
+</svg>
