@@ -23,5 +23,5 @@ import { veniceCanal } from './venice-canal';
 
 /** Scene lookup by id. Each scene file is imported here as it is added. */
 export const SCENES: Record<string, Scene> = Object.fromEntries(
-  [hotAirBalloon, rubberDuck, goldfishBowl, recordPlayer, lighthouseAtDusk, sleepingFox, toucan, desertCactus, paperBoat, iceCreamTruck, brooklynBridge, typewriter, mountFuji, birthdayCake, veniceCanal, koiPond, nightOwl, coralReef, arcadeCabinet, campfire, bentoBox].map((s) => [s.id, s]),
+  [hotAirBalloon, rubberDuck, goldfishBowl, recordPlayer, lighthouseAtDusk, sleepingFox, toucan, desertCactus, paperBoat, iceCreamTruck, brooklynBridge, typewriter, coralReef, veniceCanal, mountFuji, arcadeCabinet, birthdayCake, nightOwl, koiPond, campfire, bentoBox].map((s) => [s.id, s]),
 );
