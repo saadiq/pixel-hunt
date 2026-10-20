@@ -23,7 +23,7 @@ describe('checkStructure', () => {
     expect(errs.some((e) => /height/i.test(e))).toBe(true);
   });
   test('accepts a grid inside its band', () => {
-    const rows = Array.from({ length: 24 }, () => 'ab'.repeat(15));
+    const rows = Array.from({ length: 36 }, () => 'ab'.repeat(20));
     expect(checkStructure({ ...base, rows })).toEqual([]);
   });
 });

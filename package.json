@@ -8,9 +8,11 @@
     "test": "bun test",
     "lint": "bunx eslint .",
     "validate": "bun scripts/validate.ts",
-    "export-pngs": "bun scripts/export-pngs.ts"
+    "export-pngs": "bun scripts/export-pngs.ts",
+    "build-scenes": "bun scripts/build-scenes.ts"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "@types/bun": "^1.4.3",
     "@types/pngjs": "^6.0.5",
     "eslint": "^10.13.0",
