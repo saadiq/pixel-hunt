@@ -68,6 +68,17 @@ describe('toRun/fromRun', () => {
     expect(h.board.W).toBe(g.board.W);
   });
 
+  test('snapshot remaining is recomputed from its grid, not trusted', () => {
+    const g = mk();
+    tapLane(g, g.line[0]);
+    tick(g);
+    tapLane(g, g.line[1]);
+    const r = toRun(g, 7);
+    const h = fromRun({ ...r, hist: r.hist.map((s) => ({ ...s, remaining: 999 })) }, scenes);
+    expect(h?.hist.length).toBe(2);
+    for (const s of h?.hist ?? []) expect(s.remaining).toBe(s.grid.reduce((a, v) => a + (v >= 0 ? 1 : 0), 0));
+  });
+
   test('unknown ids return null', () => {
     const r = toRun(mk(), 7);
     expect(fromRun({ ...r, meta: { kind: 'campaign', id: 'gone' } }, scenes)).toBeNull();

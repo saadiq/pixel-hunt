@@ -81,6 +81,8 @@ const validState = (st: unknown, d: Dims): boolean =>
   && Array.isArray(st.slots) && st.slots.length === d.ns && st.slots.every((s) => s === null || isSquad(s, d.nc))
   && isInt(st.taps, 0) && typeof st.onLine === 'boolean';
 
+const count = (g: Int8Array): number => g.reduce((a, v) => a + (v >= 0 ? 1 : 0), 0);
+
 function findLevel(meta: Meta, scenes: Record<string, Scene>): Level | null {
   if (meta.kind === 'random') {
     return BANDS.includes(meta.band) && isInt(meta.seed, 1) ? randomLevel(meta.band, meta.seed) : null;
@@ -100,12 +102,15 @@ export function fromRun(r: SavedRun, scenes: Record<string, Scene>): Game | null
     if (!Array.isArray(r.hist) || !r.hist.every((h) => validState(h, d))) return null;
     if (!isInt(r.undos, 0, 3) || !isInt(r.hints, 0, 3) || !isInt(r.usedUndo, 0) || !isInt(r.usedHint, 0)) return null;
     if (!Array.isArray(r.line) || !r.line.every((x) => isInt(x, 0, level.lanes - 1))) return null;
-    const hist: Snapshot[] = r.hist.slice(-HIST_MAX).map((h) => ({ ...h, grid: Int8Array.from(h.grid) }));
+    const hist: Snapshot[] = r.hist.slice(-HIST_MAX).map((h) => {
+      const g = Int8Array.from(h.grid);
+      return { ...h, grid: g, remaining: count(g) };
+    });
     const grid = Int8Array.from(r.grid);
     return {
       meta: r.meta, level, board, grid, lanes: r.lanes, slots: r.slots, hist,
       undos: r.undos, hints: r.hints, usedUndo: r.usedUndo, usedHint: r.usedHint, taps: r.taps,
-      remaining: grid.reduce((a, v) => a + (v >= 0 ? 1 : 0), 0), stuck: false,
+      remaining: count(grid), stuck: false,
       idle: r.slots.every((s) => s === null), line: r.line, onLine: r.onLine,
     };
   } catch { return null; }
