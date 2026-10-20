@@ -247,6 +247,37 @@ Added after art check-in 1 was rejected as too low-resolution. Read the spec sec
 - [ ] **Step 7: Commit** separately: the pipeline, the cube renderer, then one commit per scene.
 - [ ] **Step 8: STOP** for the user's second art check-in. The report lists the PNG paths and the validator table.
 
+### Task 7S: Lock in the check-in 2 decisions (glossy cubes, depth metric, bento and cake)
+
+Read the spec's "Check-in 2 + spike result" bullets and the revised band table first. The spike's throwaway code is in `out/spike/` (`render.ts` has `glossRects`, and there are `depth.ts`, `bento.svg` and `cake.svg`). Port from it; don't import it.
+
+**Files:**
+- Modify: `src/render/cube.ts` (style B replaces the current cube style), `scripts/export-pngs.ts`, `scripts/checks.ts`, `scripts/targets.ts`, `scripts/validate.ts`, `src/preview.ts`
+- Create: `scripts/depth.ts`, `scenes/art/bento-box.svg`, `scenes/art/birthday-cake.svg`, generated `src/scenes/bento-box.ts` and `birthday-cake.ts`
+- Modify: `scenes/art/{hot-air-balloon,brooklyn-bridge,coral-reef}.svg` (params, and art only where needed for the depth gate), `src/scenes/manifest.ts`, `src/scenes/index.ts`
+- Test: `tests/render/cube.test.ts`, `tests/scripts/depth.test.ts`
+
+**Interfaces:**
+- `cubeRects(x, y, s, hex)` now returns style B geometry. The seam is a darker tone of the cube's own colour (no dark grout). There is a top highlight and a soft bottom shade. Cells under 4px still draw flat.
+- `enclosureDepth(art: Art): { max: number; avg: number; deep3: number }` in `scripts/depth.ts` (browser-safe). Each cell's depth is the fewest colour changes along a 4-connected path from outside the board, where stepping into a cell of a different colour than the previous cell costs 1 and the first cell entered from outside costs 0. Use a 0-1 BFS. `deep3` is the fraction of cells with depth ≥ 3.
+- `TARGETS` win rates: easy `[0.7,1]`, medium `[0.45,0.75]`, hard `[0,0.45]`. New `TARGETS[band].minAvgDepth`: easy 0, medium 0, hard 1.5 (WARN if below). Slot ranges: easy 4–5, medium 3–4, hard 2–3; `checkStructure` errors if slots are outside the band. Taps stay at 30–60.
+- `validate` prints `depth` (avg/max) as a column.
+
+- [ ] **Step 1: Write failing tests:**
+  - `enclosureDepth` on a 5×5 board of `a` with a 3×3 ring of `b` around a centre `c` gives max 2 and avg `(0*16 + 1*8 + 2*1)/25`.
+  - A uniform board gives max 0.
+  - `cubeRects` seam colour is darker than, and the same hue family as, the face colour, never the fixed dark grout.
+- [ ] **Step 2:** Run. FAIL.
+- [ ] **Step 3:** Implement depth, the style-B cubes, targets, checks and the validate column.
+- [ ] **Step 4:** Promote the spike scenes.
+  - Bento Box goes to Hard. Use `out/spike/bento.svg`, tidied, at 2–3 slots, with chunk tuned to keep taps ≤ 60.
+  - Birthday Cake goes to Medium. Use `out/spike/cake.svg` with **no decorative border** (the user said a border "chokes" it), on a patterned tablecloth background, at 3–4 slots.
+  - Re-tune Hot Air Balloon to 4–5 slots and Brooklyn Bridge to 3–4.
+  - Coral Reef must meet the Hard depth gate (avg ≥ 1.5). Either redraw it boxed in (e.g. seen through a porthole or in an aquarium frame that belongs to the subject), or, if that hurts the art, move it to Medium and note that in the report.
+- [ ] **Step 5:** Run `build-scenes`, then `validate` (full), then `export-pngs`. `Read` every PNG. Every scene must have 0 deal failures and taps of 30–60, and its win rate and depth must be within its band. Iterate params (slots first, then chunk) until they are.
+- [ ] **Step 6:** Run `bun test`, lint and tsc. All clean.
+- [ ] **Step 7: Commit** separately: cubes, depth/targets, then each scene.
+
 ### Task 7P: Dealer and simulation performance at the new grid sizes
 
 **Files:** Modify `src/core/step.ts` and/or `src/core/path.ts`, `tests/core/deal.test.ts`.
@@ -335,7 +366,7 @@ interface Renderer {
 
 ### Task 11: Easy scenes 2–10
 
-**Files:** Create 9 files in `src/scenes/` and modify `manifest.ts` and `index.ts`. The scenes are Goldfish Bowl, Lighthouse at Dusk, Birthday Candles, Sleeping Fox, Record Player, Desert Cactus at Noon, Paper Boat in the Rain, Toucan and Ice Cream Truck. Apply any art direction from the Task 7 review.
+**Files:** Create 9 files in `src/scenes/` and modify `manifest.ts` and `index.ts`. The scenes are Goldfish Bowl, Lighthouse at Dusk, Rubber Duck, Sleeping Fox, Record Player, Desert Cactus at Noon, Paper Boat in the Rain, Toucan and Ice Cream Truck. Follow the spec's art direction and check-in 2 results: style-B cubes, no decorative borders, open subject on a plain background (mostly). Easy scenes need taps 30–60 and win rates within the Easy band.
 
 - [ ] **Step 1:** Draw each scene as an SVG in `scenes/art/` (Task 7R pipeline and the spec's art direction), in the Easy band, then run `build-scenes`. Most colours should touch open edges.
 - [ ] **Step 2:** Run `bun run validate` until there are no errors. Taps should be 30–60 and win rate within the Easy target. Check every PNG thumb reads as its subject.
@@ -343,11 +374,11 @@ interface Renderer {
 
 ### Task 12: Medium scenes 12–20
 
-Same as Task 11 for Koi Pond, Mount Fuji in Bloom, First Snow at the Bus Stop, Arcade Cabinet, Night Owl, Venice Canal, Campfire Under the Stars, Typewriter and Jellyfish. They go after Brooklyn Bridge in the manifest, which is scene 11.
+Same as Task 11 for Koi Pond, Mount Fuji in Bloom, Arcade Cabinet, Night Owl, Venice Canal, Campfire Under the Stars, Typewriter and Jellyfish (8 new). Brooklyn Bridge is scene 11 and Birthday Cake is already drawn (Task 7S). Mostly the 'subject on a patterned background' layout.
 
 ### Task 13: Hard scenes 22–30
 
-Same as Task 11 for Golden Gate in Fog, Northern Lights over a Cabin, Peacock, Rose Window, Tokyo Street in the Rain, Fireworks over the Harbor, Chameleon, Hummingbird & Flowers and Santorini Rooftops. Coral Reef is scene 21. Use dark outlines and nested shapes so colours are walled inside other colours.
+Same as Task 11 for Golden Gate in Fog, Northern Lights over a Cabin, Peacock, Rose Window, Fireworks over the Harbor, Chameleon, Hummingbird & Flowers and Santorini Rooftops (8 new). Coral Reef and Bento Box are already drawn (Task 7S). Use the boxed or compartmented layout (bento-like) so the Hard depth gate (avg ≥ 1.5) is met.
 
 - [ ] **Final step for Task 13:** Run full `bun run validate` (500 deals). Tune `TARGETS.winRate` so Easy, Medium and Hard medians are clearly separated, with no scene in the wrong band. Commit `chore: tune difficulty targets`.
 
