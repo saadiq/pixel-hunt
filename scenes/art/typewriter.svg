@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 46" width="48" height="46">
+  <metadata>{"id":"typewriter","name":"Typewriter","blurb":"Clack, clack, clack... ding!","band":"medium","W":48,"H":46,"slots":3,"lanes":4,"chunk":[66,98],"wait":0.6,"bg":"#ffb3a7"}</metadata>
+  <defs>
+    <pattern id="stripes" width="6" height="8" patternUnits="userSpaceOnUse">
+      <rect width="3" height="8" fill="#ffd9cf"/>
+      <rect x="1" y="2" width="1" height="1" fill="#e8433a"/>
+      <rect x="4" y="6" width="1" height="1" fill="#e8433a"/>
+    </pattern>
+    <path id="body" d="M11,17 L37,17 C39,17 40,18 40.5,20 L43,37 C43.3,39 42,40.5 40,40.5 L8,40.5 C6,40.5 4.7,39 5,37 L7.5,20 C8,18 9,17 11,17 Z"/>
+    <clipPath id="bodyClip">
+      <path d="M11,17 L37,17 C39,17 40,18 40.5,20 L43,37 C43.3,39 42,40.5 40,40.5 L8,40.5 C6,40.5 4.7,39 5,37 L7.5,20 C8,18 9,17 11,17 Z"/>
+    </clipPath>
+  </defs>
+  <!-- striped wallpaper and a wooden desk -->
+  <rect width="48" height="46" fill="#ffb3a7"/>
+  <rect width="48" height="36" fill="url(#stripes)"/>
+  <rect y="36" width="48" height="10" fill="#b5793f"/>
+  <rect y="35.5" width="48" height="1.2" fill="#2a1f33"/>
+  <g fill="#2a1f33"><rect x="2" y="42" width="9" height="1"/><rect x="36" y="43" width="10" height="1"/><rect x="20" y="44" width="7" height="1"/></g>
+
+  <!-- the sheet of paper, half typed -->
+  <rect x="14.5" y="2.5" width="19" height="14" fill="#ffffff" stroke="#2a1f33" stroke-width="1.2"/>
+  <g fill="#2a1f33">
+    <rect x="17" y="5" width="11" height="1"/><rect x="17" y="7" width="14" height="1"/>
+    <rect x="17" y="9" width="9" height="1"/><rect x="17" y="11" width="12" height="1"/>
+  </g>
+
+  <!-- platen roller with knobs and the return lever -->
+  <path d="M7,11.5 L3,8" stroke="#2a1f33" stroke-width="3" stroke-linecap="round"/>
+  <path d="M7,11.5 L3,8" stroke="#a8b3c2" stroke-width="1.2" stroke-linecap="round"/>
+  <rect x="8" y="13" width="32" height="5" rx="2.5" fill="#2a1f33"/>
+  <rect x="11" y="14" width="26" height="1" fill="#a8b3c2"/>
+  <g fill="#a8b3c2" stroke="#2a1f33" stroke-width="1.2">
+    <circle cx="7.5" cy="15.5" r="3"/><circle cx="40.5" cy="15.5" r="3"/>
+  </g>
+
+  <!-- body: teal with a shaded front -->
+  <use href="#body" fill="#2bb3a3"/>
+  <g clip-path="url(#bodyClip)">
+    <rect x="0" y="37" width="48" height="5" fill="#1d7f78"/>
+    <rect x="39" y="17" width="9" height="25" fill="#1d7f78"/>
+  </g>
+  <use href="#body" fill="none" stroke="#2a1f33" stroke-width="1.6" stroke-linejoin="round"/>
+  <!-- type guide with the red ribbon -->
+  <path d="M19,17.5 L29,17.5 L27.5,21.5 L20.5,21.5 Z" fill="#2a1f33"/>
+  <rect x="21.5" y="18.5" width="5" height="2" fill="#e8433a"/>
+
+  <!-- ribbon spools, nameplate and feet -->
+  <g fill="#e8433a">
+    <circle cx="14" cy="20.5" r="2.2"/><circle cx="34" cy="20.5" r="2.2"/>
+  </g>
+  <rect x="20" y="37.5" width="8" height="2" fill="#a8b3c2"/>
+  <g fill="#a8b3c2" stroke="#2a1f33" stroke-width="1">
+    <rect x="8" y="40.5" width="5" height="2"/><rect x="35" y="40.5" width="5" height="2"/>
+  </g>
+
+  <!-- keyboard well and keys -->
+  <rect x="9.5" y="23" width="29" height="13" rx="1.5" fill="#2a1f33"/>
+  <g fill="#ffffff">
+    <rect x="11" y="24" width="2" height="2"/><rect x="14" y="24" width="2" height="2"/><rect x="17" y="24" width="2" height="2"/>
+    <rect x="20" y="24" width="2" height="2"/><rect x="23" y="24" width="2" height="2"/><rect x="26" y="24" width="2" height="2"/>
+    <rect x="29" y="24" width="2" height="2"/><rect x="32" y="24" width="2" height="2"/><rect x="35" y="24" width="2" height="2"/>
+    <rect x="15" y="27" width="2" height="2"/><rect x="18" y="27" width="2" height="2"/>
+    <rect x="21" y="27" width="2" height="2"/><rect x="24" y="27" width="2" height="2"/><rect x="27" y="27" width="2" height="2"/>
+    <rect x="12" y="27" width="2" height="2"/><rect x="30" y="27" width="2" height="2"/>
+    <rect x="16" y="30" width="2" height="2"/><rect x="19" y="30" width="2" height="2"/>
+    <rect x="22" y="30" width="2" height="2"/><rect x="25" y="30" width="2" height="2"/><rect x="28" y="30" width="2" height="2"/>
+    <rect x="13" y="30" width="2" height="2"/><rect x="31" y="30" width="2" height="2"/>
+    <rect x="15" y="33" width="18" height="2"/>
+  </g>
+  <rect x="33" y="27" width="4" height="2" fill="#e8433a"/>
+  <rect x="34" y="30" width="3" height="2" fill="#e8433a"/>
+</svg>

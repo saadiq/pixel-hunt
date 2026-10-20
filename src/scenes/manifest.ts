@@ -11,6 +11,7 @@ export const MANIFEST: string[] = [
   'paper-boat',
   'ice-cream-truck',
   'brooklyn-bridge',
+  'typewriter',
   'mount-fuji',
   'birthday-cake',
   'koi-pond',
