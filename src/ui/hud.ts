@@ -52,9 +52,9 @@ export function renderSlots(g: Game): void {
   });
 }
 
-/** Crumbs left, holding count, and the undo/hint badges. `over` disables hints once the board ends. */
+/** Pixels left, holding count, and the undo/hint badges. `over` disables hints once the board ends. */
 export function renderMeter(g: Game, over = false): void {
-  $('left').textContent = `${g.remaining} crumbs left`;
+  $('left').textContent = `${g.remaining} pixels left`;
   const used = g.slots.filter(Boolean).length, n = g.slots.length;
   const h = $('hold');
   h.textContent = g.stuck ? 'Stuck: no reachable food' : `Holding ${used}/${n}`;

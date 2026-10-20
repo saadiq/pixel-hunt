@@ -4,6 +4,7 @@ import type { Band, Lanes, Level, Meta, Scene, Slots } from '../core/types';
 import { type Game, HIST_MAX, type Snapshot } from './game';
 import type { DailyChoice } from './progress';
 
+// The game was called Crumb Hunt when saves began; the key stays so progress carries over.
 const KEY = 'crumbhunt.v1';
 
 export interface SavedSnapshot { grid: number[]; lanes: Lanes; slots: Slots; remaining: number; taps: number; onLine: boolean }

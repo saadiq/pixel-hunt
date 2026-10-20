@@ -1,6 +1,6 @@
-# Crumb Hunt
+# Pixel Hunt
 
-A mobile-first pixel-art puzzle. Tap lanes to send ant squads to holding slots; they run the track around the board and eat the crumbs of their colour. Every deal has at least one winning order. TypeScript, Vite and bun; installable as an offline PWA.
+A mobile-first pixel-art puzzle. Tap lanes to send ant squads to holding slots; they run the track around the board and eat the pixels of their colour. Every deal has at least one winning order. TypeScript, Vite and bun; installable as an offline PWA.
 
 ## Commands
 
