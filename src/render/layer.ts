@@ -71,14 +71,17 @@ function patch(L: Layer, geo: Geom, cells: Cells, shades: CubeShades[], i: numbe
 
 /** Brings the layer up to date with `cells`; returns the cells being chewed (drawn per frame, shrinking). */
 export function syncLayer(L: Layer, geo: Geom, cells: Cells, shades: CubeShades[]): number[] {
-  const chewing: number[] = [];
+  const chewing: number[] = [], changed: number[] = [];
   for (let i = 0; i < L.solid.length; i++) {
     const now = settled(cells, i) ? 1 : 0;
     if (cells.vis[i] >= 0 && cells.chew[i]) chewing.push(i);
     if (now === L.solid[i]) continue;
     L.solid[i] = now;
-    patch(L, geo, cells, shades, i);
+    changed.push(i);
   }
+  // Patch only after every flag is current: a patch redraws its neighbours, and one still flagged solid
+  // after being eaten (vis -1) has no tones to draw with.
+  for (const i of changed) patch(L, geo, cells, shades, i);
   return chewing;
 }
 
