@@ -12,6 +12,7 @@ export interface OutcomeCtx {
   save: SaveV1;
   replay(): void;
   undo(): void;
+  rewind(): void;
   start(meta: Meta): void;
   openScenes(): void;
   random(band: Band): void;
@@ -66,7 +67,9 @@ export function lose(c: OutcomeCtx): void {
   const m = g.meta;
   const fresh: ResultButton[] = m.kind === 'random' ? [{ label: 'New scene', fn: () => c.random(m.band) }] : [];
   showResult('Your ants are stuck',
-    'Every holding slot is full and none of those colors can be reached from the track or a tunnel. Undo your last tap or start over.',
-    [{ label: can ? `Undo last tap (${g.undos} left)` : 'No undos left', fn: c.undo, primary: true, disabled: !can },
+    'Every holding slot is full and none of those colors can be reached from the track or a tunnel. '
+      + 'Undo your last tap, rewind to the last point you could still win (once per board), or start over.',
+    [{ label: can ? `Undo last tap (${g.undos} left)` : 'No undos left', fn: c.undo, primary: can, disabled: !can },
+      { label: g.rewound ? 'Rewind used' : 'Rewind to safety', fn: c.rewind, primary: !can && !g.rewound, disabled: g.rewound },
       { label: 'Restart', fn: c.replay }, ...fresh]);
 }

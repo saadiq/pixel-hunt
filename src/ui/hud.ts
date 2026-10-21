@@ -3,12 +3,12 @@ import type { Squad } from '../core/types';
 import type { Game } from '../state/game';
 import { $, ANT_SVG, el, textOn } from './dom';
 
-export function renderLanes(g: Game, onTap: (lane: number) => void): void {
+export function renderLanes(g: Game, onTap: (lane: number) => void, hint = -1): void {
   const box = $('lanes');
   box.style.setProperty('--l', String(g.lanes.length));
   box.innerHTML = '';
   g.lanes.forEach((lane, l) => {
-    const b = el('button', 'lane');
+    const b = el('button', l === hint ? 'lane hint' : 'lane');
     b.disabled = !lane.length;
     b.setAttribute('aria-label', lane.length ? `Send squad of ${lane[0].cap}` : 'Empty lane');
     if (!lane.length) {
