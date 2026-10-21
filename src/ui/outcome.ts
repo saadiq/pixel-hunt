@@ -22,7 +22,7 @@ const plural = (n: number, w: string): string => `${n} ${w}${n > 1 ? 's' : ''}`;
 
 function stats(g: Game): string {
   const undos = g.usedUndo ? plural(g.usedUndo, 'undo') : 'no undos';
-  return `${g.taps} squads sent · ${undos}.`;
+  return `${g.taps} squads sent · ${undos}${g.rewound ? ' · rewound' : ''}.`;
 }
 
 function markCleared(save: SaveV1, id: string): void {
@@ -66,10 +66,12 @@ export function lose(c: OutcomeCtx): void {
   const can = canUndo(g), rew = canRewind(g);
   const m = g.meta;
   const fresh: ResultButton[] = m.kind === 'random' ? [{ label: 'New scene', fn: () => c.random(m.band) }] : [];
+  const ways = [can && 'undo your last tap', rew && 'rewind to the last point you could still win (once per board)', 'start over'];
+  const list = ways.filter(Boolean) as string[];
+  const say = list.length > 1 ? `${list.slice(0, -1).join(', ')} or ${list[list.length - 1]}` : list[0];
   showResult('Your ants are stuck',
-    'Every holding slot is full and none of those colors can be reached from the track or a tunnel. '
-      + 'Undo your last tap, rewind to the last point you could still win (once per board), or start over.',
+    `Every holding slot is full and none of those colors can be reached from the track or a tunnel. ${say[0].toUpperCase()}${say.slice(1)}.`,
     [{ label: can ? `Undo last tap (${g.undos} left)` : 'No undos left', fn: c.undo, primary: can, disabled: !can },
       { label: rew ? 'Rewind to safety' : 'Rewind used', fn: c.rewind, primary: !can && rew, disabled: !rew },
-      { label: 'Restart', fn: c.replay }, ...fresh]);
+      { label: 'Restart', fn: c.replay, primary: !can && !rew }, ...fresh]);
 }
