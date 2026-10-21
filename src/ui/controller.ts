@@ -4,7 +4,7 @@ import type { Band, Level, Meta } from '../core/types';
 import { createRenderer, type Renderer } from '../render/board';
 import { SCENES } from '../scenes';
 import { MANIFEST } from '../scenes/manifest';
-import { type Game, newGame, status, tapLane, tick, undo } from '../state/game';
+import { canRewind, canUndo, type Game, newGame, status, tapLane, tick, undo } from '../state/game';
 import { applyRewind, findRewind } from '../state/rewind';
 import { dailyFor, nextScene, todayKey } from '../state/progress';
 import { findLevel, type SaveV1, store, toRun } from '../state/save';
@@ -24,10 +24,6 @@ let renderer: Renderer;
 let g: Game | null = null;
 let seed = 0;
 let over = false;
-let rewinding = false;
-/** Lane to highlight after a rewind: the tap that lost the board last time. -1 for none. */
-let hint = -1;
-let tipText = '';
 let acc = 0, last = 0;
 
 const newSeed = (): number => 1 + Math.floor(Math.random() * 0x7ffffffe);
@@ -49,17 +45,17 @@ function persist(): void {
 
 function renderAll(): void {
   if (!g) return;
-  renderLanes(g, onTap, hint);
+  renderLanes(g, onTap);
   renderSlots(g);
   renderMeter(g);
 }
 
 function begin(game: Game, s: number): void {
-  g = game; seed = s; over = false; rewinding = false; hint = -1;
+  g = game; seed = s; over = false;
   renderer.reset(g);
   closeSheets();
   setTag(g.meta, g.level);
-  $('tip').textContent = tipText;
+  $('notice').hidden = true;
   $('tip').hidden = !(g.meta.kind === 'campaign' && g.meta.id === MANIFEST[0] && !save.cleared.length && g.taps === 0);
   renderAll();
   persist();
@@ -97,10 +93,10 @@ function onTap(lane: number): void {
   ensureAudio();
   if (!g || over) return;
   const r = tapLane(g, lane);
-  if (r === 'ok') hint = -1;
   if (r === 'full') { shakeSlots(); tone([180], 0.08, 'square', 0.05); return; }
   if (r !== 'ok') return;
   $('tip').hidden = true;
+  $('notice').hidden = true;
   tone([520, 780], 0.05);
   renderAll();
   persist();
@@ -108,10 +104,15 @@ function onTap(lane: number): void {
 
 function doUndo(): void {
   ensureAudio();
-  if (!g || rewinding || status(g) === 'won' || !undo(g)) return;
+  if (!g || status(g) === 'won' || !undo(g)) return;
+  reenter(g);
+}
+
+/** Back into play after the board was put back to an earlier position. */
+function reenter(game: Game): void {
   over = false;
-  hint = -1;
-  renderer.reset(g);
+  $('notice').hidden = true;
+  renderer.reset(game);
   closeSheets();
   renderAll();
   persist();
@@ -121,27 +122,17 @@ function doUndo(): void {
 async function doRewind(): Promise<void> {
   ensureAudio();
   const game = g;
-  if (!game || game.rewound || rewinding || status(game) !== 'stuck') return;
-  rewinding = true;
+  if (!game || !canRewind(game) || status(game) !== 'stuck') return;
   $('hold').textContent = 'Rewinding…';
-  const k = await findRewind(game);
-  if (g !== game) return; // restarted or left while searching
-  rewinding = false;
+  // An undo, restart or new board while searching ends the stuck state, and the search with it.
+  const r = await findRewind(game, seed, () => g === game && over);
+  if (!r) return;
+  applyRewind(game, r);
   tone([784, 523], 0.07, 'triangle', 0.07);
-  if (k < 0) {
-    start(game.meta, seed);
-    (g as Game).rewound = true;
-  } else {
-    const lane = applyRewind(game, k);
-    over = false;
-    hint = lane;
-    renderer.reset(game);
-    closeSheets();
-  }
-  $('tip').textContent = hint >= 0 ? 'Rewound. Last time, the lit lane lost it.' : 'Rewound to the start of this deal.';
-  $('tip').hidden = false;
-  renderAll();
-  persist();
+  reenter(game);
+  $('lanes').children[r.lane]?.classList.add('hint'); // until the next render rebuilds the lanes
+  $('notice').textContent = r.lane >= 0 ? 'Rewound. Last time, the lit lane lost it.' : 'Rewound to the start of this deal.';
+  $('notice').hidden = false;
 }
 
 function step(game: Game): void {
@@ -152,7 +143,7 @@ function step(game: Game): void {
 function endBoard(game: Game, st: 'won' | 'stuck'): void {
   over = true;
   // A stuck board with undos or the rewind left stays saved so closing the app on the lose sheet doesn't lose it.
-  save.run = st === 'stuck' && ((game.undos && game.hist.length) || !game.rewound) ? toRun(game, seed) : null;
+  save.run = st === 'stuck' && (canUndo(game) || canRewind(game)) ? toRun(game, seed) : null;
   renderMeter(game);
   const ctx = { game, save, replay: () => start(game.meta), undo: doUndo, rewind: () => void doRewind(), start, openScenes: showScenes, random: playRandom };
   if (st === 'won') win(ctx); else lose(ctx);
@@ -230,7 +221,6 @@ function wire(): void {
 /** Sets up the renderer, inputs and loop. Call once, then start() or resume(). */
 export function init(s: SaveV1): void {
   save = s;
-  tipText = $('tip').textContent ?? '';
   setEnabled(save.prefs.sound);
   renderer = createRenderer($('board') as HTMLCanvasElement);
   renderer.onChew = bite;

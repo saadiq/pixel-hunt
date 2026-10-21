@@ -8,7 +8,7 @@ import type { DailyChoice } from './progress';
 // The game was called Crumb Hunt when saves began; the key stays so progress carries over.
 const KEY = 'crumbhunt.v1';
 
-export interface SavedSnapshot { grid: number[]; lanes: Lanes; slots: Slots; remaining: number; taps: number; lane?: number }
+export interface SavedSnapshot { grid: number[]; lanes: Lanes; slots: Slots; remaining: number; taps: number }
 export interface SavedRun {
   meta: Meta; seed: number; grid: number[]; lanes: Lanes; slots: Slots; hist: SavedSnapshot[];
   undos: number; usedUndo: number; taps: number; rewound?: boolean;
@@ -105,7 +105,7 @@ export function fromRun(r: SavedRun, scenes: Record<string, Scene>): Game | null
     if (!isInt(r.undos, 0, 3) || !isInt(r.usedUndo, 0)) return null;
     const hist: Snapshot[] = r.hist.slice(-HIST_MAX).map((h) => {
       const g = Int8Array.from(h.grid);
-      return { grid: g, lanes: h.lanes, slots: h.slots, taps: h.taps, remaining: count(g), lane: isInt(h.lane, 0, d.nl - 1) ? h.lane as number : -1 };
+      return { grid: g, lanes: h.lanes, slots: h.slots, taps: h.taps, remaining: count(g) };
     });
     const grid = Int8Array.from(r.grid);
     return {

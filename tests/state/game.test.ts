@@ -88,17 +88,17 @@ describe('game undo and end states', () => {
     expect(g.slots.some(Boolean)).toBe(true);
   });
 
-  test('history keeps every tap and its lane; saves keep only as many as undos (3)', () => {
+  test('history keeps every tap; saves keep only as many as undos (3)', () => {
     const g = newGame(meta, level, 7);
-    const sent: number[] = [];
+    let sent = 0;
     for (let i = 0; i < 60; i++) {
       g.slots.fill(null);
       const l = g.lanes.findIndex((x) => x.length);
       if (l < 0) break;
       tapLane(g, l);
-      sent.push(l);
+      sent++;
     }
-    expect(g.hist.map((h) => h.lane)).toEqual(sent);
+    expect(g.hist.length).toBe(sent);
     expect(toRun(g, 7).hist.length).toBe(3);
   });
 

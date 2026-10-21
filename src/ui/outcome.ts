@@ -2,7 +2,7 @@
 import type { Band, Meta } from '../core/types';
 import { SCENES } from '../scenes';
 import { MANIFEST } from '../scenes/manifest';
-import type { Game } from '../state/game';
+import { canRewind, canUndo, type Game } from '../state/game';
 import type { SaveV1 } from '../state/save';
 import { type ResultButton, showResult } from './sheets';
 import { tone } from './sound';
@@ -63,13 +63,13 @@ export function win(c: OutcomeCtx): void {
 export function lose(c: OutcomeCtx): void {
   const g = c.game;
   tone([330, 247, 196], 0.12, 'sine', 0.08);
-  const can = g.undos > 0 && g.hist.length > 0;
+  const can = canUndo(g), rew = canRewind(g);
   const m = g.meta;
   const fresh: ResultButton[] = m.kind === 'random' ? [{ label: 'New scene', fn: () => c.random(m.band) }] : [];
   showResult('Your ants are stuck',
     'Every holding slot is full and none of those colors can be reached from the track or a tunnel. '
       + 'Undo your last tap, rewind to the last point you could still win (once per board), or start over.',
     [{ label: can ? `Undo last tap (${g.undos} left)` : 'No undos left', fn: c.undo, primary: can, disabled: !can },
-      { label: g.rewound ? 'Rewind used' : 'Rewind to safety', fn: c.rewind, primary: !can && !g.rewound, disabled: g.rewound },
+      { label: rew ? 'Rewind to safety' : 'Rewind used', fn: c.rewind, primary: !can && rew, disabled: !rew },
       { label: 'Restart', fn: c.replay }, ...fresh]);
 }

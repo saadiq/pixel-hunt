@@ -1,14 +1,14 @@
 // Lanes, holding slots and the meter, ported from the prototype's DOM rendering.
 import type { Squad } from '../core/types';
-import type { Game } from '../state/game';
+import { canUndo, type Game } from '../state/game';
 import { $, ANT_SVG, el, textOn } from './dom';
 
-export function renderLanes(g: Game, onTap: (lane: number) => void, hint = -1): void {
+export function renderLanes(g: Game, onTap: (lane: number) => void): void {
   const box = $('lanes');
   box.style.setProperty('--l', String(g.lanes.length));
   box.innerHTML = '';
   g.lanes.forEach((lane, l) => {
-    const b = el('button', l === hint ? 'lane hint' : 'lane');
+    const b = el('button', 'lane');
     b.disabled = !lane.length;
     b.setAttribute('aria-label', lane.length ? `Send squad of ${lane[0].cap}` : 'Empty lane');
     if (!lane.length) {
@@ -62,7 +62,7 @@ export function renderMeter(g: Game): void {
   h.textContent = g.stuck ? 'Stuck: no reachable food' : `Holding ${used}/${n}`;
   h.className = g.stuck || used >= n - 1 ? 'warn' : '';
   $('undoN').textContent = String(g.undos);
-  ($('undoBtn') as HTMLButtonElement).disabled = !g.undos || !g.hist.length;
+  ($('undoBtn') as HTMLButtonElement).disabled = !canUndo(g);
 }
 
 /** Brief shake of the slot row when every slot is full. */

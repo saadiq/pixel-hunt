@@ -4,8 +4,7 @@ import { copyLanes, copySlots } from '../core/squads';
 import { stepSlots } from '../core/step';
 import type { BiteFn, Board, Lanes, Level, Meta, Slots, Squad } from '../core/types';
 
-/** The board just before a tap; `lane` is the lane that tap sent (-1 when unknown, from an older save). */
-export interface Snapshot { grid: Int8Array; lanes: Lanes; slots: Slots; remaining: number; taps: number; lane: number }
+export interface Snapshot { grid: Int8Array; lanes: Lanes; slots: Slots; remaining: number; taps: number }
 
 export interface Game {
   meta: Meta; level: Level; board: Board; grid: Int8Array; lanes: Lanes; slots: Slots;
@@ -30,8 +29,8 @@ export function newGame(meta: Meta, level: Level, seed: number): Game {
   };
 }
 
-function snapshot(g: Game, lane: number): Snapshot {
-  return { grid: g.grid.slice(), lanes: copyLanes(g.lanes), slots: copySlots(g.slots), remaining: g.remaining, taps: g.taps, lane };
+export function snapshot(g: Game): Snapshot {
+  return { grid: g.grid.slice(), lanes: copyLanes(g.lanes), slots: copySlots(g.slots), remaining: g.remaining, taps: g.taps };
 }
 
 export function tapLane(g: Game, lane: number): 'ok' | 'full' | 'empty' {
@@ -39,7 +38,7 @@ export function tapLane(g: Game, lane: number): 'ok' | 'full' | 'empty' {
   if (!q || !q.length) return 'empty';
   const free = g.slots.indexOf(null);
   if (free < 0) return 'full';
-  g.hist.push(snapshot(g, lane));
+  g.hist.push(snapshot(g));
   g.slots[free] = { ...(q.shift() as Squad) };
   g.taps++;
   g.stuck = false;
@@ -64,8 +63,11 @@ export function restore(g: Game, h: Snapshot): void {
   g.stuck = false;
 }
 
+export const canUndo = (g: Game): boolean => g.undos > 0 && g.hist.length > 0;
+export const canRewind = (g: Game): boolean => !g.rewound;
+
 export function undo(g: Game): boolean {
-  if (g.undos <= 0 || !g.hist.length) return false;
+  if (!canUndo(g)) return false;
   restore(g, g.hist.pop() as Snapshot);
   g.undos--;
   g.usedUndo++;
