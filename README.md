@@ -10,6 +10,7 @@ It runs in the browser, installs as an offline PWA, and is built with TypeScript
 2. The ants leave the nest and run the **track around the board**. They tunnel through gaps that have already been eaten to reach pixels of their colour from any side.
 3. A squad leaves once it has eaten its fill. If every slot is full and no squad can reach food, **you're stuck**.
 4. Every deal has at least one winning order. You get **3 undos** per board, and **restart** is free: it deals new squads for the same picture.
+5. A wrong tap can doom a board long before you're stuck. Once per board, a stuck board can **rewind** to the last tap it could still be won from; the lane you tapped next is lit, since that's the tap that lost it.
 
 The game is about choices, not speed. On harder boards, sending a squad whose colour is still buried can clog a slot and lose the board, so look before you tap.
 
