@@ -38,9 +38,11 @@ const gridHash = (g: Int8Array): number => {
 };
 const keyOf = (s: SolveState) => s.pos.join(',') + '|' + s.slots.map((q) => (q ? `${q.color}:${q.cap}` : '-')).join(',') + '|' + gridHash(s.g);
 
-/** Depth-first search from a settled state. 'unknown' when more than `budget` positions would be needed. */
-export function solve(b: Board, lanes: Lanes, s: SolveState, budget = 3000): Verdict {
-  const dead = new Set<string>();
+/**
+ * Depth-first search from a settled state. 'unknown' when more than `budget` positions would be needed.
+ * `dead` collects positions proved lost; pass the same set to searches over the same lanes to reuse them.
+ */
+export function solve(b: Board, lanes: Lanes, s: SolveState, budget = 3000, dead = new Set<string>()): Verdict {
   let nodes = 0, out = false;
   const go = (st: SolveState): boolean => {
     if (cleared(st.g)) return true;
