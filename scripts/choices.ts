@@ -4,15 +4,14 @@
 import { parseArt, sceneLevel } from '../src/core/board';
 import { deal } from '../src/core/deal';
 import { mulberry } from '../src/core/rng';
-import { cloneState as clone, options, solve, type SolveState as State, tapSettled as tap } from '../src/core/solve';
+import { cloneState, options, solve, type SolveState, tapSettled } from '../src/core/solve';
 import { cleared, settle } from '../src/core/step';
 import type { Board, Lanes, Level, Scene } from '../src/core/types';
 
-const settleState = (b: Board, s: State): void => settle(s.g, b.W, b.H, s.slots);
-const won = (s: State): boolean => cleared(s.g);
+const settleState = (b: Board, s: SolveState): void => settle(s.g, b.W, b.H, s.slots);
 
 /** Can the settled state still be won? Budget exhaustion counts as yes (benefit of the doubt). */
-const solvable = (b: Board, lanes: Lanes, s: State): boolean => solve(b, lanes, s) !== 'dead';
+const solvable = (b: Board, lanes: Lanes, s: SolveState): boolean => solve(b, lanes, s) !== 'dead';
 
 export interface Choices {
   /** Share of turns with 2+ options where at least one option loses the board. */
@@ -26,7 +25,7 @@ export interface Choices {
 }
 
 function walkLine(b: Board, lanes: Lanes, line: number[], slotN: number): { turns: number; choice: number; trap: number } {
-  const s: State = { g: b.grid.slice(), slots: Array(slotN).fill(null), pos: lanes.map(() => 0) };
+  const s: SolveState = { g: b.grid.slice(), slots: Array(slotN).fill(null), pos: lanes.map(() => 0) };
   let turns = 0, choice = 0, trap = 0;
   for (const li of line) {
     settleState(b, s);
@@ -36,27 +35,27 @@ function walkLine(b: Board, lanes: Lanes, line: number[], slotN: number): { turn
       let lose = false, lure = false;
       for (const o of open) {
         if (o === li) continue;
-        const n = clone(s);
-        if (tap(b, lanes, n, o) && solvable(b, lanes, n)) continue;
+        const n = cloneState(s);
+        if (tapSettled(b, lanes, n, o) && solvable(b, lanes, n)) continue;
         lose = true;
         if (eatable.has(o)) lure = true;
       }
       if (lose) choice++;
       if (lure) trap++;
     }
-    tap(b, lanes, s, li);
+    tapSettled(b, lanes, s, li);
   }
   return { turns, choice, trap };
 }
 
 function mindlessWin(b: Board, lanes: Lanes, slotN: number, rng: () => number): boolean {
-  const s: State = { g: b.grid.slice(), slots: Array(slotN).fill(null), pos: lanes.map(() => 0) };
+  const s: SolveState = { g: b.grid.slice(), slots: Array(slotN).fill(null), pos: lanes.map(() => 0) };
   for (let guard = 0; guard < 2000; guard++) {
     settleState(b, s);
-    if (won(s)) return true;
+    if (cleared(s.g)) return true;
     const { open, eatable } = options(b, lanes, s);
     const pool = eatable.size ? [...eatable] : open;
-    if (!pool.length || !tap(b, lanes, s, pool[Math.floor(rng() * pool.length)])) return false;
+    if (!pool.length || !tapSettled(b, lanes, s, pool[Math.floor(rng() * pool.length)])) return false;
   }
   return false;
 }
