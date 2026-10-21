@@ -4,6 +4,7 @@ import { deal } from '../../src/core/deal';
 import type { Level, Meta } from '../../src/core/types';
 import { newGame, status, tapLane, tick, undo } from '../../src/state/game';
 import type { Game } from '../../src/state/game';
+import { toRun } from '../../src/state/save';
 import { d20 } from '../fixtures/proto';
 
 const level = sceneLevel(d20);
@@ -87,15 +88,18 @@ describe('game undo and end states', () => {
     expect(g.slots.some(Boolean)).toBe(true);
   });
 
-  test('history keeps only as many snapshots as undos (3)', () => {
+  test('history keeps every tap and its lane; saves keep only as many as undos (3)', () => {
     const g = newGame(meta, level, 7);
+    const sent: number[] = [];
     for (let i = 0; i < 60; i++) {
       g.slots.fill(null);
       const l = g.lanes.findIndex((x) => x.length);
       if (l < 0) break;
       tapLane(g, l);
+      sent.push(l);
     }
-    expect(g.hist.length).toBe(3);
+    expect(g.hist.map((h) => h.lane)).toEqual(sent);
+    expect(toRun(g, 7).hist.length).toBe(3);
   });
 
   test('stuck is detected and undo recovers', () => {

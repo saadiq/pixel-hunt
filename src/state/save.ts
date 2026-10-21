@@ -8,10 +8,10 @@ import type { DailyChoice } from './progress';
 // The game was called Crumb Hunt when saves began; the key stays so progress carries over.
 const KEY = 'crumbhunt.v1';
 
-export interface SavedSnapshot { grid: number[]; lanes: Lanes; slots: Slots; remaining: number; taps: number }
+export interface SavedSnapshot { grid: number[]; lanes: Lanes; slots: Slots; remaining: number; taps: number; lane?: number }
 export interface SavedRun {
   meta: Meta; seed: number; grid: number[]; lanes: Lanes; slots: Slots; hist: SavedSnapshot[];
-  undos: number; usedUndo: number; taps: number;
+  undos: number; usedUndo: number; taps: number; rewound?: boolean;
 }
 export interface SaveV1 {
   v: 1; cleared: string[]; wins: Record<Band, number>; daily: string | null;
@@ -66,9 +66,9 @@ export function store(s: SaveV1, storage: Storage | undefined = defaultStorage()
 export function toRun(g: Game, seed: number): SavedRun {
   return {
     meta: g.meta, seed, grid: Array.from(g.grid), lanes: copyLanes(g.lanes), slots: copySlots(g.slots),
-    hist: g.hist.map((h) => ({ ...h, grid: Array.from(h.grid), lanes: copyLanes(h.lanes), slots: copySlots(h.slots) })),
+    hist: g.hist.slice(-HIST_MAX).map((h) => ({ ...h, grid: Array.from(h.grid), lanes: copyLanes(h.lanes), slots: copySlots(h.slots) })),
     undos: g.undos, usedUndo: g.usedUndo,
-    taps: g.taps,
+    taps: g.taps, rewound: g.rewound,
   };
 }
 
@@ -105,13 +105,13 @@ export function fromRun(r: SavedRun, scenes: Record<string, Scene>): Game | null
     if (!isInt(r.undos, 0, 3) || !isInt(r.usedUndo, 0)) return null;
     const hist: Snapshot[] = r.hist.slice(-HIST_MAX).map((h) => {
       const g = Int8Array.from(h.grid);
-      return { grid: g, lanes: h.lanes, slots: h.slots, taps: h.taps, remaining: count(g) };
+      return { grid: g, lanes: h.lanes, slots: h.slots, taps: h.taps, remaining: count(g), lane: isInt(h.lane, 0, d.nl - 1) ? h.lane as number : -1 };
     });
     const grid = Int8Array.from(r.grid);
     return {
       meta: r.meta, level, board, grid, lanes: r.lanes, slots: r.slots, hist,
       undos: r.undos, usedUndo: r.usedUndo, taps: r.taps,
-      remaining: count(grid), stuck: false,
+      remaining: count(grid), stuck: false, rewound: r.rewound === true,
     };
   } catch { return null; }
 }
