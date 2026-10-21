@@ -4,73 +4,82 @@ import { mulberry } from '../../src/core/rng';
 import { options } from '../../src/core/solve';
 import type { Meta } from '../../src/core/types';
 import { SCENES } from '../../src/scenes';
-import { type Game, newGame, status, tapLane, tick } from '../../src/state/game';
-import { applyRewind, findRewind, verdictAt } from '../../src/state/rewind';
+import { type Game, gridAt, newGame, status, tapLane, tick } from '../../src/state/game';
+import { applyRewind, rewindInput, searchRewind, verdictAt } from '../../src/state/rewind';
 import { fromRun, toRun } from '../../src/state/save';
 
 const id = 'fireworks-harbor';
 const meta: Meta = { kind: 'campaign', id };
 const level = sceneLevel(SCENES[id]);
 const settle = (g: Game): void => { while (tick(g)); };
-const now = (): Promise<void> => Promise.resolve();
 
 /** Taps random lanes whose colour can be eaten now, settling between taps, until the board ends. */
-function playCareless(seed: number): Game {
+function playCareless(seed: number, grids: Int8Array[] = []): Game {
   const g = newGame(meta, level, seed), rng = mulberry(seed);
   while (status(g) === 'playing') {
     settle(g);
     if (status(g) !== 'playing') break;
     const { open, eatable } = options(g.board, g.lanes, { g: g.grid, slots: g.slots, pos: g.lanes.map(() => 0) });
     const pool = eatable.size ? [...eatable] : open;
+    grids.push(g.grid.slice());
     if (!pool.length || tapLane(g, pool[Math.floor(rng() * pool.length)]) !== 'ok') break;
   }
   return g;
 }
 
-/** First seed whose careless game gets stuck. */
-function stuckGame(): [Game, number] {
-  for (let seed = 1; ; seed++) {
-    const g = playCareless(seed);
+/** First seed (of 20) whose careless game gets stuck. */
+function stuckGame(grids?: Int8Array[]): [Game, number] {
+  for (let seed = 1; seed <= 20; seed++) {
+    if (grids) grids.length = 0;
+    const g = playCareless(seed, grids);
     if (status(g) === 'stuck') return [g, seed];
   }
+  throw new Error('no careless game got stuck');
 }
 
 describe('rewind', () => {
-  test('lands on the last winnable position and points at the tap that lost it', async () => {
-    const [g, seed] = stuckGame();
-    const hist = g.hist.slice();
-    const r = await findRewind(g, seed, () => true, now);
-    if (!r) throw new Error('cancelled');
-    const k = r.keep;
-    expect(r.to).toBe(hist[k]);
-    if (k + 1 < hist.length) {
-      expect(verdictAt(g, hist[k + 1])).toBe('dead');
-      expect(hist[k + 1].lanes[r.lane].length).toBe(hist[k].lanes[r.lane].length - 1);
+  test('lands on the latest winnable snapshot; a lit lane is one proved to lose', () => {
+    const [g] = stuckGame();
+    const inp = rewindInput(g), hist = g.hist.slice();
+    const r = searchRewind(inp);
+    expect(verdictAt(inp, r.to)).toBe('win');
+    if (r.lane >= 0) {
+      const after = hist[r.keep + 1]?.pos ?? inp.pos;
+      expect(after[r.lane]).toBe(r.to.pos[r.lane] + 1);
+      if (hist[r.keep + 1]) expect(verdictAt(inp, hist[r.keep + 1])).toBe('dead');
     }
     applyRewind(g, r);
-    expect(g).toMatchObject({ rewound: true, taps: k, stuck: false });
-    expect(g.hist.length).toBe(k);
+    expect(g).toMatchObject({ rewound: true, taps: r.to.taps, stuck: false });
+    expect(g.hist.length).toBe(r.keep);
     settle(g);
     expect(status(g)).toBe('playing');
   }, 60_000);
 
-  test('with no history in reach, lands on the opening of the same deal', async () => {
+  test('compact snapshots rebuild the grid each tap was made on', () => {
+    const grids: Int8Array[] = [];
+    const [g] = stuckGame(grids);
+    g.hist.forEach((h, k) => expect(gridAt(g.board, g.eaten, g.total, h)).toEqual(grids[k]));
+  }, 60_000);
+
+  test('with no history, lands on the opening of the deal', () => {
     const g = newGame(meta, level, 1);
-    const r = await findRewind(g, 1, () => true, now);
+    const r = searchRewind(rewindInput(g));
     expect(r).toMatchObject({ keep: 0, lane: -1 });
-    expect(r?.to.grid).toEqual(g.grid);
-    expect(r?.to.lanes).toEqual(g.lanes);
+    applyRewind(g, r);
+    expect(g.grid).toEqual(g.board.grid);
+    expect(g.lanes).toEqual(g.deal);
   });
 
-  test('stops when no longer live', async () => {
+  test('a save keeps the whole history, so a reloaded board rewinds to the same place', () => {
     const [g, seed] = stuckGame();
-    expect(await findRewind(g, seed, () => false, now)).toBeNull();
+    const back = fromRun(JSON.parse(JSON.stringify(toRun(g, seed))), SCENES) as Game;
+    expect(back.hist).toEqual(g.hist);
+    expect(searchRewind(rewindInput(back))).toEqual(searchRewind(rewindInput(g)));
   }, 60_000);
 
   test('saves keep the spent rewind', () => {
-    const [g, seed] = stuckGame();
+    const g = newGame(meta, level, 1);
     g.rewound = true;
-    const back = fromRun(JSON.parse(JSON.stringify(toRun(g, seed))), SCENES) as Game;
-    expect(back.rewound).toBe(true);
-  }, 60_000);
+    expect(fromRun(JSON.parse(JSON.stringify(toRun(g, 1))), SCENES)?.rewound).toBe(true);
+  });
 });

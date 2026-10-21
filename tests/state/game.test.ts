@@ -88,7 +88,7 @@ describe('game undo and end states', () => {
     expect(g.slots.some(Boolean)).toBe(true);
   });
 
-  test('history keeps every tap; saves keep only as many as undos (3)', () => {
+  test('history and saves keep every tap', () => {
     const g = newGame(meta, level, 7);
     let sent = 0;
     for (let i = 0; i < 60; i++) {
@@ -99,7 +99,7 @@ describe('game undo and end states', () => {
       sent++;
     }
     expect(g.hist.length).toBe(sent);
-    expect(toRun(g, 7).hist.length).toBe(3);
+    expect(toRun(g, 7).hist.length).toBe(sent);
   });
 
   test('stuck is detected and undo recovers', () => {

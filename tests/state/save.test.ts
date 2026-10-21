@@ -69,15 +69,28 @@ describe('toRun/fromRun', () => {
     expect(h.board.W).toBe(g.board.W);
   });
 
-  test('snapshot remaining is recomputed from its grid, not trusted', () => {
+  test('an inconsistent history is dropped, not trusted; the board still resumes', () => {
     const g = mk();
     tapLane(g, line[0]);
     tick(g);
     tapLane(g, line[1]);
     const r = toRun(g, 7);
-    const h = fromRun({ ...r, hist: r.hist.map((s) => ({ ...s, remaining: 999 })) }, scenes);
-    expect(h?.hist.length).toBe(2);
-    for (const s of h?.hist ?? []) expect(s.remaining).toBe(s.grid.reduce((a, v) => a + (v >= 0 ? 1 : 0), 0));
+    expect(fromRun(r, scenes)?.hist.length).toBe(2);
+    for (const bad of [
+      { ...r, hist: r.hist.map((s) => ({ ...s, remaining: 999 })) },
+      { ...r, hist: r.hist.slice().reverse() },
+      { ...r, eaten: [0, ...(r.eaten ?? [])] },
+      { ...r, eaten: undefined },
+    ]) {
+      const h = fromRun(bad, scenes);
+      expect(h?.hist.length).toBe(0);
+      expect(h?.eaten.length).toBe(h ? h.total - h.remaining : -1);
+    }
+  });
+
+  test('lanes that are not what is left of the seed\'s deal reject the save', () => {
+    const r = toRun(mk(), 7);
+    expect(fromRun({ ...r, seed: 8 }, scenes)).toBeNull();
   });
 
   test('unknown ids return null', () => {

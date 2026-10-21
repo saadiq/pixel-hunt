@@ -5,11 +5,12 @@ import { createRenderer, type Renderer } from '../render/board';
 import { SCENES } from '../scenes';
 import { MANIFEST } from '../scenes/manifest';
 import { canRewind, canUndo, type Game, newGame, status, tapLane, tick, undo } from '../state/game';
-import { applyRewind, findRewind } from '../state/rewind';
+import { applyRewind, type Rewind, rewindInput } from '../state/rewind';
 import { dailyFor, nextScene, todayKey } from '../state/progress';
 import { findLevel, type SaveV1, store, toRun } from '../state/save';
 import { $, el } from './dom';
 import { renderLanes, renderMeter, renderSlots, shakeSlots } from './hud';
+import { cancelRewind, runRewind } from './rewinder';
 import { lose, win } from './outcome';
 import { closeSheets, openScenes, wireSheets } from './sheets';
 import { bite, ensureAudio, setEnabled, tone } from './sound';
@@ -50,12 +51,16 @@ function renderAll(): void {
   renderMeter(g);
 }
 
+/** Shows a short message over the board; empty hides it. The region stays in place so screen readers announce it. */
+const notice = (text: string): void => { $('notice').textContent = text; };
+
 function begin(game: Game, s: number): void {
+  cancelRewind();
   g = game; seed = s; over = false;
   renderer.reset(g);
   closeSheets();
   setTag(g.meta, g.level);
-  $('notice').hidden = true;
+  notice('');
   $('tip').hidden = !(g.meta.kind === 'campaign' && g.meta.id === MANIFEST[0] && !save.cleared.length && g.taps === 0);
   renderAll();
   persist();
@@ -96,7 +101,7 @@ function onTap(lane: number): void {
   if (r === 'full') { shakeSlots(); tone([180], 0.08, 'square', 0.05); return; }
   if (r !== 'ok') return;
   $('tip').hidden = true;
-  $('notice').hidden = true;
+  notice('');
   tone([520, 780], 0.05);
   renderAll();
   persist();
@@ -105,15 +110,16 @@ function onTap(lane: number): void {
 function doUndo(): void {
   ensureAudio();
   if (!g || status(g) === 'won' || !undo(g)) return;
+  closeSheets();
   reenter(g);
 }
 
 /** Back into play after the board was put back to an earlier position. */
 function reenter(game: Game): void {
+  cancelRewind();
   over = false;
-  $('notice').hidden = true;
+  notice('');
   renderer.reset(game);
-  closeSheets();
   renderAll();
   persist();
 }
@@ -124,15 +130,20 @@ async function doRewind(): Promise<void> {
   const game = g;
   if (!game || !canRewind(game) || status(game) !== 'stuck') return;
   $('hold').textContent = 'Rewinding…';
-  // An undo, restart or new board while searching ends the stuck state, and the search with it.
-  const r = await findRewind(game, seed, () => g === game && over);
-  if (!r) return;
+  let r: Rewind | null;
+  try {
+    r = await runRewind(rewindInput(game)); // an undo, restart or new board meanwhile cancels it (null)
+  } catch {
+    endBoard(game, 'stuck'); // the search failed: back to the stuck sheet, rewind unspent
+    return;
+  }
+  if (!r || g !== game) return;
   applyRewind(game, r);
   tone([784, 523], 0.07, 'triangle', 0.07);
   reenter(game);
   $('lanes').children[r.lane]?.classList.add('hint'); // until the next render rebuilds the lanes
-  $('notice').textContent = r.lane >= 0 ? 'Rewound. Last time, the lit lane lost it.' : 'Rewound to the start of this deal.';
-  $('notice').hidden = false;
+  notice(r.lane >= 0 ? 'Rewound. Last time, the lit lane lost it.'
+    : r.to.taps ? 'Rewound to the last point you could win.' : 'Rewound to the start of this deal.');
 }
 
 function step(game: Game): void {
