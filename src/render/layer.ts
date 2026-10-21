@@ -63,7 +63,8 @@ function patch(L: Layer, geo: Geom, cells: Cells, shades: CubeShades[], i: numbe
   for (let r = Math.max(0, r0 - reach); r <= Math.min(H - 1, r0 + reach); r++) {
     for (let k = Math.max(0, c0 - reach); k <= Math.min(W - 1, c0 + reach); k++) {
       const j = r * W + k;
-      if (L.solid[j]) drawCube(c, cellX(geo, j), cellY(geo, j), cs, shades[cells.vis[j]]);
+      // Live state, not L.solid: a later neighbour may have been eaten (vis -1) and not synced yet.
+      if (settled(cells, j)) drawCube(c, cellX(geo, j), cellY(geo, j), cs, shades[cells.vis[j]]);
     }
   }
   c.restore();
@@ -71,17 +72,14 @@ function patch(L: Layer, geo: Geom, cells: Cells, shades: CubeShades[], i: numbe
 
 /** Brings the layer up to date with `cells`; returns the cells being chewed (drawn per frame, shrinking). */
 export function syncLayer(L: Layer, geo: Geom, cells: Cells, shades: CubeShades[]): number[] {
-  const chewing: number[] = [], changed: number[] = [];
+  const chewing: number[] = [];
   for (let i = 0; i < L.solid.length; i++) {
     const now = settled(cells, i) ? 1 : 0;
     if (cells.vis[i] >= 0 && cells.chew[i]) chewing.push(i);
     if (now === L.solid[i]) continue;
     L.solid[i] = now;
-    changed.push(i);
+    patch(L, geo, cells, shades, i);
   }
-  // Patch only after every flag is current: a patch redraws its neighbours, and one still flagged solid
-  // after being eaten (vis -1) has no tones to draw with.
-  for (const i of changed) patch(L, geo, cells, shades, i);
   return chewing;
 }
 
