@@ -3,65 +3,16 @@
 // a board to create pressure in, so a board that scores here scores in real play too.
 import { parseArt, sceneLevel } from '../src/core/board';
 import { deal } from '../src/core/deal';
-import { fieldOf } from '../src/core/field';
 import { mulberry } from '../src/core/rng';
-import { copySlots } from '../src/core/squads';
+import { cloneState as clone, options, solve, type SolveState as State, tapSettled as tap } from '../src/core/solve';
 import { cleared, settle } from '../src/core/step';
-import type { Board, Lanes, Level, Scene, Slots } from '../src/core/types';
-
-interface State { g: Int8Array; slots: Slots; pos: number[] }
+import type { Board, Lanes, Level, Scene } from '../src/core/types';
 
 const settleState = (b: Board, s: State): void => settle(s.g, b.W, b.H, s.slots);
-const clone = (s: State): State => ({ g: s.g.slice(), slots: copySlots(s.slots), pos: s.pos.slice() });
 const won = (s: State): boolean => cleared(s.g);
 
-/** Taps lane li (state already settled), then settles. False if the tap is impossible. */
-function tap(b: Board, lanes: Lanes, s: State, li: number): boolean {
-  const free = s.slots.indexOf(null), sq = lanes[li][s.pos[li]];
-  if (free < 0 || !sq) return false;
-  s.slots[free] = { ...sq };
-  s.pos[li]++;
-  settleState(b, s);
-  return true;
-}
-
-/** Open lanes, those whose front colour can be eaten right now first. */
-function options(b: Board, lanes: Lanes, s: State): { open: number[]; eatable: Set<number> } {
-  const exposed = fieldOf(s.g, b.W, b.H).exposed;
-  const open = lanes.map((_, k) => k).filter((k) => s.pos[k] < lanes[k].length);
-  const eatable = new Set(open.filter((k) => exposed[lanes[k][s.pos[k]].color]?.length));
-  open.sort((a, c) => Number(eatable.has(c)) - Number(eatable.has(a)));
-  return { open, eatable };
-}
-
-// Different tap orders can reach the same lanes and slots with different cells eaten, so the grid is part of the key.
-const gridHash = (g: Int8Array): number => {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < g.length; i++) h = Math.imul(h ^ (g[i] + 1), 0x01000193);
-  return h >>> 0;
-};
-const keyOf = (s: State) => s.pos.join(',') + '|' + s.slots.map((q) => (q ? `${q.color}:${q.cap}` : '-')).join(',') + '|' + gridHash(s.g);
-
-/** Depth-first: can the settled state still be won? Budget exhaustion counts as yes (benefit of the doubt). */
-function solvable(b: Board, lanes: Lanes, s: State, budget = 3000): boolean {
-  const dead = new Set<string>();
-  let nodes = 0;
-  const go = (st: State): boolean => {
-    if (won(st)) return true;
-    if (++nodes > budget) return true;
-    const k = keyOf(st);
-    if (dead.has(k)) return false;
-    if (st.slots.indexOf(null) >= 0) {
-      for (const li of options(b, lanes, st).open) {
-        const n = clone(st);
-        if (tap(b, lanes, n, li) && go(n)) return true;
-      }
-    }
-    dead.add(k);
-    return false;
-  };
-  return go(s);
-}
+/** Can the settled state still be won? Budget exhaustion counts as yes (benefit of the doubt). */
+const solvable = (b: Board, lanes: Lanes, s: State): boolean => solve(b, lanes, s) !== 'dead';
 
 export interface Choices {
   /** Share of turns with 2+ options where at least one option loses the board. */
