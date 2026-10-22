@@ -6,10 +6,10 @@ export const hilltopCastle: Scene = {
   name: "Castle on a Hill",
   blurb: "Up the winding path, the flags are flying for you.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
-  chunk: [19, 28],
-  wait: 0.95,
+  chunk: [20, 29],
+  wait: 0.9,
   waitSlack: 1,
   pal: {
     a: '#b9bdcc',
