@@ -1,4 +1,6 @@
 import { describe, expect, test } from 'bun:test';
+import { checkPalette } from '../../scripts/checks';
+import { PALETTES } from '../../src/random/palettes';
 import { parseArt } from '../../src/core/board';
 import { deal, replayLine } from '../../src/core/deal';
 import type { Band } from '../../src/core/types';
@@ -73,4 +75,8 @@ describe('randomLevel', () => {
     bad.meta = { kind: 'random', band: 'nope', seed: 1 };
     expect(fromRun(bad, {})).toBeNull();
   });
+});
+
+test('every random palette keeps its colours easy to tell apart', () => {
+  for (const p of PALETTES) expect([p.name, ...checkPalette(p)]).toEqual([p.name]);
 });
