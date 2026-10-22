@@ -128,4 +128,14 @@ describe('PressBinder', () => {
     b.click(1, 85);
     expect(taps).toEqual([]);
   });
+
+  test('a press whose release was missed ends when that pointer goes down again', () => {
+    const { b, taps, previews, fire } = mk();
+    b.down(1, 0, 0, 0);
+    fire(); // previewing lane 0; the release happens outside the window and never arrives
+    expect(b.down(1, 0, 2, 5000)).toBe(true);
+    b.up(1, 5050);
+    expect(previews).toEqual([0, null]);
+    expect(taps).toEqual([2]);
+  });
 });

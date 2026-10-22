@@ -73,6 +73,7 @@ export class PressBinder {
 
   /** Returns whether this pointer now owns the press (so the caller can capture it). */
   down(id: number, button: number, lane: number | null, at: number): boolean {
+    if (id === this.id) this.cancel(); // a pointer can't go down twice: its release was missed (left the window)
     if (button !== 0 || lane === null || this.id !== null) return false;
     this.id = id;
     const gen = ++this.gen;
@@ -133,5 +134,6 @@ export function bindLanePress(box: HTMLElement, onTap: (lane: number) => void, o
   box.addEventListener('pointercancel', (ev) => b.cancel(ev.pointerId));
   box.addEventListener('click', (ev) => b.click(laneOf(box, ev.target as Element), performance.now()));
   box.addEventListener('contextmenu', (ev) => ev.preventDefault());
+  window.addEventListener('blur', () => b.cancel()); // a release outside the window may never arrive
   return () => b.cancel();
 }
