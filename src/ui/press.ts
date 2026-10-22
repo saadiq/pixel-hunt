@@ -75,11 +75,14 @@ export class PressBinder {
   down(id: number, button: number, lane: number | null, at: number): boolean {
     if (button !== 0 || lane === null || this.id !== null) return false;
     this.id = id;
-    const gen = ++this.gen, start = at;
+    const gen = ++this.gen;
     this.feed({ t: 'down', lane, at });
-    this.schedule(() => { if (gen === this.gen && this.id === id) this.feed({ t: 'timer', at: start + HOLD_MS }); });
+    this.schedule(() => { if (gen === this.gen && this.id === id) this.feed({ t: 'timer', at: at + HOLD_MS }); });
     return true;
   }
+
+  /** Whether `id` owns the current press, so a caller can skip hit-testing other pointers. */
+  owns(id: number): boolean { return id === this.id; }
 
   move(id: number, lane: number | null): void {
     if (id === this.id) this.feed({ t: 'move', lane });
@@ -123,7 +126,9 @@ export function bindLanePress(box: HTMLElement, onTap: (lane: number) => void, o
   box.addEventListener('pointerdown', (ev) => {
     if (b.down(ev.pointerId, ev.button, laneOf(box, ev.target as Element), performance.now())) box.setPointerCapture(ev.pointerId);
   });
-  box.addEventListener('pointermove', (ev) => b.move(ev.pointerId, laneOf(box, document.elementFromPoint(ev.clientX, ev.clientY))));
+  box.addEventListener('pointermove', (ev) => {
+    if (b.owns(ev.pointerId)) b.move(ev.pointerId, laneOf(box, document.elementFromPoint(ev.clientX, ev.clientY)));
+  });
   box.addEventListener('pointerup', (ev) => b.up(ev.pointerId, performance.now()));
   box.addEventListener('pointercancel', (ev) => b.cancel(ev.pointerId));
   box.addEventListener('click', (ev) => b.click(laneOf(box, ev.target as Element), performance.now()));

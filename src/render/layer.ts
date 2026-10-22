@@ -22,8 +22,8 @@ function offscreen(w: number, h: number): [HTMLCanvasElement, CanvasRenderingCon
   return [c, c.getContext('2d') as CanvasRenderingContext2D];
 }
 
-const cellX = (geo: Geom, i: number): number => geo.ox + (i % geo.W) * geo.cs;
-const cellY = (geo: Geom, i: number): number => geo.oy + ((i / geo.W) | 0) * geo.cs;
+export const cellX = (geo: Geom, i: number): number => geo.ox + (i % geo.W) * geo.cs;
+export const cellY = (geo: Geom, i: number): number => geo.oy + ((i / geo.W) | 0) * geo.cs;
 
 /** Builds the layer at device size w x h. `paintGround` draws the static ground in CSS pixels. */
 export function buildLayer(
@@ -87,7 +87,7 @@ export function syncLayer(L: Layer, geo: Geom, cells: Cells, shades: CubeShades[
 /** Draws the chewed blocks shrinking toward their centres over `ms` (held still under reduced motion), outlined so they show on any neighbour. */
 export function drawChewing(
   ctx: CanvasRenderingContext2D, geo: Geom, cells: Cells, shades: CubeShades[], chewing: number[], now: number, ms: number,
-  reduce = false,
+  reduce: boolean,
 ): void {
   const cs = geo.cs;
   for (const i of chewing) {

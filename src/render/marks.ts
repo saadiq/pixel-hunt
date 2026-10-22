@@ -2,9 +2,7 @@
 import { exposedMask } from '../core/path';
 import { textOn } from '../ui/dom';
 import type { Ant, Geom } from './ants';
-
-const cellX = (g: Geom, i: number) => g.ox + (i % g.W) * g.cs;
-const cellY = (g: Geom, i: number) => g.oy + ((i / g.W) | 0) * g.cs;
+import { cellX, cellY } from './layer';
 
 /** Block cell -> colour index of the ant on its way to it or chewing it. */
 export function targets(ants: Ant[]): Map<number, number> {
@@ -42,11 +40,11 @@ export function drawPreview(ctx: CanvasRenderingContext2D, g: Geom, cells: numbe
   ctx.fillStyle = 'rgba(12,8,6,.62)';
   ctx.fillRect(g.ox, g.oy, g.bpx, g.H * g.cs);
   const cs = g.cs, w = Math.max(1.5, cs * 0.14);
+  ctx.fillStyle = hex;
+  ctx.lineWidth = w;
+  ctx.strokeStyle = textOn(hex);
   for (const i of cells) {
-    ctx.fillStyle = hex;
     ctx.fillRect(cellX(g, i), cellY(g, i), cs, cs);
-    ctx.lineWidth = w;
-    ctx.strokeStyle = textOn(hex);
     ctx.strokeRect(cellX(g, i) + w / 2, cellY(g, i) + w / 2, cs - w, cs - w);
   }
 }
