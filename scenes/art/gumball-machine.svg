@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 54" width="44" height="54">
+  <metadata>{"id":"gumball-machine","name":"Gumball Machine","blurb":"One coin, one twist, and fingers crossed for blue.","band":"hard","W":44,"H":54,"slots":3,"lanes":5,"chunk":[18,26],"wait":0.8,"waitSlack":1,"bg":"#ffc2d4"}</metadata>
+  <defs>
+    <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect x="1" y="1" width="1" height="1" fill="#ffffff"/>
+      <rect x="4" y="4" width="1" height="1" fill="#ffffff"/>
+    </pattern>
+    <pattern id="checks" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#ffffff"/>
+      <rect x="3" y="3" width="3" height="3" fill="#ffffff"/>
+    </pattern>
+    <clipPath id="glass"><circle cx="22" cy="19" r="12.9"/></clipPath>
+  </defs>
+  <!-- polka-dot wallpaper and a checked shop floor -->
+  <rect width="44" height="54" fill="#ffc2d4"/>
+  <rect width="44" height="45" fill="url(#dots)"/>
+  <rect y="45" width="44" height="9" fill="url(#checks)"/>
+  <rect y="44.5" width="44" height="1" fill="#2b2135"/>
+
+  <!-- glass globe full of gumballs -->
+  <circle cx="22" cy="19" r="13.5" fill="#c4ecf7" stroke="#2b2135" stroke-width="1.2"/>
+  <g clip-path="url(#glass)">
+    <circle cx="16" cy="29" r="1.95" fill="#3d7be0"/>
+    <circle cx="20" cy="29" r="1.95" fill="#4cc26b"/>
+    <circle cx="24" cy="29" r="1.95" fill="#ffcf3a"/>
+    <circle cx="28" cy="29" r="1.95" fill="#4cc26b"/>
+    <circle cx="14" cy="25" r="1.95" fill="#4cc26b"/>
+    <circle cx="18" cy="25" r="1.95" fill="#e8433a"/>
+    <circle cx="22" cy="25" r="1.95" fill="#3d7be0"/>
+    <circle cx="26" cy="25" r="1.95" fill="#e8433a"/>
+    <circle cx="30" cy="25" r="1.95" fill="#ffcf3a"/>
+    <circle cx="12" cy="21" r="1.95" fill="#e8433a"/>
+    <circle cx="16" cy="21" r="1.95" fill="#3d7be0"/>
+    <circle cx="20" cy="21" r="1.95" fill="#4cc26b"/>
+    <circle cx="24" cy="21" r="1.95" fill="#ffcf3a"/>
+    <circle cx="28" cy="21" r="1.95" fill="#4cc26b"/>
+    <circle cx="32" cy="21" r="1.95" fill="#e8433a"/>
+    <circle cx="14" cy="17" r="1.95" fill="#4cc26b"/>
+    <circle cx="18" cy="17" r="1.95" fill="#ffcf3a"/>
+    <circle cx="22" cy="17" r="1.95" fill="#e8433a"/>
+    <circle cx="26" cy="17" r="1.95" fill="#3d7be0"/>
+    <circle cx="30" cy="17" r="1.95" fill="#ffcf3a"/>
+    <circle cx="12" cy="13" r="1.95" fill="#e8433a"/>
+    <circle cx="16" cy="13" r="1.95" fill="#3d7be0"/>
+    <circle cx="20" cy="13" r="1.95" fill="#4cc26b"/>
+    <circle cx="24" cy="13" r="1.95" fill="#ffcf3a"/>
+    <circle cx="28" cy="13" r="1.95" fill="#e8433a"/>
+    <circle cx="32" cy="13" r="1.95" fill="#3d7be0"/>
+  </g>
+  <!-- shine on the glass -->
+  <path d="M13,12 C14,9 16,7.5 18,6.8" stroke="#ffffff" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+  <rect x="11.5" y="14" width="1.2" height="2" fill="#ffffff"/>
+
+  <!-- red cap and chrome knob -->
+  <path d="M14.5,7 C14.5,3 17,2 22,2 C27,2 29.5,3 29.5,7 Z" fill="#e8433a" stroke="#2b2135" stroke-width="1"/>
+  <rect x="20" y="0" width="4" height="2.5" fill="#a9b4c4" stroke="#2b2135" stroke-width="0.8"/>
+
+  <!-- chrome collar -->
+  <rect x="12.5" y="31.5" width="19" height="3" fill="#a9b4c4" stroke="#2b2135" stroke-width="1"/>
+
+  <!-- red base -->
+  <path d="M13.5,34.5 L30.5,34.5 L33.5,45.5 L10.5,45.5 Z" fill="#e8433a" stroke="#2b2135" stroke-width="1"/>
+  <!-- coin plate with slot and the turning knob -->
+  <rect x="16" y="36" width="12" height="7" fill="#a9b4c4"/>
+  <rect x="17" y="37" width="3" height="5" fill="#2b2135"/>
+  <rect x="18" y="38" width="1" height="3" fill="#ffcf3a"/>
+  <circle cx="24.5" cy="39.5" r="2.5" fill="#ffffff" stroke="#2b2135" stroke-width="1"/>
+  <rect x="24" y="37" width="1" height="5" fill="#2b2135"/>
+  <!-- chute flap -->
+  <rect x="19" y="43" width="6" height="2" fill="#2b2135"/>
+
+  <!-- a coin and a spilled gumball on the floor -->
+  <circle cx="6" cy="50" r="2.5" fill="#ffcf3a" stroke="#2b2135" stroke-width="1"/>
+  <circle cx="38" cy="50" r="2.5" fill="#3d7be0" stroke="#2b2135" stroke-width="1"/>
+</svg>
