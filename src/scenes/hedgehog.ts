@@ -6,9 +6,9 @@ export const hedgehog: Scene = {
   name: "Hedgehog in Autumn Leaves",
   blurb: "Snuffling through the leaf pile, wearing a few as a hat.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
-  chunk: [16, 24],
+  chunk: [15, 21],
   wait: 0.9,
   waitSlack: 1,
   pal: {
