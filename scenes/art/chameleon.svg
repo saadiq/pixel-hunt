@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" width="56" height="56">
-  <metadata>{"id":"chameleon","name":"Chameleon","blurb":"Striped, curled up and keeping an eye on you.","band":"hard","W":56,"H":56,"slots":3,"lanes":5,"chunk":[26,37],"wait":0.8,"waitSlack":1,"bg":"#2b8a4a"}</metadata>
+  <metadata>{"id":"chameleon","name":"Chameleon","blurb":"Striped, curled up and keeping an eye on you.","band":"hard","W":56,"H":56,"slots":2,"lanes":5,"chunk":[24,34],"wait":0.9,"waitSlack":1,"bg":"#2b8a4a"}</metadata>
   <defs>
     <clipPath id="glass"><polygon points="4.40,28.00 16.20,5.11 39.80,5.11 51.60,28.00 39.80,50.89 16.20,50.89"/></clipPath>
     <path id="leaf" d="M0,0 C3,-4 8,-4 10,0 C8,4 3,4 0,0 Z"/>
