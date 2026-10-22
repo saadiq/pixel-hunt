@@ -19,7 +19,7 @@ export const birthdayCake: Scene = {
     e: '#3a2433',
     f: '#ffd23f',
     g: '#a8e6cf',
-    h: '#f5c27a',
+    h: '#eaa66a',
     i: '#8a4b2e',
   },
   rows: [

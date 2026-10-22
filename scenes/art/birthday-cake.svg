@@ -48,7 +48,7 @@
   <ellipse cx="24" cy="40.5" rx="21.5" ry="5" fill="#ffffff" stroke="#3a2433" stroke-width="1"/>
   <path d="M3.5,41 C10,46 38,46 44.5,41 L44,43 C38,46 10,46 4,43 Z" fill="#ffc2d4"/>
   <!-- cake body -->
-  <rect x="8.5" y="17.5" width="31" height="23" rx="2" fill="#f5c27a" stroke="#3a2433" stroke-width="1"/>
+  <rect x="8.5" y="17.5" width="31" height="23" rx="2" fill="#eaa66a" stroke="#3a2433" stroke-width="1"/>
   <rect x="9" y="29" width="30" height="2" fill="#8a4b2e"/>
   <rect x="9" y="31" width="30" height="1" fill="#ffffff"/>
   <rect x="9" y="37" width="30" height="3" fill="#8a4b2e"/>
