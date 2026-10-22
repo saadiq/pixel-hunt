@@ -11,11 +11,11 @@ export const paperBoat: Scene = {
   chunk: [46, 66],
   wait: 0.3,
   pal: {
-    a: '#d4e3f7',
+    a: '#bcd9fb',
     b: '#7d9cc7',
     c: '#2a1f33',
     d: '#ffffff',
-    e: '#b5c4dc',
+    e: '#a49cb8',
     f: '#ffd23f',
     g: '#f39c2c',
     h: '#3f6fb8',
