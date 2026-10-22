@@ -6,10 +6,10 @@ export const snowman: Scene = {
   name: "Snowman",
   blurb: "Built this morning, watching the house all evening.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
-  chunk: [21, 31],
-  wait: 0.9,
+  chunk: [25, 36],
+  wait: 0.7,
   waitSlack: 1,
   pal: {
     a: '#ffffff',
