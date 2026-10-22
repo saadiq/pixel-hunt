@@ -17,7 +17,7 @@ export const santoriniRooftops: Scene = {
     c: '#ffb38a',
     d: '#ffe066',
     e: '#22303f',
-    f: '#cfd8e6',
+    f: '#b4bfcf',
     g: '#f2a541',
     h: '#e83e8c',
     i: '#4caf50',
