@@ -6,10 +6,10 @@ export const pancakeStack: Scene = {
   name: "Pancake Stack",
   blurb: "Six high, butter melting, syrup everywhere.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
   chunk: [17, 24],
-  wait: 0.8,
+  wait: 0.75,
   waitSlack: 1,
   pal: {
     a: '#fff6e8',
