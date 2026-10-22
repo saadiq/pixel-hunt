@@ -14,7 +14,7 @@ export const bentoBox: Scene = {
   pal: {
     a: '#ffffff',
     b: '#2a2233',
-    c: '#cfd8e6',
+    c: '#b4bfcf',
     d: '#ff9a76',
     e: '#ffd23f',
     f: '#f39a2b',

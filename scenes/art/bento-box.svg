@@ -7,7 +7,7 @@
     </pattern>
     <g id="nigiri">
       <rect x="0.5" y="4.5" width="8" height="5" rx="1.5" fill="#ffffff" stroke="#2a2233" stroke-width="1"/>
-      <rect x="1" y="8" width="7" height="1" fill="#cfd8e6"/>
+      <rect x="1" y="8" width="7" height="1" fill="#b4bfcf"/>
       <path d="M0.5,5.5 C0.5,1 8.5,1 8.5,5.5 Z" fill="#ff9a76" stroke="#2a2233" stroke-width="1" stroke-linejoin="round"/>
       <rect x="2.5" y="3" width="1" height="2" fill="#ffffff"/>
       <rect x="5.5" y="3" width="1" height="2" fill="#ffffff"/>
@@ -26,7 +26,7 @@
       <rect x="2" y="2" width="1" height="1" fill="#ffffff"/>
     </g>
     <g id="broc">
-      <rect x="4.5" y="5.5" width="3" height="5" fill="#cfd8e6" stroke="#2a2233" stroke-width="1"/>
+      <rect x="4.5" y="5.5" width="3" height="5" fill="#b4bfcf" stroke="#2a2233" stroke-width="1"/>
       <circle cx="3" cy="5" r="2.6" fill="#5cc23a" stroke="#2a2233" stroke-width="1"/>
       <circle cx="9" cy="5" r="2.6" fill="#5cc23a" stroke="#2a2233" stroke-width="1"/>
       <circle cx="6" cy="3" r="2.8" fill="#5cc23a" stroke="#2a2233" stroke-width="1"/>
@@ -46,12 +46,12 @@
   <!-- box: outline, red rim, inner outline -->
   <rect x="2.5" y="3.5" width="49" height="48" rx="3" fill="#e8453c" stroke="#2a2233" stroke-width="1"/>
   <rect x="5" y="49" width="44" height="2" fill="#f39a2b"/>
-  <rect x="5.5" y="6.5" width="43" height="42" fill="#cfd8e6" stroke="#2a2233" stroke-width="1"/>
+  <rect x="5.5" y="6.5" width="43" height="42" fill="#b4bfcf" stroke="#2a2233" stroke-width="1"/>
   <!-- A: onigiri on lettuce -->
   <rect x="6" y="11" width="20" height="18" fill="#5cc23a"/>
-  <path d="M6,13 L8,11 L10,13 L12,11 L14,13 L16,11 L18,13 L20,11 L22,13 L24,11 L26,13 L26,7 L6,7 Z" fill="#cfd8e6"/>
+  <path d="M6,13 L8,11 L10,13 L12,11 L14,13 L16,11 L18,13 L20,11 L22,13 L24,11 L26,13 L26,7 L6,7 Z" fill="#b4bfcf"/>
   <path d="M16,9.5 C18,9.5 25,21 25,25 C25,28 22,28.5 16,28.5 C10,28.5 7,28 7,25 C7,21 14,9.5 16,9.5 Z" fill="#ffffff" stroke="#2a2233" stroke-width="1"/>
-  <rect x="8" y="25" width="16" height="3" fill="#cfd8e6"/>
+  <rect x="8" y="25" width="16" height="3" fill="#b4bfcf"/>
   <rect x="12" y="22" width="8" height="7" fill="#2a2233"/>
   <rect x="13" y="16" width="1" height="2" fill="#2a2233"/>
   <rect x="18" y="16" width="1" height="2" fill="#2a2233"/>
