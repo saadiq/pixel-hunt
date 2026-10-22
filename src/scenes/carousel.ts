@@ -6,10 +6,10 @@ export const carousel: Scene = {
   name: "Carousel",
   blurb: "Round and round, up and down, one more go.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
   chunk: [20, 28],
-  wait: 0.8,
+  wait: 1,
   waitSlack: 1,
   pal: {
     a: '#fff1d0',

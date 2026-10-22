@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 54" width="48" height="54">
-  <metadata>{"id":"carousel","name":"Carousel","blurb":"Round and round, up and down, one more go.","band":"hard","W":48,"H":54,"slots":2,"lanes":5,"chunk":[20,28],"wait":0.8,"waitSlack":1,"bg":"#8fd3f4"}</metadata>
+  <metadata>{"id":"carousel","name":"Carousel","blurb":"Round and round, up and down, one more go.","band":"hard","W":48,"H":54,"slots":3,"lanes":5,"chunk":[20,28],"wait":1,"waitSlack":1,"bg":"#8fd3f4"}</metadata>
   <defs>
     <pattern id="confetti" width="7" height="6" patternUnits="userSpaceOnUse">
       <rect x="1" y="1" width="1" height="1" fill="#fff1d0"/>
