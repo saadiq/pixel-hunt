@@ -31,7 +31,7 @@
       <div class="stage" id="stage">
         <div class="boardWrap" id="boardWrap">
           <canvas id="board" aria-label="Pixel art puzzle board"></canvas>
-          <div class="tip" id="tip" hidden>Tap a squad. Ants run the track and eat from any side.</div>
+          <div class="tip" id="tip" hidden>Tap a squad. Ants eat what they can reach, closest to the nest first.</div>
           <div class="tip" id="notice" role="status"></div>
         </div>
       </div>
@@ -46,7 +46,8 @@
         <h2 id="lvTitle">Pixel Hunt</h2>
         <ol class="rules">
           <li>Tap a lane to send its <b>top squad</b> to a holding slot.</li>
-          <li>Ants leave the nest, run the <b>track around the board</b>, and tunnel through eaten gaps to reach blocks of their color from any side.</li>
+          <li><b>Ants eat what they can reach, closest to the nest first.</b> The nest runs along the bottom; ants run the track around the board and tunnel through eaten gaps.</li>
+          <li><b>Press and hold a lane</b> to see what its squad can reach. Let go to cancel.</li>
           <li>A squad leaves when its ants are fed. If every slot is full and nobody can reach food, <b>you're stuck</b>.</li>
           <li>Every deal has at least one winning order. Use <b>undo</b> when you're boxed in. Once per board, a stuck board can <b>rewind</b> to the last point it could still be won. <b>Restart</b> deals fresh.</li>
         </ol>
