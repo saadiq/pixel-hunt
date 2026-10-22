@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 58" width="46" height="58">
+  <metadata>{"id":"space-rocket","name":"Space Rocket","blurb":"Three, two, one... see you at the ringed planet!","band":"hard","W":46,"H":58,"slots":3,"lanes":5,"chunk":[23,33],"wait":0.8,"waitSlack":1,"bg":"#26306b"}</metadata>
+  <defs>
+    <path id="body" d="M23,4 C29,9 31,18 31,28 L31,40 L15,40 L15,28 C15,18 17,9 23,4 Z"/>
+    <clipPath id="bodyClip"><use href="#body"/></clipPath>
+    <g id="star"><rect x="-1" y="0" width="3" height="1"/><rect x="0" y="-1" width="1" height="3"/></g>
+  </defs>
+  <!-- deep space with stars -->
+  <rect width="46" height="58" fill="#26306b"/>
+  <g fill="#ffffff">
+    <use href="#star" transform="translate(4 4)"/><use href="#star" transform="translate(38 3)"/>
+    <use href="#star" transform="translate(10 18)"/><use href="#star" transform="translate(41 26)"/>
+    <use href="#star" transform="translate(5 33)"/><use href="#star" transform="translate(40 46)"/>
+    <rect x="15" y="2" width="1" height="1"/><rect x="31" y="9" width="1" height="1"/><rect x="2" y="24" width="1" height="1"/>
+  </g>
+  <g fill="#ffc93c">
+    <use href="#star" transform="translate(30 3)"/><use href="#star" transform="translate(3 12)"/>
+    <use href="#star" transform="translate(44 54)"/>
+  </g>
+
+  <!-- ringed planet in the corner -->
+  <ellipse cx="38" cy="16" rx="11" ry="3" fill="none" stroke="#11131f" stroke-width="3" transform="rotate(-20 38 16)"/>
+  <ellipse cx="38" cy="16" rx="11" ry="3" fill="none" stroke="#ffc93c" stroke-width="1.1" transform="rotate(-20 38 16)"/>
+  <circle cx="38" cy="16" r="6.5" fill="#3fc7a6" stroke="#11131f" stroke-width="1.3"/>
+  <rect x="32" y="14" width="12" height="1.6" fill="#11131f"/>
+  <rect x="33" y="18" width="10" height="1.2" fill="#ffc93c"/>
+
+  <!-- small moon on the left -->
+  <circle cx="7" cy="50" r="5.5" fill="#b8c0d8" stroke="#11131f" stroke-width="1.3"/>
+  <g fill="#11131f"><rect x="5" y="48" width="2" height="2"/><rect x="8" y="51" width="2" height="2"/></g>
+
+  <!-- exhaust flames -->
+  <path d="M16.5,40 C16,46 19,50 23,57 C27,50 30,46 29.5,40 Z" fill="#ff8a1f" stroke="#11131f" stroke-width="1.2"/>
+  <path d="M19,40 C19,45 21,48 23,52 C25,48 27,45 27,40 Z" fill="#ffc93c"/>
+  <path d="M21,40 C21,43 22,45 23,47 C24,45 25,43 25,40 Z" fill="#ffffff"/>
+
+  <!-- fins -->
+  <path d="M15.5,28 L8,38 L8,44 L15.5,40 Z" fill="#e8433a" stroke="#11131f" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M30.5,28 L38,38 L38,44 L30.5,40 Z" fill="#e8433a" stroke="#11131f" stroke-width="1.3" stroke-linejoin="round"/>
+  <rect x="22" y="33" width="2" height="10" fill="#e8433a" stroke="#11131f" stroke-width="1"/>
+
+  <!-- body: white with a red nose cone and stripe -->
+  <use href="#body" fill="#ffffff"/>
+  <g clip-path="url(#bodyClip)">
+    <rect x="10" y="0" width="26" height="12" fill="#e8433a"/>
+    <rect x="10" y="12" width="26" height="1.2" fill="#11131f"/>
+    <rect x="10" y="34" width="26" height="2" fill="#e8433a"/>
+    <rect x="27.5" y="13" width="4" height="27" fill="#b8c0d8"/>
+  </g>
+  <use href="#body" fill="none" stroke="#11131f" stroke-width="1.5"/>
+
+  <!-- porthole with a gold rim and a little astronaut -->
+  <circle cx="23" cy="21" r="5" fill="#ffc93c" stroke="#11131f" stroke-width="1.2"/>
+  <circle cx="23" cy="21" r="3.4" fill="#3fc7a6" stroke="#11131f" stroke-width="0.9"/>
+  <rect x="21" y="19" width="2" height="2" fill="#ffffff"/>
+  <!-- rivets -->
+  <g fill="#11131f"><rect x="18" y="29" width="1" height="1"/><rect x="23" y="29" width="1" height="1"/><rect x="27" y="29" width="1" height="1"/></g>
+</svg>
