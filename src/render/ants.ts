@@ -34,7 +34,7 @@ export function spawnAnt(g: Geom, cell: number, color: number, path: number[], n
   const len = cum[cum.length - 1], mul = fast ? 2 : 1;
   const v = (reduce ? 1e6 : Math.max(560, g.bpx * 2.6)) * mul;
   const end = pts[pts.length - 1];
-  return { i: cell, color, pts, cum, len, tx: end[0], ty: end[1], t0: now, go: (len / v) * 1000, chew: reduce ? 0 : 130 / mul, phase: 0 };
+  return { i: cell, color, pts, cum, len, tx: end[0], ty: end[1], t0: now, go: (len / v) * 1000, chew: 130 / mul, phase: 0 };
 }
 
 /** Position and heading at distance s along the ant's polyline. */

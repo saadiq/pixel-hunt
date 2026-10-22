@@ -105,7 +105,7 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.drawImage(layer.canvas, 0, 0);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      drawChewing(ctx, geo, cells, shades, chewing, now, fast ? 65 : 130);
+      drawChewing(ctx, geo, cells, shades, chewing, now, fast ? 65 : 130, reduce);
       const marks = targets(ants);
       if (previewing !== null) drawPreview(ctx, geo, reachable(cells.vis, geo.W, geo.H, previewing, marks), cells.colors[previewing]);
       drawMarkers(ctx, geo, marks, cells.colors, now, reduce);

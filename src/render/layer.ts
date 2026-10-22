@@ -84,13 +84,14 @@ export function syncLayer(L: Layer, geo: Geom, cells: Cells, shades: CubeShades[
   return chewing;
 }
 
-/** Draws the chewed blocks shrinking toward their centres over `ms`, outlined so they show on any neighbour. */
+/** Draws the chewed blocks shrinking toward their centres over `ms` (held still under reduced motion), outlined so they show on any neighbour. */
 export function drawChewing(
   ctx: CanvasRenderingContext2D, geo: Geom, cells: Cells, shades: CubeShades[], chewing: number[], now: number, ms: number,
+  reduce = false,
 ): void {
   const cs = geo.cs;
   for (const i of chewing) {
-    const p = Math.min(1, (now - cells.chew[i]) / ms), s = cs * (1 - p * 0.85), o = (cs - s) / 2;
+    const p = reduce ? 0 : Math.min(1, (now - cells.chew[i]) / ms), s = cs * (1 - p * 0.85), o = (cs - s) / 2;
     drawCube(ctx, cellX(geo, i) + o, cellY(geo, i) + o, s, shades[cells.vis[i]]);
     ctx.lineWidth = Math.max(1, cs * 0.08);
     ctx.strokeStyle = textOn(cells.colors[cells.vis[i]]);
