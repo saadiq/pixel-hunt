@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 44" width="56" height="44">
+  <metadata>{"id":"steam-train","name":"Steam Train","blurb":"Full steam ahead across the valley.","band":"hard","W":56,"H":44,"slots":3,"lanes":5,"chunk":[20,29],"wait":0.8,"waitSlack":1,"bg":"#8fd3ff"}</metadata>
+  <defs>
+    <g id="wheel">
+      <circle r="4" fill="#1d2033"/>
+      <circle r="2.6" fill="#d63a3a"/>
+      <path d="M-2.6,0 H2.6 M0,-2.6 V2.6" stroke="#1d2033" stroke-width="1"/>
+      <circle r="0.9" fill="#ffcc33"/>
+    </g>
+    <g id="smallWheel">
+      <circle r="2.6" fill="#1d2033"/>
+      <circle r="1.4" fill="#ffcc33"/>
+    </g>
+  </defs>
+  <!-- sky and rolling hills -->
+  <rect width="56" height="44" fill="#8fd3ff"/>
+  <path d="M-2,30 C8,22 16,20 26,26 C34,30 42,20 58,24 L58,46 L-2,46 Z" fill="#1d2033"/>
+  <path d="M-2,31.4 C8,23.4 16,21.4 26,27.4 C34,31.4 42,21.4 58,25.4 L58,46 L-2,46 Z" fill="#5bb04a"/>
+
+  <!-- smoke trailing back from the chimney -->
+  <g fill="#1d2033">
+    <circle cx="44" cy="8" r="4.6"/><circle cx="36" cy="6" r="5.6"/><circle cx="26" cy="5.5" r="5"/>
+    <circle cx="17" cy="7.5" r="4.4"/><circle cx="9" cy="9" r="3.6"/><circle cx="3" cy="10.5" r="2.6"/>
+  </g>
+  <g fill="#b8c0cc">
+    <circle cx="44" cy="8" r="3.6"/><circle cx="36" cy="6" r="4.6"/><circle cx="26" cy="5.5" r="4"/>
+    <circle cx="17" cy="7.5" r="3.4"/><circle cx="9" cy="9" r="2.6"/><circle cx="3" cy="10.5" r="1.6"/>
+  </g>
+  <g fill="#ffffff">
+    <circle cx="43" cy="7" r="2"/><circle cx="35" cy="4.6" r="2.6"/><circle cx="25" cy="4.4" r="2.2"/><circle cx="16" cy="6.6" r="1.6"/>
+  </g>
+
+  <!-- track on its sleepers -->
+  <rect x="-2" y="38" width="60" height="2" fill="#1d2033"/>
+  <pattern id="sleepers" x="1" y="40" width="7" height="2" patternUnits="userSpaceOnUse"><rect width="3" height="2" fill="#8a5a3c"/></pattern>
+  <rect x="1" y="40" width="52" height="2" fill="url(#sleepers)"/>
+  <rect x="-2" y="42" width="60" height="3" fill="#8a5a3c"/>
+
+  <!-- tender behind the engine -->
+  <rect x="2.5" y="21.5" width="13" height="12" fill="#d63a3a" stroke="#1d2033" stroke-width="1.2"/>
+  <rect x="3" y="19" width="12" height="3" fill="#1d2033"/>
+  <rect x="4" y="25" width="10" height="2" fill="#ffcc33"/>
+  <rect x="15" y="31" width="4" height="2" fill="#1d2033"/>
+
+  <!-- the cab with a lit window -->
+  <rect x="18.5" y="15.5" width="11" height="18" fill="#d63a3a" stroke="#1d2033" stroke-width="1.2"/>
+  <rect x="17" y="13" width="14" height="3" fill="#1d2033"/>
+  <rect x="21" y="18" width="6" height="6" fill="#ffffff" stroke="#1d2033" stroke-width="1.2"/>
+  <rect x="21" y="21" width="6" height="1" fill="#1d2033"/>
+  <rect x="19" y="27" width="10" height="2" fill="#ffcc33"/>
+
+  <!-- boiler with gold bands, dome and chimney -->
+  <rect x="29.5" y="21.5" width="18" height="10" rx="1" fill="#1d2033" stroke="#1d2033" stroke-width="1.2"/>
+  <rect x="30" y="22" width="17" height="4" fill="#d63a3a"/>
+  <g fill="#ffcc33"><rect x="34" y="22" width="1" height="9"/><rect x="40" y="22" width="1" height="9"/></g>
+  <path d="M35,21.6 C35,18 39,18 39,21.6 Z" fill="#ffcc33" stroke="#1d2033" stroke-width="1.1"/>
+  <rect x="42.5" y="14.5" width="4" height="7" fill="#1d2033"/>
+  <rect x="41.5" y="12.5" width="6" height="2.5" fill="#1d2033"/>
+  <rect x="43" y="15" width="3" height="1" fill="#d63a3a"/>
+  <!-- headlamp and buffer -->
+  <rect x="47.5" y="20.5" width="3" height="3" fill="#ffcc33" stroke="#1d2033" stroke-width="1"/>
+  <rect x="47" y="25" width="2" height="6" fill="#d63a3a" stroke="#1d2033" stroke-width="1"/>
+  <!-- cowcatcher -->
+  <path d="M47.5,31 L52.5,37.5 L47.5,37.5 Z" fill="#ffcc33" stroke="#1d2033" stroke-width="1.1" stroke-linejoin="round"/>
+  <!-- running board -->
+  <rect x="18" y="31" width="31" height="2.6" fill="#1d2033"/>
+
+  <!-- wheels and coupling rod -->
+  <use href="#smallWheel" transform="translate(6 35.4)"/>
+  <use href="#smallWheel" transform="translate(12 35.4)"/>
+  <use href="#wheel" transform="translate(24 34)"/>
+  <use href="#wheel" transform="translate(33 34)"/>
+  <use href="#smallWheel" transform="translate(43 35.4)"/>
+  <rect x="23" y="34" width="11" height="1.2" fill="#b8c0cc"/>
+</svg>
