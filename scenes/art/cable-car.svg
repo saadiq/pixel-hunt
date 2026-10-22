@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" width="56" height="56">
+  <metadata>{"id":"cable-car","name":"Cable Car","blurb":"Hang on to the pole, the next hill is a steep one.","band":"hard","W":56,"H":56,"slots":3,"lanes":5,"chunk":[21,31],"wait":0.8,"waitSlack":1,"bg":"#8fd0f0"}</metadata>
+  <defs><clipPath id="card"><rect x="4" y="4" width="48" height="48"/></clipPath></defs>
+  <rect width="56" height="56" fill="#fff1c9"/>
+  <g clip-path="url(#card)"><g transform="translate(0 2)">
+  <!-- sky, the bay and Alcatraz -->
+  <rect width="56" height="50" fill="#8fd0f0"/>
+  <circle cx="13" cy="5" r="3" fill="#f2b632" stroke="#26202e" stroke-width="1"/>
+  <rect y="13" width="56" height="10" fill="#3d6fc9"/>
+  <rect y="12.5" width="56" height="1" fill="#26202e"/>
+  <path d="M1.5,17.5 L3.5,15.5 L9.5,15.5 L11.5,17.5 Z" fill="#8a8f9e" stroke="#26202e" stroke-width="1"/>
+  <rect x="5" y="13" width="2" height="2" fill="#fff1c9"/>
+  <!-- painted-lady houses climbing the hill behind -->
+  <defs><g id="win6"><rect width="6" height="5"/><rect x="1" y="1" width="4" height="3" fill="#3d6fc9"/></g><g id="win5"><rect width="5" height="5"/><rect x="1" y="1" width="3" height="3" fill="#3d6fc9"/></g></defs>
+  <path d="M-1.5,40 L-1.5,25.5 L3,21.5 L7.5,25.5 L7.5,40 Z" fill="#fff1c9" stroke="#26202e" stroke-width="1"/><use href="#win6" fill="#3fa69a" x="0" y="28"/><use href="#win6" fill="#3fa69a" x="0" y="35"/>
+  <path d="M8.5,40 L8.5,21.5 L13,17.5 L17.5,21.5 L17.5,40 Z" fill="#f29bb5" stroke="#26202e" stroke-width="1"/>
+  <path d="M18.5,40 L18.5,16.5 L23,12.5 L27.5,16.5 L27.5,40 Z" fill="#3fa69a" stroke="#26202e" stroke-width="1"/>
+  <path d="M28.5,40 L28.5,12.5 L32.5,8.5 L36.5,12.5 L36.5,40 Z" fill="#fff1c9" stroke="#26202e" stroke-width="1"/><use href="#win5" fill="#3fa69a" x="30" y="15"/>
+  <path d="M37.5,40 L37.5,8.5 L42,4.5 L46.5,8.5 L46.5,40 Z" fill="#f29bb5" stroke="#26202e" stroke-width="1"/><use href="#win6" fill="#fff1c9" x="39" y="11"/><use href="#win6" fill="#fff1c9" x="39" y="18"/>
+  <path d="M47.5,40 L47.5,4.5 L52,0.5 L56.5,4.5 L56.5,40 Z" fill="#3fa69a" stroke="#26202e" stroke-width="1"/><use href="#win6" fill="#fff1c9" x="49" y="7"/><use href="#win6" fill="#fff1c9" x="49" y="14"/><use href="#win6" fill="#fff1c9" x="49" y="21"/>
+  <!-- the flat crossing street with rails and cable slot -->
+  <rect y="40" width="56" height="10" fill="#8a8f9e"/>
+  <rect y="39.5" width="56" height="1" fill="#26202e"/>
+  <g fill="#fff1c9"><rect y="44" width="56" height="1"/><rect y="48" width="56" height="1"/></g>
+  <rect y="46" width="56" height="1" fill="#26202e"/>
+  <!-- the cable car: roof, destination board, saloon, open ends -->
+  <rect x="7.5" y="21.5" width="41" height="3" rx="1" fill="#d23a3a" stroke="#26202e" stroke-width="1"/>
+  <rect x="19.5" y="17.5" width="17" height="4" fill="#fff1c9" stroke="#26202e" stroke-width="1"/>
+  <g fill="#26202e"><rect x="22" y="19" width="2" height="1"/><rect x="25" y="19" width="3" height="1"/><rect x="29" y="19" width="2" height="1"/><rect x="32" y="19" width="2" height="1"/></g>
+  <rect x="8.5" y="24.5" width="39" height="8" fill="#8fd0f0" stroke="#26202e" stroke-width="1"/>
+  <rect x="11.5" y="24.5" width="33" height="8" fill="#fff1c9" stroke="#26202e" stroke-width="1"/>
+  <g fill="#3d6fc9"><rect x="13" y="26" width="4" height="5"/><rect x="19" y="26" width="4" height="5"/><rect x="25" y="26" width="4" height="5"/><rect x="31" y="26" width="4" height="5"/><rect x="37" y="26" width="4" height="5"/><rect x="43" y="26" width="4" height="5"/></g>
+  <!-- riders on the running boards -->
+  <g fill="#26202e"><rect x="9" y="25" width="1" height="8"/><rect x="46" y="25" width="1" height="8"/></g>
+  <g fill="#f29bb5"><rect x="10" y="26" width="2" height="2"/><rect x="44" y="26" width="2" height="2"/><rect x="20" y="27" width="2" height="2"/><rect x="32" y="27" width="2" height="2"/></g>
+  <g fill="#3fa69a"><rect x="10" y="28" width="2" height="4"/><rect x="44" y="28" width="2" height="4"/></g>
+  <!-- red lower body with gold stripe and number -->
+  <rect x="6.5" y="32.5" width="43" height="6" fill="#d23a3a" stroke="#26202e" stroke-width="1"/>
+  <rect x="8" y="34" width="40" height="1" fill="#f2b632"/>
+  <rect x="25" y="35" width="6" height="3" fill="#fff1c9"/>
+  <g fill="#26202e"><rect x="27" y="36" width="1" height="1"/><rect x="29" y="36" width="1" height="1"/></g>
+  <!-- running board, bumpers and wheels -->
+  <rect x="5" y="38" width="46" height="1.2" fill="#26202e"/>
+  <g fill="#26202e"><circle cx="15" cy="40" r="2"/><circle cx="41" cy="40" r="2"/></g>
+  <g fill="#f2b632"><rect x="5" y="31" width="2" height="2"/><rect x="49" y="31" width="2" height="2"/></g>
+  </g></g>
+  <!-- postcard border -->
+  <rect x="0.5" y="0.5" width="55" height="55" fill="none" stroke="#26202e" stroke-width="1"/>
+  <rect x="3.5" y="3.5" width="49" height="49" fill="none" stroke="#26202e" stroke-width="1"/>
+</svg>
