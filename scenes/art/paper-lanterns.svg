@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 54" width="52" height="54">
+  <metadata>{"id":"paper-lanterns","name":"Lantern Festival","blurb":"Paper lanterns strung across the rooftops, glowing all night.","band":"hard","W":52,"H":54,"slots":3,"lanes":5,"chunk":[23,33],"wait":0.8,"waitSlack":1,"bg":"#2b3a8f"}</metadata>
+  <defs>
+    <pattern id="stars" width="13" height="11" patternUnits="userSpaceOnUse">
+      <rect x="2" y="2" width="1" height="1" fill="#fff3d6"/>
+      <rect x="9" y="7" width="1" height="1" fill="#fff3d6"/>
+    </pattern>
+    <!-- a lantern centred on 0,0, body 20 wide and 16 tall -->
+    <g id="lanternR">
+      <rect x="-1" y="-12" width="2" height="3" fill="#141425"/>
+      <ellipse cx="0" cy="0" rx="10" ry="8" fill="#e23b3b" stroke="#141425" stroke-width="1.4"/>
+      <ellipse cx="0" cy="0" rx="5" ry="8" fill="none" stroke="#ffd84a" stroke-width="1"/>
+      <ellipse cx="0" cy="0" rx="2" ry="4" fill="#fff3d6"/>
+      <rect x="-5" y="-10" width="10" height="3" fill="#ffd84a" stroke="#141425" stroke-width="1"/>
+      <rect x="-5" y="7" width="10" height="3" fill="#ffd84a" stroke="#141425" stroke-width="1"/>
+      <rect x="-1" y="10.5" width="2" height="5" fill="#ffd84a"/>
+    </g>
+    <g id="lanternO">
+      <ellipse cx="0" cy="0" rx="10" ry="8" fill="#ff9a3c" stroke="#141425" stroke-width="1.4"/>
+      <ellipse cx="0" cy="0" rx="5" ry="8" fill="none" stroke="#e23b3b" stroke-width="1"/>
+      <ellipse cx="0" cy="0" rx="2" ry="4" fill="#fff3d6"/>
+      <rect x="-5" y="-10" width="10" height="3" fill="#e23b3b" stroke="#141425" stroke-width="1"/>
+      <rect x="-5" y="7" width="10" height="3" fill="#e23b3b" stroke="#141425" stroke-width="1"/>
+    </g>
+    <g id="lanternP">
+      <ellipse cx="0" cy="0" rx="10" ry="8" fill="#ff86b8" stroke="#141425" stroke-width="1.4"/>
+      <ellipse cx="0" cy="0" rx="2.4" ry="4.4" fill="#fff3d6"/>
+      <rect x="-5" y="-10" width="10" height="3" fill="#ffd84a" stroke="#141425" stroke-width="1"/>
+      <rect x="-5" y="7" width="10" height="3" fill="#ffd84a" stroke="#141425" stroke-width="1"/>
+      <rect x="-1" y="10.5" width="2" height="5" fill="#ffd84a"/>
+    </g>
+  </defs>
+  <!-- night sky -->
+  <rect width="52" height="54" fill="#2b3a8f"/>
+  <rect width="52" height="44" fill="url(#stars)"/>
+
+  <!-- strings and cords -->
+  <g fill="none" stroke="#141425" stroke-width="1">
+    <path d="M0,2 Q26,14 52,2"/>
+    <path d="M0,20 Q26,32 52,20"/>
+    <path d="M9.5,5 L9.5,9 M42.5,5 L42.5,9 M26,8 L26,11"/>
+  </g>
+
+  <!-- pagoda rooftops with lit windows -->
+  <path d="M-1,44 C3,43 6,41 8,38 L18,38 C20,41 23,43 27,44 Z" fill="#2f9e8f" stroke="#141425" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M25,43 C29,42 32,40 34,37 L44,37 C46,40 49,42 53,43 Z" fill="#2f9e8f" stroke="#141425" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="0" y="44" width="52" height="10" fill="#141425"/>
+  <g fill="#e23b3b"><rect x="2" y="44" width="22" height="2"/><rect x="28" y="43" width="22" height="2"/></g>
+  <g fill="#ffd84a">
+    <rect x="4" y="48" width="3" height="4"/><rect x="11" y="48" width="3" height="4"/><rect x="18" y="48" width="3" height="4"/>
+    <rect x="30" y="48" width="3" height="4"/><rect x="37" y="48" width="3" height="4"/><rect x="44" y="48" width="3" height="4"/>
+  </g>
+
+  <!-- lanterns: back row on the high string, front row on the low one -->
+  <use href="#lanternO" transform="translate(9.5 18) scale(0.82)"/>
+  <use href="#lanternO" transform="translate(42.5 18) scale(0.82)"/>
+  <use href="#lanternR" transform="translate(26 24) scale(1.2)"/>
+  <use href="#lanternP" transform="translate(8 34) scale(0.68)"/>
+  <use href="#lanternP" transform="translate(44 34) scale(0.68)"/>
+</svg>
