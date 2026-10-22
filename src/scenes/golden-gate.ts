@@ -6,9 +6,9 @@ export const goldenGate: Scene = {
   name: "Golden Gate in Fog",
   blurb: "The towers peek out of the fog, on a postage stamp.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
-  chunk: [22, 32],
+  chunk: [20, 30],
   wait: 0.9,
   waitSlack: 1,
   pal: {
