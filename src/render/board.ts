@@ -51,7 +51,9 @@ function drawGround(ctx: CanvasRenderingContext2D, geo: Geom, CW: number, CH: nu
   const y = holeY(geo), h = nest * 0.24;
   ctx.fillStyle = '#1c120c';
   ctx.beginPath();
-  ctx.roundRect(T * 0.5, y - h, CW - T, 2 * h, h);
+  // roundRect is newer than the rest of the canvas API used here (Safari 16, Firefox 112): square ends without it.
+  if (typeof ctx.roundRect === 'function') ctx.roundRect(T * 0.5, y - h, CW - T, 2 * h, h);
+  else ctx.rect(T * 0.5, y - h, CW - T, 2 * h);
   ctx.fill();
 }
 
