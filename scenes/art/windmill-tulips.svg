@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 60" width="54" height="60">
+  <metadata>{"id":"windmill-tulips","name":"Windmill and Tulips","blurb":"Spring in Holland, painted on a Delft tile.","band":"hard","W":54,"H":60,"slots":3,"lanes":5,"chunk":[26,38],"wait":0.8,"waitSlack":1,"bg":"#a8e0ff"}</metadata>
+  <defs>
+    <!-- a sail: dark frame with a white lattice, pointing up from the hub -->
+    <g id="sail">
+      <rect x="-0.8" y="-21" width="1.6" height="21" fill="#2b2233"/>
+      <rect x="0" y="-21" width="7" height="16" fill="#2b2233"/>
+      <rect x="1.2" y="-19.8" width="4.6" height="5.6" fill="#ffffff"/>
+      <rect x="1.2" y="-12.8" width="4.6" height="6.6" fill="#ffffff"/>
+    </g>
+    <g id="tulipP">
+      <rect x="-0.5" y="0" width="1" height="3" fill="#2f8f3a"/>
+      <path d="M-1.6,-2 L-1.6,0.8 L1.6,0.8 L1.6,-2 L0.8,-1 L0,-2 L-0.8,-1 Z" fill="#ff5c9a"/>
+    </g>
+    <path id="tulipY" d="M-1.6,-2 L-1.6,0.8 L1.6,0.8 L1.6,-2 L0.8,-1 L0,-2 L-0.8,-1 Z" fill="#ffd23f"/>
+  </defs>
+  <rect width="54" height="60" fill="#a8e0ff"/>
+  <g transform="translate(3.9 3) scale(0.964)">
+  <!-- sky, sun and clouds -->
+  <circle cx="40" cy="8" r="4.6" fill="#2b2233"/>
+  <circle cx="40" cy="8" r="3.6" fill="#ffd23f"/>
+  <g fill="#ffffff"><rect x="2" y="9" width="8" height="2"/><rect x="4" y="7" width="4" height="2"/><rect x="30" y="17" width="9" height="2"/><rect x="32" y="15" width="4" height="2"/></g>
+
+  <!-- far fields: alternating stripes of tulips -->
+  <rect x="0" y="30" width="48" height="26" fill="#2f8f3a"/>
+  <rect x="0" y="29.5" width="48" height="1.2" fill="#2b2233"/>
+  <path d="M0,32 L48,32 L48,34 L0,35 Z" fill="#ff5c9a"/>
+  <path d="M0,37 L48,36 L48,38.5 L0,40 Z" fill="#ffd23f"/>
+  <path d="M0,42.5 L48,41 L48,44 L0,46 Z" fill="#ff5c9a"/>
+
+  <!-- canal running across the front -->
+  <path d="M-2,47 C14,45.5 30,46.5 50,45 L50,51 C30,52.5 14,51.5 -2,53 Z" fill="#2f6fd6" stroke="#2b2233" stroke-width="1.2"/>
+  <g fill="#ffffff"><rect x="6" y="49" width="4" height="1"/><rect x="22" y="48" width="5" height="1"/><rect x="38" y="48" width="3" height="1"/></g>
+
+  <!-- the mill: tapered tower, gallery, cap -->
+  <path d="M15.5,44.5 L18.5,21 L29.5,21 L32.5,44.5 Z" fill="#b8483a" stroke="#2b2233" stroke-width="1.4" stroke-linejoin="round"/>
+  <rect x="13" y="32" width="22" height="2" fill="#2b2233"/>
+  <rect x="33" y="34" width="1" height="3" fill="#2b2233"/>
+  <path d="M17,21.5 C17,15 31,15 31,21.5 Z" fill="#2f6fd6" stroke="#2b2233" stroke-width="1.4"/>
+  <!-- door and windows -->
+  <path d="M21.5,44.5 L21.5,39.5 C21.5,37 26.5,37 26.5,39.5 L26.5,44.5 Z" fill="#ffd23f" stroke="#2b2233" stroke-width="1.2"/>
+  <rect x="21.5" y="24.5" width="5" height="5" fill="#ffffff" stroke="#2b2233" stroke-width="1.2"/>
+  <rect x="23.5" y="24.5" width="1" height="5" fill="#2b2233"/>
+
+  <!-- sails on the hub -->
+  <g transform="translate(24 21)">
+    <use href="#sail" transform="rotate(20)"/>
+    <use href="#sail" transform="rotate(110)"/>
+    <use href="#sail" transform="rotate(200)"/>
+    <use href="#sail" transform="rotate(290)"/>
+    <circle r="2" fill="#2b2233"/>
+    <circle r="0.9" fill="#ffd23f"/>
+  </g>
+
+  <!-- tulips in the foreground -->
+  <g transform="translate(0 54)">
+    <use href="#tulipP" transform="translate(3 0)"/><use href="#tulipY" transform="translate(7 0)"/>
+    <use href="#tulipP" transform="translate(11 0)"/><use href="#tulipY" transform="translate(15 0)"/>
+    <use href="#tulipP" transform="translate(19 0)"/><use href="#tulipY" transform="translate(23 0)"/>
+    <use href="#tulipP" transform="translate(27 0)"/><use href="#tulipY" transform="translate(31 0)"/>
+    <use href="#tulipP" transform="translate(35 0)"/><use href="#tulipY" transform="translate(39 0)"/>
+    <use href="#tulipP" transform="translate(43 0)"/>
+  </g>
+  </g>
+  <!-- Delft tile border: white glaze, blue corners, dark edge -->
+  <path d="M0,0 H54 V60 H0 Z M3.5,3.5 V56.5 H50.5 V3.5 Z" fill="#ffffff" fill-rule="evenodd"/>
+  <rect x="3" y="3" width="48" height="54" fill="none" stroke="#2b2233" stroke-width="1"/>
+  <rect x="0.5" y="0.5" width="53" height="59" fill="none" stroke="#2f6fd6" stroke-width="1"/>
+  <g fill="#2f6fd6">
+    <path d="M0,0 H6 L0,6 Z"/><path d="M54,0 H48 L54,6 Z"/><path d="M0,60 H6 L0,54 Z"/><path d="M54,60 H48 L54,54 Z"/>
+    <rect x="25" y="1" width="4" height="2"/><rect x="25" y="57" width="4" height="2"/>
+    <rect x="1" y="28" width="2" height="4"/><rect x="51" y="28" width="2" height="4"/>
+  </g>
+</svg>
