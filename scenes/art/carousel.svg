@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 54" width="48" height="54">
+  <metadata>{"id":"carousel","name":"Carousel","blurb":"Round and round, up and down, one more go.","band":"hard","W":48,"H":54,"slots":2,"lanes":5,"chunk":[20,28],"wait":0.8,"waitSlack":1,"bg":"#8fd3f4"}</metadata>
+  <defs>
+    <pattern id="confetti" width="7" height="6" patternUnits="userSpaceOnUse">
+      <rect x="1" y="1" width="1" height="1" fill="#fff1d0"/>
+      <rect x="4" y="4" width="1" height="1" fill="#ff7eb6"/>
+    </pattern>
+    <!-- prancing horse facing right, body centred on 0,0 -->
+    <g id="horseShape">
+      <ellipse cx="0" cy="0" rx="4.6" ry="2.6"/>
+      <path d="M2.4,-1.2 L4.2,-6.4 L7.8,-5.6 L7.8,-3.6 L5.6,-3.8 L4.6,0 Z"/>
+      <path d="M-4.4,-1 C-7.2,-1 -7.4,2.2 -6.8,4.2 L-5.4,1.6 Z"/>
+      <rect x="-3.8" y="1" width="1.2" height="4.6"/>
+      <rect x="-1.6" y="1" width="1.2" height="4.6"/>
+      <path d="M2.6,1 L5.6,3.2 L5,4.2 L2,2.2 Z"/>
+      <path d="M1,1.2 L3.4,4 L2.6,4.8 L0,2.2 Z"/>
+    </g>
+    <g id="horse">
+      <use href="#horseShape" fill="#2a1f3d" stroke="#2a1f3d" stroke-width="2"/>
+      <use href="#horseShape" fill="#fff1d0"/>
+      <path d="M3.4,-5.8 L4.6,-6.6 L4.2,-1.6 L3,-1.2 Z" fill="#e63946"/>
+    </g>
+  </defs>
+  <rect width="48" height="54" fill="#8fd3f4"/>
+  <rect width="48" height="46" fill="url(#confetti)"/>
+  <!-- bunting strung from the roof to the edges -->
+  <path d="M0,4.5 Q8,9 19,8.5 M29,8.5 Q40,9 48,4.5" fill="none" stroke="#2a1f3d" stroke-width="1"/>
+  <g fill="#ffc23d"><path d="M1,5 L5,6.6 L2.6,9.6 Z"/><path d="M12,8.3 L16,8.6 L14,11.6 Z"/><path d="M38,8.4 L42,7.6 L40.6,10.8 Z"/></g>
+  <g fill="#ff7eb6"><path d="M6,6.8 L10.5,8 L7.6,11 Z"/><path d="M32,8.6 L36.5,8.5 L34.4,11.6 Z"/><path d="M43,7.2 L47,5.2 L46,8.8 Z"/></g>
+  <!-- grass -->
+  <rect y="46" width="48" height="8" fill="#1fa38a"/>
+
+  <g fill="#ff7eb6"><rect x="2" y="51" width="2" height="2"/><rect x="13" y="52" width="2" height="2"/><rect x="33" y="51" width="2" height="2"/><rect x="44" y="52" width="2" height="2"/></g>
+  <g fill="#ffc23d"><rect x="7" y="52" width="2" height="1"/><rect x="25" y="51" width="2" height="2"/><rect x="39" y="52" width="2" height="1"/></g>
+  <g fill="#fff1d0"><rect x="19" y="52" width="2" height="1"/><rect x="29" y="52" width="1" height="2"/></g>
+  <!-- inside: purple shade behind the ride -->
+  <rect x="5" y="20" width="38" height="24" fill="#6a4c93"/>
+  <!-- framed mirror panels on the inner wall -->
+  <g fill="#1fa38a" stroke="#ffc23d" stroke-width="1">
+    <rect x="6.5" y="26.5" width="4" height="8"/><rect x="26.5" y="26.5" width="4" height="8"/><rect x="38.5" y="26.5" width="3" height="8"/>
+  </g>
+  <rect x="28" y="29" width="1" height="3" fill="#ff7eb6"/>
+  <!-- central pole with a mirrored drum -->
+  <rect x="21.5" y="19" width="5" height="12" fill="#1fa38a" stroke="#2a1f3d" stroke-width="1"/>
+  <g fill="#ffc23d"><rect x="23" y="21" width="2" height="2"/><rect x="23" y="26" width="2" height="2"/></g>
+  <rect x="23" y="31" width="2" height="12" fill="#ffc23d"/>
+
+  <!-- horse poles -->
+  <use href="#horse" transform="translate(13 29) scale(-1 1)"/><rect x="11" y="26" width="3" height="3" fill="#1fa38a"/>
+  <use href="#horse" transform="translate(36 33)"/><rect x="35" y="30" width="3" height="3" fill="#ff7eb6"/>
+  <use href="#horse" transform="translate(17 36)"/><rect x="16" y="33" width="3" height="3" fill="#e63946"/>
+
+  <g fill="#ffc23d">
+    <rect x="12" y="20" width="1" height="23"/><rect x="36" y="20" width="1" height="23"/><rect x="17" y="20" width="1" height="23"/>
+  </g>
+  <!-- platform -->
+  <rect x="2.5" y="42.5" width="43" height="5" fill="#e63946" stroke="#2a1f3d" stroke-width="1"/>
+  <rect x="3" y="44" width="42" height="1" fill="#fff1d0"/>
+  <g fill="#ffc23d">
+    <rect x="6" y="46" width="1" height="1"/><rect x="12" y="46" width="1" height="1"/><rect x="18" y="46" width="1" height="1"/>
+    <rect x="24" y="46" width="1" height="1"/><rect x="30" y="46" width="1" height="1"/><rect x="36" y="46" width="1" height="1"/><rect x="42" y="46" width="1" height="1"/>
+  </g>
+  <rect x="4" y="48" width="40" height="2" fill="#6a4c93"/>
+
+  <!-- striped cone roof -->
+  <path d="M24,6 L45,18.5 L3,18.5 Z" fill="#fff1d0"/>
+  <g fill="#e63946">
+    <path d="M24,6 L3.5,18.5 L10.5,18.5 Z"/>
+    <path d="M24,6 L17.5,18.5 L24,18.5 Z"/>
+    <path d="M24,6 L31,18.5 L37.5,18.5 Z"/>
+  </g>
+  <path d="M24,6 L45,18.5 L3,18.5 Z" fill="none" stroke="#2a1f3d" stroke-width="1.2" stroke-linejoin="round"/>
+  <g fill="#ffc23d">
+    <rect x="23" y="10" width="2" height="1"/><rect x="14" y="14" width="1" height="1"/><rect x="20" y="14" width="1" height="1"/><rect x="27" y="14" width="1" height="1"/><rect x="33" y="14" width="1" height="1"/>
+    <rect x="9" y="17" width="1" height="1"/><rect x="38" y="17" width="1" height="1"/>
+  </g>
+  <!-- scalloped valance with lights -->
+  <rect x="2.5" y="18.5" width="43" height="2" fill="#ffc23d" stroke="#2a1f3d" stroke-width="1"/>
+  <g fill="#ff7eb6"><rect x="5" y="19" width="2" height="1"/><rect x="13" y="19" width="2" height="1"/><rect x="21" y="19" width="2" height="1"/><rect x="29" y="19" width="2" height="1"/><rect x="37" y="19" width="2" height="1"/></g>
+  <path d="M3,20.5 L7,20.5 L5,24.5 Z" fill="#e63946"/>
+  <path d="M7,20.5 L11,20.5 L9,24.5 Z" fill="#fff1d0"/>
+  <path d="M11,20.5 L15,20.5 L13,24.5 Z" fill="#e63946"/>
+  <path d="M15,20.5 L19,20.5 L17,24.5 Z" fill="#fff1d0"/>
+  <path d="M19,20.5 L23,20.5 L21,24.5 Z" fill="#e63946"/>
+  <path d="M23,20.5 L27,20.5 L25,24.5 Z" fill="#fff1d0"/>
+  <path d="M27,20.5 L31,20.5 L29,24.5 Z" fill="#e63946"/>
+  <path d="M31,20.5 L35,20.5 L33,24.5 Z" fill="#fff1d0"/>
+  <path d="M35,20.5 L39,20.5 L37,24.5 Z" fill="#e63946"/>
+  <path d="M39,20.5 L43,20.5 L41,24.5 Z" fill="#fff1d0"/>
+  <path d="M43,20.5 L47,20.5 L45,24.5 Z" fill="#e63946"/>
+  <!-- finial and flag -->
+  <rect x="23.5" y="1" width="1" height="5" fill="#2a1f3d"/>
+  <path d="M24.5,1 L29,2.5 L24.5,4 Z" fill="#ff7eb6"/>
+  <circle cx="24" cy="6" r="1.5" fill="#ffc23d"/>
+</svg>
