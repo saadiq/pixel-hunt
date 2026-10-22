@@ -29,7 +29,7 @@
   <path d="M-1,32 L-1,23.5 L4,23.5 L5.5,26 L6.5,26 L8,32 Z" fill="#d0643a" stroke="#2a1f33" stroke-width="1.4" stroke-linejoin="round"/>
   <path d="M43,32 L43,22.5 L39,22.5 L37.5,25 L36.5,25 L34,32 Z" fill="#d0643a" stroke="#2a1f33" stroke-width="1.4" stroke-linejoin="round"/>
   <!-- sand dunes with shade bands -->
-  <path d="M-1,32 C10,29.5 30,29.5 43,32 L43,47 L-1,47 Z" fill="#f7c97a" stroke="#2a1f33" stroke-width="1.4"/>
+  <path d="M-1,32 C10,29.5 30,29.5 43,32 L43,47 L-1,47 Z" fill="#eab36b" stroke="#2a1f33" stroke-width="1.4"/>
   <path d="M-1,39 C7,35.5 13,37 18,39.5 L18,41.5 C13,39.5 7,38 -1,41 Z" fill="#d0643a"/>
   <path d="M43,37.5 C36,37.5 30,40 25,41 L25,43 C30,42 36,39.5 43,40 Z" fill="#d0643a"/>
   <ellipse cx="22" cy="44.3" rx="10" ry="1.6" fill="#d0643a"/>

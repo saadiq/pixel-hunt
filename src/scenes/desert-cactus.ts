@@ -16,7 +16,7 @@ export const desertCactus: Scene = {
     c: '#2a1f33',
     d: '#ffffff',
     e: '#d0643a',
-    f: '#f7c97a',
+    f: '#eab36b',
     g: '#4fae4a',
     h: '#2e7a3a',
     i: '#ff6fa0',
