@@ -157,6 +157,7 @@ function step(game: Game): void {
 
 function endBoard(game: Game, st: 'won' | 'stuck'): void {
   over = true;
+  cancelPress(); // a held preview would stay dimming the board under the sheet
   // A stuck board with undos or the rewind left stays saved so closing the app on the lose sheet doesn't lose it.
   save.run = st === 'stuck' && (canUndo(game) || canRewind(game)) ? toRun(game, seed) : null;
   renderMeter(game);
