@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56" width="48" height="56">
+  <metadata>{"id":"phone-booth","name":"Red Phone Box in the Rain","blurb":"Ducking in out of the drizzle to ring home.","band":"hard","W":48,"H":56,"slots":3,"lanes":5,"chunk":[20,29],"wait":0.8,"waitSlack":1,"bg":"#3d4f73"}</metadata>
+  <defs>
+    <pattern id="rain" width="7" height="9" patternUnits="userSpaceOnUse">
+      <rect x="1" y="1" width="1" height="2" fill="#9cc8ea"/>
+      <rect x="5" y="5" width="1" height="2" fill="#9cc8ea"/>
+    </pattern>
+    <pattern id="cobbles" width="6" height="4" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="6" height="1" fill="#1f1a26"/>
+      <rect x="0" y="0" width="1" height="2" fill="#1f1a26"/>
+      <rect x="3" y="2" width="1" height="2" fill="#1f1a26"/>
+    </pattern>
+  </defs>
+  <!-- rainy night sky -->
+  <rect width="48" height="56" fill="#3d4f73"/>
+  <rect width="48" height="45" fill="url(#rain)"/>
+  <!-- wet cobbled pavement -->
+  <rect y="45" width="48" height="11" fill="#8a94a6"/>
+  <rect y="45" width="48" height="11" fill="url(#cobbles)"/>
+  <rect y="44" width="48" height="1" fill="#1f1a26"/>
+  <!-- red puddle reflection -->
+  <ellipse cx="38" cy="52" rx="8" ry="2.5" fill="#3d4f73" stroke="#1f1a26" stroke-width="1"/>
+  <g fill="#d8262f"><rect x="34" y="51" width="3" height="1"/><rect x="38" y="52" width="4" height="1"/></g>
+
+  <!-- street lamp on the left -->
+  <rect x="4" y="12" width="2" height="33" fill="#1f1a26"/>
+  <rect x="2.5" y="6.5" width="5" height="6" fill="#ffd966" stroke="#1f1a26" stroke-width="1"/>
+  <path d="M2,6.5 L5,3.5 L8,6.5 Z" fill="#1f1a26"/>
+  <rect x="3" y="43" width="4" height="2" fill="#1f1a26"/>
+
+  <!-- the box: dome, crown header, body -->
+  <path d="M13.5,9.5 C13.5,5 17,3.5 24,3.5 C31,3.5 34.5,5 34.5,9.5 Z" fill="#d8262f" stroke="#1f1a26" stroke-width="1"/>
+  <rect x="22" y="1.5" width="4" height="2" fill="#ffd966"/>
+  <rect x="12.5" y="9.5" width="23" height="5" fill="#d8262f" stroke="#1f1a26" stroke-width="1"/>
+  <!-- TELEPHONE sign -->
+  <rect x="15" y="10" width="18" height="4" fill="#1f1a26"/>
+  <g fill="#ffffff">
+    <rect x="17" y="11" width="1" height="2"/><rect x="19" y="11" width="1" height="2"/><rect x="21" y="11" width="1" height="2"/>
+    <rect x="23" y="11" width="1" height="2"/><rect x="25" y="11" width="1" height="2"/><rect x="27" y="11" width="1" height="2"/>
+    <rect x="29" y="11" width="1" height="2"/><rect x="31" y="11" width="1" height="2"/>
+  </g>
+  <rect x="12.5" y="14.5" width="23" height="30" fill="#d8262f" stroke="#1f1a26" stroke-width="1"/>
+  <!-- shaded pillars either side -->
+  <rect x="32" y="15" width="3" height="29" fill="#8e1a22"/>
+  <rect x="13" y="15" width="2" height="29" fill="#8e1a22"/>
+  <!-- lit window grid: 3 x 6 panes with red glazing bars -->
+  <rect x="15.5" y="16.5" width="16" height="22" fill="#8e1a22" stroke="#1f1a26" stroke-width="1"/>
+  <pattern id="panes" x="17" y="18" width="5" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="2" fill="#ffe9a8"/></pattern>
+  <rect x="17" y="18" width="13" height="20" fill="url(#panes)"/>
+  <!-- the telephone seen through the glass -->
+  <rect x="22" y="24" width="4" height="5" fill="#1f1a26"/>
+  <rect x="21" y="23" width="6" height="1" fill="#1f1a26"/>
+  <rect x="23" y="25" width="2" height="2" fill="#ffffff"/>
+  <!-- door handle and base plinth -->
+  <rect x="30" y="27" width="1" height="4" fill="#ffd966"/>
+  <rect x="15" y="40" width="18" height="3" fill="#8e1a22"/>
+  <rect x="11.5" y="43.5" width="25" height="2" fill="#8a94a6" stroke="#1f1a26" stroke-width="1"/>
+
+  <!-- umbrella person waiting outside -->
+  <path d="M37.5,24.5 C37.5,19 46.5,19 46.5,24.5 Z" fill="#ffd966" stroke="#1f1a26" stroke-width="1"/>
+  <rect x="41.5" y="24" width="1" height="5" fill="#1f1a26"/>
+  <rect x="39.5" y="28.5" width="5" height="10" fill="#1f1a26"/>
+  <rect x="40" y="38" width="1.5" height="6" fill="#1f1a26"/>
+  <rect x="42.5" y="38" width="1.5" height="6" fill="#1f1a26"/>
+</svg>
