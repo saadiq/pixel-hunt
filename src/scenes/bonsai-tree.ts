@@ -6,10 +6,10 @@ export const bonsaiTree: Scene = {
   name: "Bonsai Tree",
   blurb: "A hundred years of patience, in one small pot.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
   chunk: [24, 34],
-  wait: 1,
+  wait: 0.9,
   waitSlack: 1,
   pal: {
     a: '#c99d63',
