@@ -6,6 +6,7 @@ import { type Ant, type Cells, type Crumb, type Geom, drawCrumbs, holeY, spawnAn
 import { type CubeShades, shadeCache } from './cube';
 import { fitBoard } from './fit';
 import { type Layer, buildLayer, drawChewing, syncLayer } from './layer';
+import { drawMarkers, targets } from './marks';
 
 export interface Renderer {
   reset(g: Game): void;
@@ -102,6 +103,7 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer {
       ctx.drawImage(layer.canvas, 0, 0);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       drawChewing(ctx, geo, cells, shades, chewing, now, fast ? 65 : 130);
+      drawMarkers(ctx, geo, targets(ants), cells.colors, now, reduce);
       crumbs = drawCrumbs(ctx, crumbs, now);
       ants = stepAnts(ctx, ants, now, geo, cells, crumbs, reduce, r.onChew);
     },
