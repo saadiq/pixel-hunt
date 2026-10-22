@@ -110,7 +110,3 @@ export function exposedMask(grid: Int8Array | Int16Array, W: number, H: number):
   for (let i = 0; i < W * H; i++) if (grid[i] >= 0 && minAround(d, i, W) >= 0) exp[i] = 1;
   return exp;
 }
-
-export function holeCol(si: number, n: number, W: number): number {
-  return Math.min(W - 1, Math.floor(((si + 0.5) / n) * W));
-}

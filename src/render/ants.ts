@@ -11,7 +11,6 @@ export interface Crumb { x: number; y: number; vx: number; vy: number; s: number
 
 export interface Cells { colors: string[]; vis: Int16Array; chew: Float64Array }
 
-export const holeX = (g: Geom, col: number): number => g.ox + (col + 0.5) * g.cs;
 export const holeY = (g: Geom): number => g.oy + g.H * g.cs + g.nest * 0.55;
 
 /** Pixel centre of an extended-grid cell (the track ring around the board). */
@@ -23,10 +22,11 @@ function extCenter(g: Geom, e: number): [number, number] {
   ];
 }
 
-export function spawnAnt(g: Geom, holeCol: number, cell: number, color: number, path: number[], now: number, reduce: boolean, fast: boolean): Ant {
+/** An ant for one bite: it rises from the nest directly below the bottom-track cell its route starts on. */
+export function spawnAnt(g: Geom, cell: number, color: number, path: number[], now: number, reduce: boolean, fast: boolean): Ant {
   const r = (cell / g.W) | 0, c = cell % g.W;
   const jit = () => (Math.random() - 0.5) * g.cs * 0.3, jx = jit(), jy = jit();
-  const pts: number[][] = [[holeX(g, holeCol) + jx, holeY(g)]];
+  const pts: number[][] = [[extCenter(g, path[0])[0] + jx, holeY(g)]];
   for (const e of path) { const [x, y] = extCenter(g, e); pts.push([x + jx, y + jy]); }
   pts.push([g.ox + (c + 0.5) * g.cs, g.oy + (r + 0.5) * g.cs]);
   const cum = [0];
@@ -50,7 +50,8 @@ export function along(a: Ant, s: number): [number, number, number] {
   ];
 }
 
-export function drawAnt(ctx: CanvasRenderingContext2D, x: number, y: number, ang: number, sz: number, carry: string | null, t: number): void {
+/** One ant, its body in its squad's colour and outlined dark so it reads on any block. */
+export function drawAnt(ctx: CanvasRenderingContext2D, x: number, y: number, ang: number, sz: number, body: string, carry: string | null, t: number): void {
   ctx.save();
   ctx.translate(x, y);
   ctx.rotate(ang);
@@ -67,9 +68,9 @@ export function drawAnt(ctx: CanvasRenderingContext2D, x: number, y: number, ang
   ctx.moveTo(sz * 0.3, 0); ctx.lineTo(sz * 0.48, -sz * 0.16);
   ctx.moveTo(sz * 0.3, 0); ctx.lineTo(sz * 0.48, sz * 0.16);
   ctx.stroke();
-  ctx.fillStyle = '#2a1810';
-  ctx.strokeStyle = 'rgba(255,236,214,.7)';
-  ctx.lineWidth = Math.max(1, sz * 0.05);
+  ctx.fillStyle = body;
+  ctx.strokeStyle = '#1d130d';
+  ctx.lineWidth = Math.max(1, sz * 0.07);
   const parts: (() => void)[] = [
     () => ctx.ellipse(-sz * 0.3, 0, sz * 0.22, sz * 0.16, 0, 0, 7),
     () => ctx.ellipse(0, 0, sz * 0.13, sz * 0.1, 0, 0, 7),
@@ -127,7 +128,7 @@ export function stepAnts(
       if (a.phase < 2) { cells.vis[a.i] = -1; cells.chew[a.i] = 0; }
       return false;
     }
-    if (go > 0) drawAnt(ctx, x, y, ang, sz, carry, now);
+    if (go > 0) drawAnt(ctx, x, y, ang, sz, cells.colors[a.color], carry, now);
     return true;
   });
 }

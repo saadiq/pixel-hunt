@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 import { parseArt, sceneLevel } from '../../src/core/board';
-import { closer, exposedMask, holeCol, minAround, nestField, pickNear, tracePath } from '../../src/core/path';
+import { closer, exposedMask, minAround, nestField, pickNear, tracePath } from '../../src/core/path';
 import { hashStr, mulberry } from '../../src/core/rng';
 import { bridge, d20, upscale } from '../fixtures/proto';
 
@@ -56,13 +56,6 @@ describe('exposedMask', () => {
     grid[3] = -1; // left of centre, but also on the border so reachable
     const m = exposedMask(grid, 3, 3);
     expect(m[4]).toBe(1);
-  });
-});
-
-describe('holeCol', () => {
-  test('spreads slots across the width', () => {
-    expect(holeCol(0, 4, 28)).toBe(3);
-    expect(holeCol(3, 4, 28)).toBe(24);
   });
 });
 
