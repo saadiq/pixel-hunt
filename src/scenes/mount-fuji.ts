@@ -9,7 +9,7 @@ export const mountFuji: Scene = {
   slots: 3,
   lanes: 5,
   chunk: [17, 25],
-  wait: 0.9,
+  wait: 1,
   waitSlack: 1,
   pal: {
     a: '#e8508f',
@@ -18,7 +18,7 @@ export const mountFuji: Scene = {
     d: '#2a1f33',
     e: '#5a86d9',
     f: '#3d5fae',
-    g: '#ffffff',
+    g: '#dce8ff',
     h: '#ff9cc2',
     i: '#8a5a3c',
   },
