@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 52" width="50" height="52">
+  <metadata>{"id":"red-panda","name":"Red Panda","blurb":"A lazy afternoon nap, high up in the maple.","band":"hard","W":50,"H":52,"slots":3,"lanes":5,"chunk":[22,32],"wait":0.9,"waitSlack":1,"bg":"#bfe6f2"}</metadata>
+  <defs>
+    <path id="leafShape" d="M0,-4.5 L1.6,-1.6 L4.4,-2.4 L3.2,0.6 L4.6,2 L1,2.4 L0,4.6 L-1,2.4 L-4.6,2 L-3.2,0.6 L-4.4,-2.4 L-1.6,-1.6 Z"/>
+    <g id="leaf">
+      <use href="#leafShape" fill="#2a1d1a" stroke="#2a1d1a" stroke-width="2" stroke-linejoin="round"/>
+      <use href="#leafShape" fill="#4caf50"/>
+      <path d="M0,-3 L0,3" stroke="#1f6b3a" stroke-width="1"/>
+    </g>
+    <ellipse id="face" cx="25" cy="20" rx="11" ry="8.5"/>
+    <clipPath id="faceClip"><use href="#face"/></clipPath>
+    <path id="tail" d="M36,31 C42,32 44,38 43,44 C42.4,48 40,50 37.5,49 C35.6,48.2 36.6,44 37,40 C37.4,36 34,34 36,31 Z"/>
+    <clipPath id="tailClip"><use href="#tail"/></clipPath>
+  </defs>
+  <!-- sky with soft dappled light -->
+  <rect width="50" height="52" fill="#bfe6f2"/>
+  <g fill="#ffffff">
+    <rect x="3" y="27" width="6" height="2"/><rect x="5" y="26" width="3" height="1"/>
+    <rect x="41" y="20" width="6" height="2"/><rect x="43" y="19" width="2" height="1"/>
+  </g>
+
+  <!-- background branch and leaves -->
+  <path d="M-2,8 C8,10 12,6 18,4" stroke="#2a1d1a" stroke-width="3.6" fill="none"/>
+  <path d="M-2,8 C8,10 12,6 18,4" stroke="#8b5a2b" stroke-width="1.6" fill="none"/>
+  <path d="M52,46 C44,44 40,47 34,51" stroke="#2a1d1a" stroke-width="3.6" fill="none"/>
+  <path d="M52,46 C44,44 40,47 34,51" stroke="#8b5a2b" stroke-width="1.6" fill="none"/>
+  <use href="#leaf" transform="translate(5 5) rotate(-20)"/>
+  <use href="#leaf" transform="translate(13 10) rotate(160)"/>
+  <use href="#leaf" transform="translate(44 6) rotate(15)"/>
+  <use href="#leaf" transform="translate(45 14) rotate(80) scale(0.8)"/>
+  <use href="#leaf" transform="translate(6 45) rotate(200)"/>
+  <use href="#leaf" transform="translate(14 47) rotate(-30) scale(0.85)"/>
+  <use href="#leaf" transform="translate(46 40) rotate(40) scale(0.85)"/>
+
+  <!-- the branch it sleeps on -->
+  <path d="M-2,34 C14,32 34,33 52,30 L52,38 C34,40 14,40 -2,41 Z" fill="#8b5a2b" stroke="#2a1d1a" stroke-width="1.4"/>
+  <g fill="#2a1d1a"><rect x="5" y="37" width="5" height="1"/><rect x="20" y="37" width="4" height="1"/><rect x="44" y="34" width="4" height="1"/></g>
+
+  <!-- ringed tail hanging over the branch -->
+  <use href="#tail" fill="#d9612b" stroke="#2a1d1a" stroke-width="1.4"/>
+  <g clip-path="url(#tailClip)" fill="#f5c27a">
+    <rect x="30" y="35" width="16" height="2"/><rect x="30" y="40" width="16" height="2"/><rect x="30" y="45" width="16" height="2"/>
+  </g>
+
+  <!-- body draped along the branch, with dark legs dangling -->
+  <ellipse cx="27" cy="30" rx="13" ry="5" fill="#d9612b" stroke="#2a1d1a" stroke-width="1.4"/>
+  <g fill="#2a1d1a">
+    <rect x="15" y="31" width="4" height="9" rx="1.5"/><rect x="21" y="32" width="4" height="9" rx="1.5"/>
+    <rect x="31" y="32" width="4" height="8" rx="1.5"/>
+  </g>
+
+  <!-- ears: white rims, dark inside -->
+  <g fill="#ffffff" stroke="#2a1d1a" stroke-width="1.3">
+    <circle cx="16" cy="12.5" r="4"/><circle cx="34" cy="12.5" r="4"/>
+  </g>
+  <g fill="#2a1d1a"><circle cx="16.4" cy="13" r="2.4"/><circle cx="33.6" cy="13" r="2.4"/></g>
+
+  <!-- face -->
+  <use href="#face" fill="#d9612b" stroke="#2a1d1a" stroke-width="1.4"/>
+  <g clip-path="url(#faceClip)" fill="#ffffff">
+    <ellipse cx="25" cy="25" rx="5.5" ry="4"/>
+    <ellipse cx="14.5" cy="23" rx="3.4" ry="4"/><ellipse cx="35.5" cy="23" rx="3.4" ry="4"/>
+    <rect x="18" y="15" width="3" height="2"/><rect x="29" y="15" width="3" height="2"/>
+  </g>
+  <!-- tear marks, sleepy eyes and nose on the grid -->
+  <g fill="#2a1d1a">
+    <rect x="20" y="18" width="2" height="2"/><rect x="28" y="18" width="2" height="2"/>
+    <rect x="20" y="21" width="1" height="2"/><rect x="29" y="21" width="1" height="2"/>
+    <rect x="24" y="22" width="2" height="2"/><rect x="23" y="26" width="4" height="1"/>
+  </g>
+  <!-- front paws over the branch -->
+  <g fill="#2a1d1a">
+    <rect x="17" y="27" width="5" height="3" rx="1"/><rect x="28" y="27" width="5" height="3" rx="1"/>
+  </g>
+</svg>
