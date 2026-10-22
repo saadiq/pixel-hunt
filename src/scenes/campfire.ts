@@ -6,10 +6,10 @@ export const campfire: Scene = {
   name: "Campfire Under the Stars",
   blurb: "Marshmallows, ghost stories and a sky full of stars.",
   band: "hard",
-  slots: 3,
+  slots: 2,
   lanes: 5,
-  chunk: [17, 26],
-  wait: 0.8,
+  chunk: [20, 30],
+  wait: 0.75,
   waitSlack: 1,
   pal: {
     a: '#fff1b0',
