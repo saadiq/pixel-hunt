@@ -69,7 +69,7 @@ export function tapLane(g: Game, lane: number): 'ok' | 'full' | 'empty' {
 /** One stepSlots; sets stuck; returns whether a squad ate. */
 export function tick(g: Game, onBite?: BiteFn): boolean {
   const { W, H } = g.board;
-  const ate = stepSlots(g.grid, W, H, g.slots, (...a) => { g.remaining--; g.eaten.push(a[1]); onBite?.(...a); });
+  const ate = stepSlots(g.grid, W, H, g.slots, (...a) => { g.remaining--; g.eaten.push(a[0]); onBite?.(...a); });
   g.stuck = !ate && g.slots.every(Boolean) && g.remaining > 0;
   return ate;
 }

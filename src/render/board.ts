@@ -1,4 +1,3 @@
-import { tracePath } from '../core/path';
 import { mulberry } from '../core/rng';
 import type { BiteFn } from '../core/types';
 import type { Game } from '../state/game';
@@ -93,12 +92,11 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer {
       stage = [w, h];
       layout();
     },
-    bite(_slot, cell, color, dist) {
-      const path = tracePath(dist, cell, geo.W, geo.H);
+    bite(cell, color, path) {
       ants.push(spawnAnt(geo, cell, color, path, performance.now(), reduce, fastNow));
     },
     frame(now, g, fast) {
-      if (g !== last) last = g;
+      last = g;
       fastNow = fast;
       if (!CW || !layer) return;
       const chewing = syncLayer(layer, geo, cells, shades);

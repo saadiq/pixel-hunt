@@ -55,11 +55,11 @@ function build(g: Int8Array, W: number, H: number): Field {
     W, H, ref: g.slice(), dist: nestField(g, W, H), exposed: [], pos: new Int32Array(g.length).fill(-1),
     q: new Int32Array((W + 2) * (H + 2)),
   };
-  const base = f.dist, EW = W + 2;
+  const d = f.dist, EW = W + 2;
   for (let i = 0; i < g.length; i++) {
     if (g[i] < 0) continue;
     const e = extOf(i, W);
-    if (base[e - EW] >= 0 || base[e + EW] >= 0 || base[e - 1] >= 0 || base[e + 1] >= 0) addExposed(f, i);
+    if (d[e - EW] >= 0 || d[e + EW] >= 0 || d[e - 1] >= 0 || d[e + 1] >= 0) addExposed(f, i);
   }
   return f;
 }
@@ -113,9 +113,9 @@ export function fieldOf(g: Int8Array, W: number, H: number): Field {
 
 /**
  * Nearest exposed block of a colour: lowest walking distance from the nest, ties broken by `closer`
- * (the same pick as pickNear over a full field). `i` is -1 if none; `d` is the live field.
+ * (the same pick as pickNear over a full field), or -1 if none.
  */
-export function nearest(f: Field, color: number): { i: number; d: Int16Array } {
+export function nearest(f: Field, color: number): number {
   const d = f.dist;
   let best = -1, bd = -1;
   const l = f.exposed[color] ?? [];
@@ -123,7 +123,7 @@ export function nearest(f: Field, color: number): { i: number; d: Int16Array } {
     const i = l[k], v = minAround(d, i, f.W);
     if (v >= 0 && (best < 0 || closer(i, best, v, bd, f.W))) { bd = v; best = i; }
   }
-  return { i: best, d };
+  return best;
 }
 
 /** Exposed block count per colour (blocks touching the track region), read from the live cache. */

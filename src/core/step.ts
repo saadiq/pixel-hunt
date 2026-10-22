@@ -1,4 +1,5 @@
 import { eat, fieldOf, nearest } from './field';
+import { tracePath } from './path';
 import type { BiteFn, Slots } from './types';
 
 /** One tick: each occupied slot takes one bite of its nearest reachable block. */
@@ -7,9 +8,9 @@ export function stepSlots(g: Int8Array, W: number, H: number, slots: Slots, onBi
   const f = fieldOf(g, W, H);
   slots.forEach((sq, si) => {
     if (!sq) return;
-    const { i, d } = nearest(f, sq.color);
+    const i = nearest(f, sq.color);
     if (i < 0) return;
-    if (onBite) onBite(si, i, sq.color, d.slice());
+    if (onBite) onBite(i, sq.color, tracePath(f.dist, i, W, H));
     eat(f, g, i);
     sq.cap--;
     ate = true;

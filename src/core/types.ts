@@ -16,4 +16,4 @@ export type Meta =
   | { kind: 'campaign'; id: string }
   | { kind: 'random'; band: Band; seed: number }
   | { kind: 'daily'; date: string; id: string };
-export type BiteFn = (slot: number, cell: number, color: number, dist: Int16Array) => void;
+export type BiteFn = (cell: number, color: number, path: number[]) => void;
