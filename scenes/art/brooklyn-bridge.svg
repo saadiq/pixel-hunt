@@ -45,7 +45,7 @@
   <use href="#deck"/>
   <!-- tower: 2-cell outline, a shade band on the right of each pier -->
   <rect x="2" y="2" width="26" height="46" fill="#2a1f33"/>
-  <rect x="4" y="4" width="22" height="44" fill="#d8b48a"/>
+  <rect x="4" y="4" width="22" height="44" fill="#cdb8a6"/>
   <rect x="5" y="8" width="1" height="40" fill="#a87f5c"/>
   <rect x="16" y="8" width="1" height="40" fill="#a87f5c"/>
   <rect x="25" y="4" width="1" height="44" fill="#a87f5c"/>

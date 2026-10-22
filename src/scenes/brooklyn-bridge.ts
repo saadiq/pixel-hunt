@@ -18,7 +18,7 @@ export const brooklynBridge: Scene = {
     e: '#2a1f33',
     f: '#a87f5c',
     g: '#2f4f8f',
-    h: '#d8b48a',
+    h: '#cdb8a6',
   },
   rows: [
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
