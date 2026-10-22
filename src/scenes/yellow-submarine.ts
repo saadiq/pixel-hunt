@@ -6,9 +6,9 @@ export const yellowSubmarine: Scene = {
   name: "Yellow Submarine",
   blurb: "Periscope up, with fish to watch from every porthole.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
-  chunk: [18, 26],
+  chunk: [22, 32],
   wait: 0.8,
   waitSlack: 1,
   pal: {

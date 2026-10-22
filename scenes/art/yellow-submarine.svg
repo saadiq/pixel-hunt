@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 44" width="54" height="44">
-  <metadata>{"id":"yellow-submarine","name":"Yellow Submarine","blurb":"Periscope up, with fish to watch from every porthole.","band":"hard","W":54,"H":44,"slots":2,"lanes":5,"chunk":[18,26],"wait":0.8,"waitSlack":1,"bg":"#1f5f9e"}</metadata>
+  <metadata>{"id":"yellow-submarine","name":"Yellow Submarine","blurb":"Periscope up, with fish to watch from every porthole.","band":"hard","W":54,"H":44,"slots":3,"lanes":5,"chunk":[22,32],"wait":0.8,"waitSlack":1,"bg":"#1f5f9e"}</metadata>
   <defs>
     <path id="fish" d="M0,0 C2,-2 5,-2 6,0 C5,2 2,2 0,0 Z M0,0 L-2.5,-2 L-2.5,2 Z"/>
     <g id="porthole">
