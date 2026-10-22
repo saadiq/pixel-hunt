@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 44" width="52" height="44">
+  <metadata>{"id":"monarch-butterfly","name":"Monarch Butterfly","blurb":"A quick rest on the flowers before the long flight south.","band":"hard","W":52,"H":44,"slots":2,"lanes":5,"chunk":[16,24],"wait":1,"waitSlack":1,"bg":"#bde6f5"}</metadata>
+  <defs>
+    <pattern id="blooms" x="0" y="30" width="6" height="5" patternUnits="userSpaceOnUse">
+      <rect x="1" y="1" width="2" height="1" fill="#f06aa8"/>
+      <rect x="4" y="3" width="1" height="1" fill="#ffd84a"/>
+    </pattern>
+    <path id="fore" d="M27,15 C32,8 42,3.5 50.5,3.5 C51.5,9 49.5,16 46.5,21.5 C40,23.5 33,23.5 27.5,22.5 Z"/>
+    <path id="foreIn" d="M28.8,15.6 C33.5,10 41,6 48.2,5.8 C48.8,10 47.4,15.5 44.8,19.8 C39,21.2 33,21.4 28.8,20.8 Z"/>
+    <path id="hind" d="M27.5,22 C35,20.8 43.5,21.6 45.6,26 C46.6,31.5 41.5,38 35,40 C30.6,40 27.8,35.5 27.2,30 Z"/>
+    <path id="hindIn" d="M29.2,23.8 C35,23.2 42,23.6 43.6,26.8 C44.2,31 40.4,36 35.2,37.8 C31.8,37.8 29.6,34 29.2,29.5 Z"/>
+    <clipPath id="hindClip"><use href="#hindIn"/></clipPath>
+    <g id="wing">
+      <use href="#fore" fill="#1c1a24"/>
+      <use href="#hind" fill="#1c1a24"/>
+      <use href="#foreIn" fill="#f5892a"/>
+      <use href="#hindIn" fill="#f5892a"/>
+      <g clip-path="url(#hindClip)"><ellipse cx="30" cy="27" rx="5" ry="4.5" fill="#c9531c"/></g>
+      <g fill="none" stroke="#1c1a24" stroke-width="1">
+        <path d="M29,18.5 L46,9.5 M30,19.8 L44,16.5 M34,15 L39,9"/>
+        <path d="M30,26.5 L42,27.5 M30.5,29.5 L39,34.5 M30,32 L34,37"/>
+      </g>
+      <!-- spots in the black border -->
+      <g fill="#ffffff">
+        <rect x="47" y="5" width="2" height="1"/><rect x="48" y="9" width="1" height="2"/><rect x="47" y="14" width="1" height="1"/><rect x="45" y="19" width="1" height="1"/>
+        <rect x="40" y="5" width="2" height="1"/><rect x="36" y="7" width="1" height="1"/>
+        <rect x="44" y="25" width="1" height="1"/><rect x="44" y="29" width="1" height="1"/><rect x="41" y="34" width="1" height="1"/><rect x="38" y="37" width="1" height="1"/><rect x="34" y="38" width="1" height="1"/>
+      </g>
+      <g fill="#f5892a"><rect x="49" y="7" width="1" height="1"/><rect x="44" y="4" width="2" height="1"/><rect x="48" y="12" width="1" height="1"/></g>
+    </g>
+  </defs>
+  <rect width="52" height="44" fill="#bde6f5"/>
+  <!-- leafy garden behind -->
+  <g fill="#2d7a3a">
+    <ellipse cx="4" cy="40" rx="9" ry="7"/><ellipse cx="48" cy="40" rx="9" ry="7"/><ellipse cx="17" cy="45" rx="9" ry="5"/><ellipse cx="36" cy="45" rx="9" ry="5"/>
+  </g>
+  <g fill="#4fae4a">
+    <path d="M0,30 C6,30 10,35 9,40 C4,40 1,36 0,30 Z"/><path d="M52,30 C46,30 42,35 43,40 C48,40 51,36 52,30 Z"/>
+    <path d="M12,44 C12,38 16,35 21,36 C20,41 17,44 12,44 Z"/><path d="M40,44 C40,38 36,35 31,36 C32,41 35,44 40,44 Z"/>
+  </g>
+  <rect y="30" width="52" height="14" fill="url(#blooms)"/>
+  <!-- clouds -->
+  <g fill="#ffffff"><ellipse cx="6" cy="4" rx="4" ry="1.6"/><ellipse cx="46" cy="4" rx="4" ry="1.6"/></g>
+  <!-- small sky flowers -->
+  <g fill="#f06aa8"><circle cx="5" cy="27" r="2"/><circle cx="47" cy="27" r="2"/></g>
+  <g fill="#ffd84a"><rect x="4" y="26" width="2" height="2"/><rect x="46" y="26" width="2" height="2"/></g>
+
+  <!-- wings -->
+  <use href="#wing"/>
+  <use href="#wing" transform="translate(52 0) scale(-1 1)"/>
+
+  <!-- body, head, antennae -->
+  <g fill="#1c1a24">
+    <rect x="25" y="7" width="1" height="1"/><rect x="24" y="6" width="1" height="1"/><rect x="23" y="5" width="1" height="1"/><rect x="22" y="4" width="1" height="1"/><rect x="21" y="3" width="1" height="1"/>
+    <rect x="26" y="7" width="1" height="1"/><rect x="27" y="6" width="1" height="1"/><rect x="28" y="5" width="1" height="1"/><rect x="29" y="4" width="1" height="1"/><rect x="30" y="3" width="1" height="1"/>
+    <rect x="20" y="1" width="2" height="2"/><rect x="30" y="1" width="2" height="2"/>
+  </g>
+  <ellipse cx="26" cy="23" rx="1.5" ry="13" fill="#1c1a24"/>
+  <circle cx="26" cy="10" r="2.2" fill="#1c1a24"/>
+  <g fill="#ffffff"><rect x="25" y="13" width="1" height="1"/><rect x="26" y="16" width="1" height="1"/><rect x="25" y="19" width="1" height="1"/></g>
+
+  <!-- the flower it rests on -->
+  <g fill="#f06aa8" stroke="#1c1a24" stroke-width="0.8">
+    <circle cx="22.5" cy="39.5" r="2.4"/><circle cx="29.5" cy="39.5" r="2.4"/><circle cx="26" cy="41.5" r="2.4"/><circle cx="26" cy="37.6" r="2.4"/>
+  </g>
+  <rect x="25" y="38.5" width="2" height="2" fill="#ffd84a"/>
+</svg>
