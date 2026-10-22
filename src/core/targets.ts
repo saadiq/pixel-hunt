@@ -19,7 +19,7 @@ export interface BandTargets {
 export const TARGETS: Record<Band, BandTargets> = {
   easy: { slots: [4, 5], winRate: [0.7, 1], taps: [30, 60], decisions: [0, Infinity], maxMindless: 1 },
   medium: { slots: [3, 4], winRate: [0.15, 0.85], taps: [60, 90], decisions: [6, Infinity], maxMindless: 0.85 },
-  hard: { slots: [2, 3], winRate: [0, 0.5], taps: [90, 150], decisions: [14, Infinity], maxMindless: 0.55 },
+  hard: { slots: [3, 3], winRate: [0, 0.5], taps: [90, 150], decisions: [14, Infinity], maxMindless: 0.55 },
 };
 
 /** The tap count a band aims for: the middle of its range. */
