@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { HOLD_MS, type PressEvent, type PressOut, IDLE, pressStep } from '../../src/ui/press';
+import { HOLD_MS, IDLE, PressBinder, type PressEvent, type PressOut, pressStep } from '../../src/ui/press';
 
 /** Runs events from idle and collects every output. */
 function run(events: PressEvent[]): PressOut[] {
@@ -58,5 +58,74 @@ describe('pressStep', () => {
     const o = run([{ t: 'down', lane: 2, at: 0 }, { t: 'timer', at: 150 }, { t: 'up', at: 200 }]);
     expect(previews(o)).toEqual([]);
     expect(sends(o)).toEqual([2]);
+  });
+});
+
+describe('PressBinder', () => {
+  const mk = () => {
+    const taps: number[] = [], previews: (number | null)[] = [];
+    let fire: (() => void) | null = null;
+    const b = new PressBinder((l) => taps.push(l), (l) => previews.push(l), (fn) => { fire = fn; });
+    return { b, taps, previews, fire: () => fire?.() };
+  };
+
+  test('a right-click does not send', () => {
+    const { b, taps } = mk();
+    b.down(1, 2, 0, 0);
+    b.up(1, 50);
+    expect(taps).toEqual([]);
+  });
+
+  test('a second finger lifting does not send or end the first finger\'s press', () => {
+    const { b, taps, previews, fire } = mk();
+    b.down(1, 0, 0, 0);
+    b.down(2, 0, 3, 10);
+    b.up(2, 60);
+    expect(taps).toEqual([]);
+    fire();
+    expect(previews).toEqual([0]);
+    b.up(2, 400);
+    expect(previews).toEqual([0]);
+    b.up(1, 500);
+    expect(previews).toEqual([0, null]);
+  });
+
+  test('the hold timer enters the preview even if the clock reads a hair early', () => {
+    const { b, previews, fire } = mk();
+    b.down(1, 0, 2, 1000);
+    fire(); // whenever it fires, it means HOLD_MS has passed
+    expect(previews).toEqual([2]);
+  });
+
+  test('a click with no pointer press before it taps (keyboard or assistive tech)', () => {
+    const { b, taps } = mk();
+    b.click(1, 5000);
+    expect(taps).toEqual([1]);
+  });
+
+  test('the click that follows a pointer tap is not a second tap', () => {
+    const { b, taps } = mk();
+    b.down(1, 0, 1, 0);
+    b.up(1, 50);
+    b.click(1, 55);
+    expect(taps).toEqual([1]);
+  });
+
+  test('the click that follows a preview does not send', () => {
+    const { b, taps, fire } = mk();
+    b.down(1, 0, 1, 0);
+    fire();
+    b.up(1, 600);
+    b.click(1, 605);
+    expect(taps).toEqual([]);
+  });
+
+  test('a press cancelled by the board does not send when the finger lifts and clicks', () => {
+    const { b, taps } = mk();
+    b.down(1, 0, 1, 0);
+    b.cancel();
+    b.up(1, 80);
+    b.click(1, 85);
+    expect(taps).toEqual([]);
   });
 });
