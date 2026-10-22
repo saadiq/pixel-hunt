@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import { checkColors, checkDeals, checkPalette, checkStructure, deltaE2000, estimateWinRate, labDelta2000 } from '../../scripts/checks';
 import type { Scene } from '../../src/core/types';
+import { SCENES } from '../../src/scenes';
 import { bridge } from '../fixtures/proto';
 
 const base: Scene = {
@@ -74,6 +75,9 @@ describe('checkColors', () => {
   });
   test('passes distinct colours with enough cells', () => {
     expect(checkColors({ ...base, rows: ['aaaabbbb'] })).toEqual([]);
+  });
+  test('every scene passes, so a recolour that breaks the rule fails here and not only in validate', () => {
+    for (const s of Object.values(SCENES)) expect([s.id, ...checkColors(s)]).toEqual([s.id]);
   });
   test('flags more than 9 colours', () => {
     const chars = [...'abcdefghij'];
