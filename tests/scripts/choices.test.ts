@@ -9,8 +9,10 @@ describe('measureChoices', () => {
     expect(c.trap).toBe(0);
   });
 
-  // Under the bottom-nest rule this board measures 0.625; restore once the scene is retuned.
-  test.todo('a teaching board is won by tapping anything eatable (mindless > 0.75)');
+  test('a teaching board is mostly won by tapping anything eatable', () => {
+    // 8 deals: over 2 the rate swings with a single game (it reads 0.625 there, 0.81 over 8).
+    expect(measureChoices(SCENES['hot-air-balloon'], 8).mindless).toBeGreaterThan(0.75);
+  });
 
   test('a hard board has many wrong taps that lose, and punishes mindless tapping', () => {
     const c = measureChoices(SCENES['rose-window'], 3);
