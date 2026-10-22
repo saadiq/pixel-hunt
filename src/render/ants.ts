@@ -68,9 +68,7 @@ export function drawAnt(ctx: CanvasRenderingContext2D, x: number, y: number, ang
   ctx.moveTo(sz * 0.3, 0); ctx.lineTo(sz * 0.48, -sz * 0.16);
   ctx.moveTo(sz * 0.3, 0); ctx.lineTo(sz * 0.48, sz * 0.16);
   ctx.stroke();
-  ctx.fillStyle = body;
-  ctx.strokeStyle = '#1d130d';
-  ctx.lineWidth = Math.max(1, sz * 0.07);
+  ctx.fillStyle = body; // outlined with the legs' stroke, still set
   const parts: (() => void)[] = [
     () => ctx.ellipse(-sz * 0.3, 0, sz * 0.22, sz * 0.16, 0, 0, 7),
     () => ctx.ellipse(0, 0, sz * 0.13, sz * 0.1, 0, 0, 7),
@@ -100,12 +98,15 @@ export function drawCrumbs(ctx: CanvasRenderingContext2D, crumbs: Crumb[], now: 
   });
 }
 
+/** Whether an ant is drawn at time t. Under reduced motion only while it sits on its target, never on the way there or back. */
+const shown = (a: Ant, t: number, reduce: boolean): boolean => a.go > 0 && (!reduce || (t >= a.go && t < a.go + a.chew));
+
 /** Advances and draws every ant; returns those still in flight. Clears `vis` cells when chewing finishes. */
 export function stepAnts(
   ctx: CanvasRenderingContext2D, ants: Ant[], now: number, g: Geom, cells: Cells,
   crumbs: Crumb[], reduce: boolean, onChew: (() => void) | undefined,
 ): Ant[] {
-  const sz = Math.max(9, g.cs * 0.95);
+  const sz = Math.max(9, g.cs * 0.95), wiggle = reduce ? 0 : g.cs * 0.06, legT = reduce ? 0 : now;
   return ants.filter((a) => {
     const t = now - a.t0, go = a.go, ch = a.chew;
     let x = 0, y = 0, ang = 0, carry: string | null = null;
@@ -114,7 +115,7 @@ export function stepAnts(
     } else if (t < go + ch) {
       if (a.phase === 0) { a.phase = 1; cells.chew[a.i] = now; onChew?.(); }
       [x, y, ang] = along(a, a.len);
-      x += Math.sin(t / 25) * g.cs * 0.06;
+      x += Math.sin(t / 25) * wiggle;
     } else if (t < go * 2 + ch) {
       if (a.phase < 2) {
         if (a.phase === 0) onChew?.();
@@ -128,7 +129,7 @@ export function stepAnts(
       if (a.phase < 2) { cells.vis[a.i] = -1; cells.chew[a.i] = 0; }
       return false;
     }
-    if (go > 0) drawAnt(ctx, x, y, ang, sz, cells.colors[a.color], carry, now);
+    if (shown(a, t, reduce)) drawAnt(ctx, x, y, ang, sz, cells.colors[a.color], carry, legT);
     return true;
   });
 }
