@@ -3,35 +3,55 @@ import type { Scene } from '../core/types';
 import { arcadeCabinet } from './arcade-cabinet';
 import { bentoBox } from './bento-box';
 import { birthdayCake } from './birthday-cake';
+import { bonsaiTree } from './bonsai-tree';
 import { brooklynBridge } from './brooklyn-bridge';
+import { cableCar } from './cable-car';
 import { campfire } from './campfire';
+import { carousel } from './carousel';
 import { chameleon } from './chameleon';
 import { coralReef } from './coral-reef';
 import { desertCactus } from './desert-cactus';
 import { fireworksHarbor } from './fireworks-harbor';
 import { goldenGate } from './golden-gate';
 import { goldfishBowl } from './goldfish-bowl';
+import { gumballMachine } from './gumball-machine';
+import { hedgehog } from './hedgehog';
+import { hilltopCastle } from './hilltop-castle';
 import { hotAirBalloon } from './hot-air-balloon';
 import { hummingbird } from './hummingbird';
 import { iceCreamTruck } from './ice-cream-truck';
 import { jellyfishAquarium } from './jellyfish-aquarium';
 import { koiPond } from './koi-pond';
+import { ladybug } from './ladybug';
 import { lighthouseAtDusk } from './lighthouse-at-dusk';
+import { monarchButterfly } from './monarch-butterfly';
 import { mountFuji } from './mount-fuji';
 import { nightOwl } from './night-owl';
 import { northernLights } from './northern-lights';
+import { pancakeStack } from './pancake-stack';
 import { paperBoat } from './paper-boat';
+import { paperLanterns } from './paper-lanterns';
 import { peacock } from './peacock';
+import { phoneBooth } from './phone-booth';
 import { recordPlayer } from './record-player';
+import { redPanda } from './red-panda';
 import { roseWindow } from './rose-window';
 import { rubberDuck } from './rubber-duck';
 import { santoriniRooftops } from './santorini-rooftops';
+import { seaTurtle } from './sea-turtle';
 import { sleepingFox } from './sleeping-fox';
+import { snowman } from './snowman';
+import { spaceRocket } from './space-rocket';
+import { steamTrain } from './steam-train';
+import { teapot } from './teapot';
 import { toucan } from './toucan';
 import { typewriter } from './typewriter';
 import { veniceCanal } from './venice-canal';
+import { vintageBicycle } from './vintage-bicycle';
+import { windmillTulips } from './windmill-tulips';
+import { yellowSubmarine } from './yellow-submarine';
 
 /** Scene lookup by id. */
 export const SCENES: Record<string, Scene> = Object.fromEntries(
-  [arcadeCabinet, bentoBox, birthdayCake, brooklynBridge, campfire, chameleon, coralReef, desertCactus, fireworksHarbor, goldenGate, goldfishBowl, hotAirBalloon, hummingbird, iceCreamTruck, jellyfishAquarium, koiPond, lighthouseAtDusk, mountFuji, nightOwl, northernLights, paperBoat, peacock, recordPlayer, roseWindow, rubberDuck, santoriniRooftops, sleepingFox, toucan, typewriter, veniceCanal].map((s) => [s.id, s]),
+  [arcadeCabinet, bentoBox, birthdayCake, bonsaiTree, brooklynBridge, cableCar, campfire, carousel, chameleon, coralReef, desertCactus, fireworksHarbor, goldenGate, goldfishBowl, gumballMachine, hedgehog, hilltopCastle, hotAirBalloon, hummingbird, iceCreamTruck, jellyfishAquarium, koiPond, ladybug, lighthouseAtDusk, monarchButterfly, mountFuji, nightOwl, northernLights, pancakeStack, paperBoat, paperLanterns, peacock, phoneBooth, recordPlayer, redPanda, roseWindow, rubberDuck, santoriniRooftops, seaTurtle, sleepingFox, snowman, spaceRocket, steamTrain, teapot, toucan, typewriter, veniceCanal, vintageBicycle, windmillTulips, yellowSubmarine].map((s) => [s.id, s]),
 );
