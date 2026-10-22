@@ -1,6 +1,6 @@
 import { expect, test } from 'bun:test';
 import { parseArt, sceneLevel } from '../../src/core/board';
-import { distField, holeCol, pickNear } from '../../src/core/path';
+import { nestField, pickNear } from '../../src/core/path';
 import { stepSlots } from '../../src/core/step';
 import type { Slots } from '../../src/core/types';
 import { bridge, upscale } from '../fixtures/proto';
@@ -10,7 +10,7 @@ function refStep(g: Int8Array, W: number, H: number, slots: Slots): boolean {
   let ate = false;
   slots.forEach((sq, si) => {
     if (!sq) return;
-    const i = pickNear(g, W, H, sq.color, distField(g, W, H, holeCol(si, slots.length, W)));
+    const i = pickNear(g, W, H, sq.color, nestField(g, W, H));
     if (i < 0) return;
     g[i] = -1;
     sq.cap--;
@@ -39,4 +39,14 @@ test('incremental stepSlots matches the full-search rules, including outside gri
     }
   }
   expect(sa).toEqual(sb);
+});
+
+test('two same-colour squads: slot 0 takes the contested pixel', () => {
+  // 3x3 of colour 0 with one exposed colour-1 block at the bottom centre.
+  const g = new Int8Array(9).fill(0);
+  g[7] = 1;
+  const slots: Slots = [{ color: 1, cap: 5, total: 5 }, { color: 1, cap: 5, total: 5 }];
+  expect(stepSlots(g, 3, 3, slots)).toBe(true);
+  expect(slots[0]?.cap).toBe(4);
+  expect(slots[1]?.cap).toBe(5);
 });

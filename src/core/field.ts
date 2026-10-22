@@ -1,14 +1,14 @@
-// Incremental search state for stepSlots. Every hole sits on the open track ring, so all holes
-// reach the same cells; `exposed` lists, per colour, the blocks touching that region. Distance
-// fields are kept per hole and repaired in place when a block is eaten (distances only shrink),
+// Incremental search state for stepSlots. Ants come from one nest along the whole bottom track,
+// so every squad shares one distance field; `exposed` lists, per colour, the blocks touching the
+// reachable region. The field is repaired in place when a block is eaten (distances only shrink),
 // instead of re-walking the whole board for every bite. The cache is checked against the live
 // grid before each use, so any outside change to the grid just causes a rebuild.
-import { distField, minAround } from './path';
+import { closer, minAround, nestField } from './path';
 
 export interface Field {
   W: number; H: number;
   ref: Int8Array;                  // our belief of the grid
-  fields: Map<number, Int16Array>; // hole column -> distances over the ext grid (-1 = unreached)
+  dist: Int16Array;                // distance from the nest over the ext grid (-1 = unreached)
   exposed: number[][];             // colour -> block cells touching the reachable region
   pos: Int32Array;                 // cell -> index in its exposed list, or -1
   q: Int32Array;
@@ -52,11 +52,10 @@ function removeExposed(f: Field, i: number): void {
 
 function build(g: Int8Array, W: number, H: number): Field {
   const f: Field = {
-    W, H, ref: g.slice(), fields: new Map(), exposed: [], pos: new Int32Array(g.length).fill(-1),
+    W, H, ref: g.slice(), dist: nestField(g, W, H), exposed: [], pos: new Int32Array(g.length).fill(-1),
     q: new Int32Array((W + 2) * (H + 2)),
   };
-  const base = distField(g, W, H, 0), EW = W + 2;
-  f.fields.set(0, base);
+  const base = f.dist, EW = W + 2;
   for (let i = 0; i < g.length; i++) {
     if (g[i] < 0) continue;
     const e = extOf(i, W);
@@ -74,9 +73,9 @@ function reached(f: Field, e: number): void {
   addExposed(f, cellAt(f, e + 1));
 }
 
-/** Block cell i was just eaten (f.ref already updated): repair one field. `base` also tracks exposure. */
-function repair(f: Field, d: Int16Array, i: number, base: boolean): void {
-  const { W, H, q, ref } = f, EW = W + 2, EH = H + 2, x = extOf(i, W);
+/** Block cell i was just eaten (f.ref already updated): repair the field and the exposed lists. */
+function repair(f: Field, i: number): void {
+  const { W, H, q, ref, dist: d } = f, EW = W + 2, EH = H + 2, x = extOf(i, W);
   let m = -1;
   for (let k = 0; k < 4; k++) {
     const v = d[k === 0 ? x - EW : k === 1 ? x + EW : k === 2 ? x - 1 : x + 1];
@@ -86,7 +85,7 @@ function repair(f: Field, d: Int16Array, i: number, base: boolean): void {
   d[x] = m + 1;
   let qh = 0, qt = 0;
   q[qt++] = x;
-  if (base) reached(f, x);
+  reached(f, x);
   const relax = (n: number, nd: number) => {
     const c = cellAt(f, n);
     if (c >= 0 && ref[c] >= 0) return;
@@ -94,7 +93,7 @@ function repair(f: Field, d: Int16Array, i: number, base: boolean): void {
     const fresh = d[n] < 0;
     d[n] = nd;
     q[qt++] = n;
-    if (base && fresh) reached(f, n);
+    if (fresh) reached(f, n);
   };
   while (qh < qt) {
     const e = q[qh++], er = (e / EW) | 0, ec = e - er * EW, nd = d[e] + 1;
@@ -113,17 +112,16 @@ export function fieldOf(g: Int8Array, W: number, H: number): Field {
 }
 
 /**
- * Nearest exposed block of a colour for a hole: lowest walking distance, then lowest cell index
+ * Nearest exposed block of a colour: lowest walking distance from the nest, ties broken by `closer`
  * (the same pick as pickNear over a full field). `i` is -1 if none; `d` is the live field.
  */
-export function nearest(f: Field, g: Int8Array, hc: number, color: number): { i: number; d: Int16Array } {
-  let d = f.fields.get(hc);
-  if (!d) f.fields.set(hc, (d = distField(g, f.W, f.H, hc)));
-  let best = -1, bd = 1e9;
+export function nearest(f: Field, color: number): { i: number; d: Int16Array } {
+  const d = f.dist;
+  let best = -1, bd = -1;
   const l = f.exposed[color] ?? [];
   for (let k = 0; k < l.length; k++) {
     const i = l[k], v = minAround(d, i, f.W);
-    if (v >= 0 && (v < bd || (v === bd && i < best))) { bd = v; best = i; }
+    if (v >= 0 && (best < 0 || closer(i, best, v, bd, f.W))) { bd = v; best = i; }
   }
   return { i: best, d };
 }
@@ -134,10 +132,10 @@ export function exposedCounts(g: Int8Array, W: number, H: number, nColors: numbe
   return Array.from({ length: nColors }, (_, c) => f.exposed[c]?.length ?? 0);
 }
 
-/** Eat cell i: clears it in the grid and repairs every cached field. */
+/** Eat cell i: clears it in the grid and repairs the cached field. */
 export function eat(f: Field, g: Int8Array, i: number): void {
   removeExposed(f, i);
   f.ref[i] = -1;
   g[i] = -1;
-  for (const [hc, d] of f.fields) repair(f, d, i, hc === 0);
+  repair(f, i);
 }
