@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { checkColors, checkDeals, checkStructure, estimateWinRate } from '../../scripts/checks';
+import { checkColors, checkDeals, checkPalette, checkStructure, deltaE2000, estimateWinRate, labDelta2000 } from '../../scripts/checks';
 import type { Scene } from '../../src/core/types';
 import { bridge } from '../fixtures/proto';
 
@@ -39,6 +39,27 @@ describe('checkStructure', () => {
     const rows = Array.from({ length: 36 }, () => 'ab'.repeat(20));
     expect(checkStructure({ ...base, rows, waitSlack: -1 })).toEqual(['bad waitSlack -1']);
     expect(checkStructure({ ...base, rows, waitSlack: 1.5 })).toEqual(['bad waitSlack 1.5']);
+  });
+});
+
+describe('colour difference', () => {
+  test('labDelta2000 matches Sharma et al. reference pairs', () => {
+    expect(labDelta2000([50, 2.6772, -79.7751], [50, 0, -82.7485])).toBeCloseTo(2.0425, 4);
+    expect(labDelta2000([50, 0, 0], [50, -1, 2])).toBeCloseTo(2.3669, 4);
+    expect(labDelta2000([50, 2.5, 0], [73, 25, -18])).toBeCloseTo(27.1492, 4);
+  });
+  test('deltaE2000: white against a pale grey is too close to tell', () => {
+    expect(deltaE2000('#ffffff', '#e6e6e6')).toBeLessThan(12);
+  });
+  test('deltaE2000: red against blue is far apart', () => {
+    expect(deltaE2000('#ff0000', '#0000ff')).toBeGreaterThan(40);
+  });
+  test('checkPalette flags two accents that look alike', () => {
+    const p = { name: 'x', dark: '#1a1a1a', light: '#f5f0e6', acc: ['#c0392b', '#c23c2e', '#2e86c1'] };
+    expect(checkPalette(p).some((e) => /similar/i.test(e))).toBe(true);
+  });
+  test('checkPalette passes a distinct palette', () => {
+    expect(checkPalette({ name: 'x', dark: '#1a1a1a', light: '#f5f0e6', acc: ['#c0392b', '#2e86c1', '#f1c40f'] })).toEqual([]);
   });
 });
 
