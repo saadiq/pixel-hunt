@@ -6,10 +6,10 @@ export const seaTurtle: Scene = {
   name: "Sea Turtle",
   blurb: "Gliding home over the coral, in no hurry at all.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
-  chunk: [22, 32],
-  wait: 0.8,
+  chunk: [26, 38],
+  wait: 0.85,
   waitSlack: 1,
   pal: {
     a: '#8fe0f0',
