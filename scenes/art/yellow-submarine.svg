@@ -10,7 +10,7 @@
   <rect width="54" height="44" fill="#1f5f9e"/>
 
   <!-- sandy floor, seaweed and coral -->
-  <path d="M0,39 Q10,36 20,38.5 Q32,41 42,37.5 Q48,36 54,38 V44 H0 Z" fill="#e8c98a"/>
+  <path d="M0,39 Q10,36 20,38.5 Q32,41 42,37.5 Q48,36 54,38 V44 H0 Z" fill="#d9c3a0"/>
   <g fill="none" stroke="#3fa34d" stroke-width="1.6" stroke-linecap="round">
     <path d="M4,40 C2,35 6,32 4,27 C3,24 5,22 4,20"/>
     <path d="M8,40 C10,36 7,33 9,29"/>

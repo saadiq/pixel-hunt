@@ -16,7 +16,7 @@ export const yellowSubmarine: Scene = {
     b: '#14213d',
     c: '#8fe3f0',
     d: '#1f5f9e',
-    e: '#e8c98a',
+    e: '#d9c3a0',
     f: '#3fa34d',
     g: '#ff6f91',
     h: '#f08a24',
