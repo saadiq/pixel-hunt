@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 44" width="54" height="44">
+  <metadata>{"id":"yellow-submarine","name":"Yellow Submarine","blurb":"Periscope up, with fish to watch from every porthole.","band":"hard","W":54,"H":44,"slots":2,"lanes":5,"chunk":[18,26],"wait":0.8,"waitSlack":1,"bg":"#1f5f9e"}</metadata>
+  <defs>
+    <path id="fish" d="M0,0 C2,-2 5,-2 6,0 C5,2 2,2 0,0 Z M0,0 L-2.5,-2 L-2.5,2 Z"/>
+    <g id="porthole">
+      <circle r="2.8" fill="#9aa5b1" stroke="#14213d" stroke-width="1"/>
+      <circle r="1.6" fill="#8fe3f0"/>
+    </g>
+  </defs>
+  <rect width="54" height="44" fill="#1f5f9e"/>
+
+  <!-- sandy floor, seaweed and coral -->
+  <path d="M0,39 Q10,36 20,38.5 Q32,41 42,37.5 Q48,36 54,38 V44 H0 Z" fill="#e8c98a"/>
+  <g fill="none" stroke="#3fa34d" stroke-width="1.6" stroke-linecap="round">
+    <path d="M4,40 C2,35 6,32 4,27 C3,24 5,22 4,20"/>
+    <path d="M8,40 C10,36 7,33 9,29"/>
+    <path d="M24,40 C22,37 26,35 24,32"/>
+  </g>
+  <g fill="none" stroke="#ff6f91" stroke-width="1.6" stroke-linecap="round">
+    <path d="M45,39 L45,32 M45,35 L42,31 M45,34 L48,30 M48,30 L48,28 M42,31 L41,29"/>
+  </g>
+  <g fill="#f08a24"><rect x="33" y="40" width="3" height="1"/><rect x="34" y="39" width="1" height="3"/></g>
+  <g fill="#14213d"><rect x="15" y="41" width="2" height="1"/><rect x="38" y="41" width="2" height="1"/></g>
+
+  <!-- fish -->
+  <g fill="#f08a24">
+    <use href="#fish" transform="translate(42 7) scale(1.5)"/>
+    <use href="#fish" transform="translate(46 14) scale(1.2)"/>
+    <use href="#fish" transform="translate(13 5) scale(-1.4 1.4)"/>
+  </g>
+  <use href="#fish" fill="#ff6f91" transform="translate(35 36) scale(1.3)"/>
+  <g fill="#14213d"><rect x="47" y="6" width="1" height="1"/><rect x="51" y="13" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="40" y="35" width="1" height="1"/></g>
+
+  <!-- bubbles from the propeller -->
+  <g fill="#8fe3f0">
+    <rect x="3" y="14" width="2" height="2"/><rect x="6" y="10" width="1" height="1"/><rect x="3" y="7" width="2" height="2"/><rect x="18" y="8" width="2" height="2"/><rect x="5" y="2" width="1" height="1"/>
+  </g>
+
+  <!-- periscope -->
+  <path d="M31,13 V4.5 H37" fill="none" stroke="#14213d" stroke-width="3"/>
+  <path d="M31,13 V4.5 H37" fill="none" stroke="#9aa5b1" stroke-width="1.2"/>
+  <rect x="36.5" y="2.5" width="2" height="4" fill="#8fe3f0" stroke="#14213d" stroke-width="1"/>
+
+  <!-- propeller -->
+  <rect x="5" y="23.5" width="5" height="3" fill="#9aa5b1" stroke="#14213d" stroke-width="1"/>
+  <g fill="#f08a24">
+    <ellipse cx="4.5" cy="21" rx="1.6" ry="3.2"/>
+    <ellipse cx="4.5" cy="29" rx="1.6" ry="3.2"/>
+  </g>
+
+  <!-- hull, tower, fins -->
+  <g fill="#ffd23f" stroke="#14213d" stroke-width="1.2" stroke-linejoin="round">
+    <path d="M22.5,18.5 L23.5,12.5 Q24,11 26,11 L33,11 Q35,11 35,13 L35.5,18.5 Z"/>
+    <path d="M9,18 L5.5,15 L9,15.5 Z"/>
+    <rect x="9.5" y="17.5" width="38" height="15" rx="7.5"/>
+    <path d="M14,32 L11,36 L18,32 Z"/>
+  </g>
+  <!-- orange band along the keel and on the tower -->
+  <path d="M11,28.5 H46 C45.3,30.5 43.5,32 40,32 H17 C13.5,32 11.7,30.5 11,28.5 Z" fill="#f08a24"/>
+  <rect x="23.5" y="14" width="11" height="1.4" fill="#f08a24"/>
+  <!-- rivets -->
+  <g fill="#14213d"><rect x="12" y="21" width="1" height="1"/><rect x="44" y="21" width="1" height="1"/><rect x="25" y="16" width="1" height="1"/><rect x="32" y="16" width="1" height="1"/></g>
+  <!-- portholes -->
+  <use href="#porthole" transform="translate(17 23.5)"/>
+  <use href="#porthole" transform="translate(24.5 23.5)"/>
+  <use href="#porthole" transform="translate(32 23.5)"/>
+  <use href="#porthole" transform="translate(39.5 23.5)"/>
+</svg>
