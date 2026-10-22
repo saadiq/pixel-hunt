@@ -12,6 +12,7 @@ import { $, el } from './dom';
 import { renderLanes, renderMeter, renderSlots, shakeSlots } from './hud';
 import { cancelRewind, runRewind } from './rewinder';
 import { lose, win } from './outcome';
+import { bindLanePress } from './press';
 import { closeSheets, openScenes, wireSheets } from './sheets';
 import { bite, ensureAudio, setEnabled, tone } from './sound';
 
@@ -26,6 +27,7 @@ let g: Game | null = null;
 let seed = 0;
 let over = false;
 let acc = 0, last = 0;
+let cancelPress = (): void => {};
 
 const newSeed = (): number => 1 + Math.floor(Math.random() * 0x7ffffffe);
 const fast = (): boolean => save.prefs.fast;
@@ -46,7 +48,7 @@ function persist(): void {
 
 function renderAll(): void {
   if (!g) return;
-  renderLanes(g, onTap);
+  renderLanes(g);
   renderSlots(g);
   renderMeter(g);
 }
@@ -56,6 +58,7 @@ const notice = (text: string): void => { $('notice').textContent = text; };
 
 function begin(game: Game, s: number): void {
   cancelRewind();
+  cancelPress();
   g = game; seed = s; over = false;
   renderer.reset(g);
   closeSheets();
@@ -117,6 +120,7 @@ function doUndo(): void {
 /** Back into play after the board was put back to an earlier position. */
 function reenter(game: Game): void {
   cancelRewind();
+  cancelPress();
   over = false;
   notice('');
   renderer.reset(game);
@@ -221,6 +225,7 @@ function wire(): void {
   $('muteBtn').onclick = toggleSound;
   $('restartBtn').onclick = () => { ensureAudio(); if (g) start(g.meta); };
   $('speedBtn').onclick = () => { save.prefs.fast = !save.prefs.fast; store(save); syncSpeed(); };
+  cancelPress = bindLanePress($('lanes'), onTap, (l) => renderer.preview(l === null ? null : g?.lanes[l]?.[0]?.color ?? null));
   wireSheets();
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') persist(); });
   const stage = $('stage');

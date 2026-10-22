@@ -1,4 +1,5 @@
 // Feedback drawn over the board: rings on the blocks ants are heading for, and the reach preview.
+import { exposedMask } from '../core/path';
 import { textOn } from '../ui/dom';
 import type { Ant, Geom } from './ants';
 
@@ -26,5 +27,26 @@ export function drawMarkers(
     ctx.lineWidth = w;
     ctx.strokeStyle = colors[c];
     ctx.strokeRect(x, y, s, s);
+  }
+}
+
+/** Blocks of `color` that look eatable on screen right now, minus those an ant is already heading for. */
+export function reachable(vis: Int16Array, W: number, H: number, color: number, marks: Map<number, number>): number[] {
+  const exp = exposedMask(vis, W, H), out: number[] = [];
+  for (let i = 0; i < vis.length; i++) if (exp[i] && vis[i] === color && !marks.has(i)) out.push(i);
+  return out;
+}
+
+/** The reach preview: the board dimmed, with each reachable block re-lit and ringed. */
+export function drawPreview(ctx: CanvasRenderingContext2D, g: Geom, cells: number[], hex: string): void {
+  ctx.fillStyle = 'rgba(12,8,6,.62)';
+  ctx.fillRect(g.ox, g.oy, g.bpx, g.H * g.cs);
+  const cs = g.cs, w = Math.max(1.5, cs * 0.14);
+  for (const i of cells) {
+    ctx.fillStyle = hex;
+    ctx.fillRect(cellX(g, i), cellY(g, i), cs, cs);
+    ctx.lineWidth = w;
+    ctx.strokeStyle = textOn(hex);
+    ctx.strokeRect(cellX(g, i) + w / 2, cellY(g, i) + w / 2, cs - w, cs - w);
   }
 }

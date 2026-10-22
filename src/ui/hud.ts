@@ -3,11 +3,12 @@ import type { Squad } from '../core/types';
 import { canUndo, type Game } from '../state/game';
 import { $, ANT_SVG, el, textOn } from './dom';
 
-export function renderLanes(g: Game, onTap: (lane: number) => void): void {
+/** Lane buttons. Taps and holds are handled on the box (see press.ts), so rebuilding them is safe mid-press. */
+export function renderLanes(g: Game): void {
   const box = $('lanes');
   box.style.setProperty('--l', String(g.lanes.length));
   box.innerHTML = '';
-  g.lanes.forEach((lane, l) => {
+  g.lanes.forEach((lane) => {
     const b = el('button', 'lane');
     b.disabled = !lane.length;
     b.setAttribute('aria-label', lane.length ? `Send squad of ${lane[0].cap}` : 'Empty lane');
@@ -23,7 +24,6 @@ export function renderLanes(g: Game, onTap: (lane: number) => void): void {
       h += `<span class="more">${lane.length > 3 ? '+' + (lane.length - 3) + ' more' : ''}</span>`;
       b.innerHTML = h;
     }
-    b.addEventListener('click', () => onTap(l));
     box.appendChild(b);
   });
 }
