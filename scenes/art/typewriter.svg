@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 46" width="48" height="46">
-  <metadata>{"id":"typewriter","name":"Typewriter","blurb":"Clack, clack, clack... ding!","band":"hard","W":48,"H":46,"slots":3,"lanes":5,"chunk":[19,28],"wait":0.8,"waitSlack":1,"bg":"#ffb3a7"}</metadata>
+  <metadata>{"id":"typewriter","name":"Typewriter","blurb":"Clack, clack, clack... ding!","band":"hard","W":48,"H":46,"slots":3,"lanes":5,"chunk":[19,28],"wait":0.8,"waitSlack":1,"bg":"#ff9a8a"}</metadata>
   <defs>
     <pattern id="stripes" width="6" height="8" patternUnits="userSpaceOnUse">
       <rect width="3" height="8" fill="#ffd9cf"/>
@@ -12,7 +12,7 @@
     </clipPath>
   </defs>
   <!-- striped wallpaper and a wooden desk -->
-  <rect width="48" height="46" fill="#ffb3a7"/>
+  <rect width="48" height="46" fill="#ff9a8a"/>
   <rect width="48" height="36" fill="url(#stripes)"/>
   <rect y="36" width="48" height="10" fill="#b5793f"/>
   <rect y="35.5" width="48" height="1.2" fill="#2a1f33"/>

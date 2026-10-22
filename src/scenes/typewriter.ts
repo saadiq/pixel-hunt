@@ -14,7 +14,7 @@ export const typewriter: Scene = {
   pal: {
     a: '#ffd9cf',
     b: '#e8433a',
-    c: '#ffb3a7',
+    c: '#ff9a8a',
     d: '#b5793f',
     e: '#2a1f33',
     f: '#ffffff',
