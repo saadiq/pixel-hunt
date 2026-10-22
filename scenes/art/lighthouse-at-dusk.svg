@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 48" width="42" height="48">
-  <metadata>{"id":"lighthouse-at-dusk","name":"Lighthouse at Dusk","blurb":"The lamp comes on as the sun goes down.","band":"medium","W":42,"H":48,"slots":3,"lanes":5,"chunk":[31,46],"wait":0.8,"waitSlack":1,"bg":"#5b4b9e"}</metadata>
+  <metadata>{"id":"lighthouse-at-dusk","name":"Lighthouse at Dusk","blurb":"The lamp comes on as the sun goes down.","band":"medium","W":42,"H":48,"slots":3,"lanes":5,"chunk":[34,50],"wait":1,"waitSlack":1,"bg":"#5b4b9e"}</metadata>
   <defs>
     <path id="tower" d="M13,41 L16,14 L26,14 L29,41 Z"/>
     <clipPath id="towerClip"><use href="#tower"/></clipPath>
@@ -24,7 +24,7 @@
   <rect x="31" y="29.5" width="9" height="1.6" rx="0.8" fill="#5b4b9e"/>
   <rect x="2" y="25" width="9" height="1.6" rx="0.8" fill="#5b4b9e"/>
   <!-- setting sun -->
-  <circle cx="7" cy="36" r="6.5" fill="#ffd23f" stroke="#2a1f33" stroke-width="1.2"/>
+  <circle cx="7" cy="36" r="6.5" fill="#f9b81c" stroke="#2a1f33" stroke-width="1.2"/>
   <!-- sea -->
   <rect y="35.5" width="42" height="12.5" fill="#3a6fd0"/>
   <rect y="35.5" width="42" height="1" fill="#2a1f33"/>
@@ -53,7 +53,7 @@
   <rect x="20" y="19" width="2" height="3" fill="#2a1f33"/>
   <!-- gallery, lantern and roof -->
   <rect x="13.5" y="11.5" width="15" height="3" fill="#e8433a" stroke="#2a1f33" stroke-width="1.5"/>
-  <rect x="16" y="5" width="10" height="6.5" fill="#ffd23f" stroke="#2a1f33" stroke-width="1.5"/>
+  <rect x="16" y="5" width="10" height="6.5" fill="#f9b81c" stroke="#2a1f33" stroke-width="1.5"/>
   <rect x="19" y="5.5" width="1" height="6" fill="#2a1f33"/><rect x="22" y="5.5" width="1" height="6" fill="#2a1f33"/>
   <path d="M15,5.5 C15,0.5 27,0.5 27,5.5 Z" fill="#e8433a" stroke="#2a1f33" stroke-width="1.5" stroke-linejoin="round"/>
   
