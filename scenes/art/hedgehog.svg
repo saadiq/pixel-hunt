@@ -24,9 +24,9 @@
   <rect x="12" y="28" width="2" height="2" fill="#2a1c1a"/>
   <path d="M17.5,22.5 C16,20 17,18.5 19.5,19 L20,23.5 Z" fill="#e0ad72" stroke="#2a1c1a" stroke-width="0.9"/>
   <!-- toadstool -->
-  <rect x="45" y="30" width="3" height="6" fill="#fff6e6" stroke="#2a1c1a" stroke-width="1"/>
+  <rect x="45" y="30" width="3" height="6" fill="#ffffff" stroke="#2a1c1a" stroke-width="1"/>
   <path d="M41.5,30.5 C41.5,24.5 51.5,24.5 51.5,30.5 Z" fill="#c8322a" stroke="#2a1c1a" stroke-width="1"/>
-  <g fill="#fff6e6"><rect x="44" y="27" width="2" height="1"/><rect x="48" y="28" width="2" height="1"/></g>
+  <g fill="#ffffff"><rect x="44" y="27" width="2" height="1"/><rect x="48" y="28" width="2" height="1"/></g>
   <!-- leaf litter in front -->
   <use href="#litter" fill="#f5c242" transform="translate(24.1 39.8)"/>
   <use href="#litter" fill="#f5c242" transform="translate(45.1 37) rotate(15)"/>

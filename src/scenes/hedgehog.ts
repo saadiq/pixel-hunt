@@ -19,7 +19,7 @@ export const hedgehog: Scene = {
     e: '#c8322a',
     f: '#6b4128',
     g: '#e0ad72',
-    h: '#fff6e6',
+    h: '#ffffff',
     i: '#6a9a3a',
   },
   rows: [
