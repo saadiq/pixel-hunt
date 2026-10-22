@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 50" width="44" height="50">
+  <metadata>{"id":"pancake-stack","name":"Pancake Stack","blurb":"Six high, butter melting, syrup everywhere.","band":"hard","W":44,"H":50,"slots":2,"lanes":5,"chunk":[17,24],"wait":0.8,"waitSlack":1,"bg":"#e84a5f"}</metadata>
+  <defs>
+    <pattern id="gingham" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="4" height="4" fill="#fff6e8"/>
+      <rect x="4" y="4" width="4" height="4" fill="#fff6e8"/>
+    </pattern>
+  </defs>
+  <!-- gingham tablecloth -->
+  <rect width="44" height="50" fill="#e84a5f"/>
+  <rect width="44" height="50" fill="url(#gingham)"/>
+
+  <!-- coffee cup and saucer, top left -->
+  <ellipse cx="7" cy="13" rx="6.5" ry="2" fill="#a9d4e6" stroke="#2b1d1d" stroke-width="1"/>
+  <path d="M10.5,6 C13.5,6 13.5,10.5 10.5,10.5" fill="none" stroke="#2b1d1d" stroke-width="2.4"/>
+  <path d="M10.5,6 C13.5,6 13.5,10.5 10.5,10.5" fill="none" stroke="#a9d4e6" stroke-width="0.9"/>
+  <path d="M2.5,4.5 H11.5 V10 C11.5,12 10,13 7,13 C4,13 2.5,12 2.5,10 Z" fill="#a9d4e6" stroke="#2b1d1d" stroke-width="1"/>
+  <rect x="3" y="5" width="8" height="1.6" fill="#7a3a12"/>
+  <rect x="5" y="1" width="1" height="2" fill="#fff6e8"/>
+  <!-- syrup jug, top right -->
+  <path d="M35.5,6.5 L36.5,3.5 H41.5 L42.5,6.5 V13 C42.5,14 41.5,14.5 39,14.5 C36.5,14.5 35.5,14 35.5,13 Z" fill="#7a3a12" stroke="#2b1d1d" stroke-width="1"/>
+  <rect x="36.5" y="1.5" width="5" height="2" fill="#a9d4e6" stroke="#2b1d1d" stroke-width="1"/>
+  <rect x="36.5" y="8.5" width="5" height="3" fill="#fff08a" stroke="#2b1d1d" stroke-width="1"/>
+  <rect x="38" y="9.5" width="2" height="1" fill="#e84a5f"/>
+  <!-- plate -->
+  <ellipse cx="22" cy="43" rx="20.5" ry="5.8" fill="#a9d4e6" stroke="#2b1d1d" stroke-width="1.2"/>
+  <ellipse cx="22" cy="42.5" rx="15" ry="3.8" fill="none" stroke="#fff6e8" stroke-width="1"/>
+
+  <!-- the stack -->
+  <defs><g id="pancake"><rect width="29" height="4" rx="1.8" fill="#eaa64a" stroke="#2b1d1d" stroke-width="1"/><rect x="1.5" y="2.5" width="26" height="1" fill="#b8692e"/></g></defs>
+  <use href="#pancake" x="7.5" y="37.5"/>
+  <use href="#pancake" x="6.5" y="33.5"/>
+  <use href="#pancake" x="8.5" y="29.5"/>
+  <use href="#pancake" x="7.5" y="25.5"/>
+  <use href="#pancake" x="6.5" y="21.5"/>
+  <use href="#pancake" x="8.5" y="17.5"/>
+
+  <!-- syrup pooling on top and dripping down -->
+  <g fill="#7a3a12" transform="translate(0 4)">
+    <path d="M10,14.5 C10,12.4 13,12 22,12 C31,12 34,12.4 34,14.5 C34,16 32,16.4 30,16 L30,22 C30,23.4 28.4,23.4 28.4,22 L28.4,17 C24,17.4 20,17.4 16.6,17 L16.6,26 C16.6,27.6 14.8,27.6 14.8,26 L14.8,16.6 C12,16.6 10,16 10,14.5 Z"/>
+    <rect x="34" y="16" width="1.6" height="9"/><rect x="34" y="25" width="1.6" height="1.4" rx="0.8"/>
+    <rect x="21" y="17" width="1.6" height="4"/>
+  </g>
+  <!-- butter pat -->
+  <rect x="17.5" y="12.5" width="8" height="4.5" fill="#fff08a" stroke="#2b1d1d" stroke-width="1"/>
+
+  <!-- berries on the plate and the stack -->
+  <g fill="#3d4fa8" stroke="#2b1d1d" stroke-width="0.8">
+    <circle cx="7" cy="44" r="2"/><circle cx="2.5" cy="20" r="1.8"/><circle cx="41" cy="22" r="1.8"/><circle cx="40" cy="31" r="1.8"/><circle cx="11.5" cy="46" r="2"/><circle cx="35" cy="46" r="2"/>
+    <circle cx="29.5" cy="15.5" r="2"/><circle cx="13" cy="16" r="2"/>
+  </g>
+  <path d="M37,40.5 C41,39.5 43,42 40.5,45.5 C38,44.5 36.5,42.5 37,40.5 Z" fill="#e84a5f" stroke="#2b1d1d" stroke-width="0.8"/>
+</svg>
