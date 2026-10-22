@@ -93,24 +93,37 @@ export function labDelta2000([L1, a1, b1]: Lab, [L2, a2, b2]: Lab): number {
 /** CIEDE2000 difference between two #rrggbb colours. */
 export const deltaE2000 = (a: string, b: string): number => labDelta2000(toLab(a), toLab(b));
 
-/** Pairs of colours too close to tell apart as drawn, as error strings. */
-function similarPairs(names: string[], hexes: string[]): string[] {
-  const errs: string[] = [];
+export interface ColourPair { a: string; b: string; ha: string; hb: string; d: number }
+
+/** Every pair of colours with its CIEDE2000 difference, in input order. */
+export function colourPairs(names: string[], hexes: string[]): ColourPair[] {
+  const out: ColourPair[] = [];
   for (let i = 0; i < hexes.length; i++) {
     for (let j = i + 1; j < hexes.length; j++) {
-      const d = deltaE2000(hexes[i], hexes[j]);
-      if (d < MIN_DE00) errs.push(`colours "${names[i]}" and "${names[j]}" too similar (dE00 ${d.toFixed(1)})`);
+      out.push({ a: names[i], b: names[j], ha: hexes[i], hb: hexes[j], d: deltaE2000(hexes[i], hexes[j]) });
     }
   }
-  return errs;
+  return out;
 }
+
+/** Pairs of colours too close to tell apart as drawn, as error strings. */
+const similarPairs = (names: string[], hexes: string[]): string[] => colourPairs(names, hexes)
+  .filter((p) => p.d < MIN_DE00).map((p) => `colours "${p.a}" and "${p.b}" too similar (dE00 ${p.d.toFixed(1)})`);
+
+/** Cell count per palette letter a scene actually draws with (letters with a valid hex only). */
+export function usedColours(s: Scene): Record<string, number> {
+  const counts: Record<string, number> = {};
+  for (const row of s.rows) for (const ch of row) if (ch in s.pal && HEX.test(s.pal[ch])) counts[ch] = (counts[ch] ?? 0) + 1;
+  return counts;
+}
+
+/** A random-mode palette's colours. */
+export const paletteHexes = (p: Palette): string[] => [p.dark, p.light, ...p.acc];
 
 /** Colour errors: palette size, tiny colours, pairs too close to tell apart (background included). */
 export function checkColors(s: Scene): string[] {
   const errs: string[] = [];
-  const counts: Record<string, number> = {};
-  for (const row of s.rows) for (const ch of row) counts[ch] = (counts[ch] ?? 0) + 1;
-  const used = Object.keys(counts).filter((ch) => ch in s.pal && HEX.test(s.pal[ch]));
+  const counts = usedColours(s), used = Object.keys(counts);
   if (used.length > MAX_COLORS) errs.push(`too many colours: ${used.length} (max ${MAX_COLORS})`);
   for (const ch of used) if (counts[ch] < MIN_CELLS) errs.push(`colour "${ch}" has ${counts[ch]} cells (min ${MIN_CELLS})`);
   return [...errs, ...similarPairs(used, used.map((ch) => s.pal[ch]))];
@@ -118,7 +131,7 @@ export function checkColors(s: Scene): string[] {
 
 /** Random-mode palette errors: any two of its colours too close to tell apart. */
 export function checkPalette(p: Palette): string[] {
-  const hexes = [p.dark, p.light, ...p.acc];
+  const hexes = paletteHexes(p);
   return similarPairs(hexes, hexes);
 }
 

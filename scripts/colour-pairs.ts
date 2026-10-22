@@ -3,26 +3,17 @@
 import { PALETTES } from '../src/random/palettes';
 import { SCENES } from '../src/scenes';
 import { MANIFEST } from '../src/scenes/manifest';
-import { deltaE2000, MIN_DE00 } from './checks';
+import { colourPairs, MIN_DE00, paletteHexes, usedColours } from './checks';
 
-interface Pair { where: string; a: string; b: string; ha: string; hb: string; d: number }
-
-function pairs(where: string, names: string[], hexes: string[]): Pair[] {
-  const out: Pair[] = [];
-  for (let i = 0; i < hexes.length; i++) {
-    for (let j = i + 1; j < hexes.length; j++) {
-      out.push({ where, a: names[i], b: names[j], ha: hexes[i], hb: hexes[j], d: deltaE2000(hexes[i], hexes[j]) });
-    }
-  }
-  return out.sort((x, y) => x.d - y.d);
-}
+const pairs = (where: string, names: string[], hexes: string[]) =>
+  colourPairs(names, hexes).map((p) => ({ where, ...p })).sort((x, y) => x.d - y.d);
 
 const scenePairs = MANIFEST.map((id) => {
-  const s = SCENES[id], used = [...new Set(s.rows.join(''))];
+  const s = SCENES[id], used = Object.keys(usedColours(s));
   return pairs(id, used, used.map((ch) => s.pal[ch]));
 });
 const palettePairs = PALETTES.map((p) => {
-  const hexes = [p.dark, p.light, ...p.acc];
+  const hexes = paletteHexes(p);
   return pairs(`random:${p.name}`, hexes, hexes);
 });
 const all = [...scenePairs, ...palettePairs];
