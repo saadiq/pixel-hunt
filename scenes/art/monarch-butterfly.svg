@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 44" width="52" height="44">
-  <metadata>{"id":"monarch-butterfly","name":"Monarch Butterfly","blurb":"A quick rest on the flowers before the long flight south.","band":"hard","W":52,"H":44,"slots":2,"lanes":5,"chunk":[16,24],"wait":1,"waitSlack":1,"bg":"#bde6f5"}</metadata>
+  <metadata>{"id":"monarch-butterfly","name":"Monarch Butterfly","blurb":"A quick rest on the flowers before the long flight south.","band":"hard","W":52,"H":44,"slots":3,"lanes":4,"chunk":[14,20],"wait":0.8,"waitSlack":1,"bg":"#bde6f5"}</metadata>
   <defs>
     <pattern id="blooms" x="0" y="30" width="6" height="5" patternUnits="userSpaceOnUse">
       <rect x="1" y="1" width="2" height="1" fill="#f06aa8"/>
