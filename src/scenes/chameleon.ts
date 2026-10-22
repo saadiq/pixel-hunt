@@ -6,10 +6,10 @@ export const chameleon: Scene = {
   name: "Chameleon",
   blurb: "Striped, curled up and keeping an eye on you.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
   chunk: [24, 34],
-  wait: 0.9,
+  wait: 1,
   waitSlack: 1,
   pal: {
     a: '#2b8a4a',
