@@ -18,7 +18,7 @@ export const recordPlayer: Scene = {
     d: '#2bb3a3',
     e: '#1d7f86',
     f: '#e8433a',
-    g: '#d9dde8',
+    g: '#aeb4c8',
     h: '#5a5470',
   },
   rows: [
