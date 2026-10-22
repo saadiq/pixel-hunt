@@ -6,10 +6,10 @@ export const vintageBicycle: Scene = {
   name: "Vintage Bicycle",
   blurb: "A penny-farthing out for a Sunday spin in the park.",
   band: "hard",
-  slots: 2,
+  slots: 3,
   lanes: 5,
-  chunk: [16, 22],
-  wait: 0.95,
+  chunk: [22, 30],
+  wait: 0.9,
   waitSlack: 1,
   pal: {
     a: '#c98f5a',

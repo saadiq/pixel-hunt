@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 46" width="48" height="46">
-  <metadata>{"id":"vintage-bicycle","name":"Vintage Bicycle","blurb":"A penny-farthing out for a Sunday spin in the park.","band":"hard","W":48,"H":46,"slots":2,"lanes":5,"chunk":[16,22],"wait":0.95,"waitSlack":1,"bg":"#a9d8f0"}</metadata>
+  <metadata>{"id":"vintage-bicycle","name":"Vintage Bicycle","blurb":"A penny-farthing out for a Sunday spin in the park.","band":"hard","W":48,"H":46,"slots":3,"lanes":5,"chunk":[22,30],"wait":0.9,"waitSlack":1,"bg":"#a9d8f0"}</metadata>
   <defs>
     <pattern id="cobbles" x="0" y="39" width="6" height="6" patternUnits="userSpaceOnUse">
       <rect x="0" y="0" width="5" height="2" fill="#c98f5a"/>
