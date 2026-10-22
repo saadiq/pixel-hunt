@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 46" width="48" height="46">
+  <metadata>{"id":"vintage-bicycle","name":"Vintage Bicycle","blurb":"A penny-farthing out for a Sunday spin in the park.","band":"hard","W":48,"H":46,"slots":2,"lanes":5,"chunk":[17,24],"wait":0.8,"waitSlack":1,"bg":"#a9d8f0"}</metadata>
+  <defs>
+    <pattern id="cobbles" x="0" y="39" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="5" height="2" fill="#e3c08a"/>
+      <rect x="-3" y="3" width="5" height="2" fill="#e3c08a"/>
+      <rect x="3" y="3" width="5" height="2" fill="#e3c08a"/>
+    </pattern>
+    <pattern id="blooms" x="1" y="25" width="7" height="5" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="1" height="1" fill="#c8283c"/>
+      <rect x="3" y="2" width="1" height="1" fill="#ffffff"/>
+      <rect x="5" y="4" width="1" height="1" fill="#f2b830"/>
+    </pattern>
+    <path id="spoke" d="M28,28 L28,14"/>
+  </defs>
+  <rect width="48" height="46" fill="#a9d8f0"/>
+  <!-- clouds -->
+  <g fill="#ffffff">
+    <ellipse cx="8" cy="7" rx="5" ry="2"/><ellipse cx="11" cy="5.5" rx="3" ry="2"/>
+    <ellipse cx="36" cy="4" rx="4.5" ry="1.8"/><ellipse cx="34" cy="2.8" rx="2.4" ry="1.6"/>
+  </g>
+  <!-- sun -->
+  <circle cx="6" cy="19" r="3.4" fill="#f2b830" stroke="#ffffff" stroke-width="1"/>
+  <!-- a distant bird -->
+  <g fill="#2b2233"><rect x="39" y="10" width="1" height="1"/><rect x="40" y="11" width="1" height="1"/><rect x="41" y="10" width="1" height="1"/></g>
+  <!-- hedge with flowers -->
+  <path d="M0,26 Q4,22 8,25 Q12,21 16,25 Q20,21 24,24 Q28,20 32,24 Q36,21 40,25 Q44,21 48,24 V39 H0 Z" fill="#4f9d4a"/>
+  <rect x="0" y="25" width="48" height="13" fill="url(#blooms)"/>
+  <g fill="#c8283c"><rect x="3" y="28" width="1" height="1"/><rect x="21" y="27" width="1" height="1"/><rect x="35" y="29" width="1" height="1"/><rect x="25" y="33" width="1" height="1"/><rect x="38" y="35" width="1" height="1"/></g>
+  <g fill="#f2b830"><rect x="16" y="28" width="1" height="1"/><rect x="2" y="31" width="1" height="1"/></g>
+  <g fill="#ffffff"><rect x="6" y="31" width="1" height="1"/><rect x="18" y="34" width="1" height="1"/><rect x="31" y="27" width="1" height="1"/><rect x="40" y="28" width="1" height="1"/><rect x="45" y="27" width="1" height="1"/></g>
+  <!-- cobbled path -->
+  <rect y="38" width="48" height="8" fill="#7a4a2a"/>
+  <rect y="38" width="48" height="8" fill="url(#cobbles)"/>
+  <rect y="38" width="48" height="1" fill="#2b2233"/>
+
+  <!-- park lamp behind the wheel -->
+  <rect x="43" y="10" width="2" height="29" fill="#2b2233"/>
+  <path d="M41.5,9.5 L46.5,9.5 L45.5,4.5 L42.5,4.5 Z" fill="#f2b830" stroke="#2b2233" stroke-width="1"/>
+  <rect x="42" y="2" width="4" height="2" fill="#2b2233"/>
+  <!-- big wheel: spokes, rim, tyre -->
+  <g stroke="#c3ccd6" stroke-width="1">
+    <use href="#spoke" transform="rotate(30 28 28)"/><use href="#spoke" transform="rotate(60 28 28)"/>
+    <use href="#spoke" transform="rotate(90 28 28)"/><use href="#spoke" transform="rotate(120 28 28)"/><use href="#spoke" transform="rotate(150 28 28)"/>
+    <use href="#spoke" transform="rotate(180 28 28)"/><use href="#spoke" transform="rotate(210 28 28)"/><use href="#spoke" transform="rotate(240 28 28)"/>
+    <use href="#spoke" transform="rotate(270 28 28)"/><use href="#spoke" transform="rotate(300 28 28)"/><use href="#spoke" transform="rotate(330 28 28)"/>
+  </g>
+  <circle cx="28" cy="28" r="14.2" fill="none" stroke="#c3ccd6" stroke-width="1.2"/>
+  <circle cx="28" cy="28" r="15.8" fill="none" stroke="#2b2233" stroke-width="2"/>
+
+  <!-- small wheel -->
+  <circle cx="7" cy="40.5" r="4.5" fill="#c3ccd6" stroke="#2b2233" stroke-width="1.6"/>
+
+  <!-- frame: curved backbone and fork, outlined -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M27,10 C18,10 10,22 7,40.5 M27,10 L28,28" stroke="#2b2233" stroke-width="3.8"/>
+    <path d="M27,10 C18,10 10,22 7,40.5 M27,10 L28,28" stroke="#c8283c" stroke-width="2"/>
+  </g>
+  <!-- handlebars and grips -->
+  <path d="M24,6.5 C26,7.5 29,7.5 31,5.5" fill="none" stroke="#2b2233" stroke-width="1.6"/>
+  <rect x="31" y="3" width="2" height="3" fill="#7a4a2a"/>
+  <!-- saddle with spring -->
+  <path d="M15,9.5 C16.5,6.5 22,6.5 24,8.5 C22.5,11 17,11.5 15,9.5 Z" fill="#7a4a2a" stroke="#2b2233" stroke-width="1"/>
+  <!-- hub, crank and pedal -->
+  <circle cx="28" cy="28" r="2.4" fill="#f2b830" stroke="#2b2233" stroke-width="1"/>
+  <path d="M28,28 L32,32" stroke="#2b2233" stroke-width="1.4"/>
+  <rect x="31" y="32" width="3" height="2" fill="#f2b830" stroke="#2b2233" stroke-width="0.8"/>
+</svg>
