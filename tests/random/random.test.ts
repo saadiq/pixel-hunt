@@ -4,12 +4,21 @@ import { PALETTES } from '../../src/random/palettes';
 import { parseArt } from '../../src/core/board';
 import { deal, replayLine } from '../../src/core/deal';
 import type { Band } from '../../src/core/types';
-import { TAP_SLACK, randomLevel, tapWindow } from '../../src/random/level';
+import { TARGETS } from '../../src/core/targets';
+import { RANDOM_BANDS, TAP_SLACK, randomLevel, tapWindow } from '../../src/random/level';
 import { makeScene } from '../../src/random/scene';
 import { newGame } from '../../src/state/game';
 import { fromRun, toRun } from '../../src/state/save';
 
 const BANDS: Band[] = ['easy', 'medium', 'hard'];
+
+test('each random band holds a slot count its band allows', () => {
+  for (const b of BANDS) {
+    const [lo, hi] = TARGETS[b].slots;
+    expect(RANDOM_BANDS[b].slots).toBeGreaterThanOrEqual(lo);
+    expect(RANDOM_BANDS[b].slots).toBeLessThanOrEqual(hi);
+  }
+});
 
 describe('makeScene', () => {
   test('deterministic per seed, n x n, at most 9 colors', () => {
