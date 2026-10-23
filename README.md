@@ -79,7 +79,7 @@ The band gates in `src/core/targets.ts` apply to scenes and random mode alike:
 | Medium | 3–4 | 60–90 | 6+ | ≤ 0.85 |
 | Hard | 3 | 90–150 | 14+ | ≤ 0.55 |
 
-The main lever is `waitSlack: 1`, which lets the dealer put a squad whose colour is still buried into a lane while slots are scarce. Open scenes with little enclosed art produce few choices whatever the settings, so they belong in Easy, unless a frame (a window, tile border or postcard edge) encloses them. When a hard board's mindless win rate is too high, try larger squads (`chunk`), or `wait` between 0.8 and 1.0 (its effect varies by board), and check that decisions stay at 14 or more. Squad size (`chunk`) sets the board's length, so a single tap never clears a whole outline.
+The main lever is `waitSlack: 1`, which lets the dealer put a squad whose colour is still buried into a lane while slots are scarce. Open scenes with little enclosed art produce few choices whatever the settings, so they belong in Easy or Medium, unless a frame (a window, tile border or postcard edge) encloses them. When a hard board's mindless win rate is too high, try larger squads (`chunk`), or `wait` between 0.8 and 1.0 (its effect varies by board), and check that decisions stay at 14 or more. Squad size (`chunk`) sets the board's length, so a single tap never clears a whole outline.
 
 ## Adding a scene
 
