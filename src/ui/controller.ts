@@ -12,7 +12,7 @@ import { $, el } from './dom';
 import { renderLanes, renderMeter, renderSlots, shakeSlots } from './hud';
 import { cancelRewind, runRewind } from './rewinder';
 import { lose, win } from './outcome';
-import { bindLanePress } from './press';
+import { bindPress } from './press';
 import { closeSheets, openScenes, wireSheets } from './sheets';
 import { bite, ensureAudio, setEnabled, tone } from './sound';
 
@@ -226,7 +226,7 @@ function wire(): void {
   $('muteBtn').onclick = toggleSound;
   $('restartBtn').onclick = () => { ensureAudio(); if (g) start(g.meta); };
   $('speedBtn').onclick = () => { save.prefs.fast = !save.prefs.fast; store(save); syncSpeed(); };
-  cancelPress = bindLanePress($('lanes'), onTap, (l) => renderer.preview(l === null ? null : g?.lanes[l]?.[0]?.color ?? null));
+  cancelPress = bindPress($('lanes'), '.lane', onTap, (l) => renderer.preview(l === null ? null : g?.lanes[l]?.[0]?.color ?? null));
   wireSheets();
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') persist(); });
   const stage = $('stage');

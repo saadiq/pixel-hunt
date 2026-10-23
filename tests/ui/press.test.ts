@@ -129,6 +129,19 @@ describe('PressBinder', () => {
     expect(taps).toEqual([]);
   });
 
+  test('with no tap handler a tap and a click do nothing, and a hold still previews', () => {
+    const previews: (number | null)[] = [];
+    let fire: (() => void) | null = null;
+    const b = new PressBinder(null, (l) => previews.push(l), (fn) => { fire = fn; });
+    b.down(1, 0, 2, 0);
+    b.up(1, 50);
+    b.click(2, 5000);
+    b.down(1, 0, 1, 6000);
+    fire!();
+    b.up(1, 6400);
+    expect(previews).toEqual([1, null]);
+  });
+
   test('a press whose release was missed ends when that pointer goes down again', () => {
     const { b, taps, previews, fire } = mk();
     b.down(1, 0, 0, 0);

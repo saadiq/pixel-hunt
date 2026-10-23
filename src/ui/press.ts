@@ -1,5 +1,5 @@
-// Tap or hold on the lanes. A quick tap sends the lane's top squad; holding past HOLD_MS previews what
-// that squad can reach, sliding compares lanes, and letting go from a preview never sends anything.
+// Tap or hold on the lanes or the holding slots. A quick tap on a lane sends its top squad; holding past
+// HOLD_MS previews that squad's colour on the board, sliding compares, and letting go from a preview never sends.
 
 export const HOLD_MS = 300;
 
@@ -10,7 +10,7 @@ export type PressEvent =
   | { t: 'up'; at: number }
   | { t: 'cancel' };
 
-/** `send`: tap this lane. `preview`: show this lane's reach, or null to clear it. */
+/** `send`: tap this item. `preview`: preview this item's colour, or null to clear it. */
 export interface PressOut { send?: number; preview?: number | null }
 
 export interface PressState { phase: 'idle' | 'down' | 'preview'; origin: number; lane: number | null; start: number }
@@ -36,9 +36,9 @@ export function pressStep(s: PressState, e: PressEvent): [PressState, PressOut] 
   return [IDLE, tap ? { send: s.origin } : {}];
 }
 
-/** Index of the lane button under an element, or null. */
-function laneOf(box: HTMLElement, target: Element | null): number | null {
-  const b = target?.closest('.lane');
+/** Index of the box child matching `sel` under an element, or null. A disabled button never matches. */
+function itemAt(box: HTMLElement, target: Element | null, sel: string): number | null {
+  const b = target?.closest(sel);
   if (!b || !box.contains(b) || (b as HTMLButtonElement).disabled) return null;
   const i = Array.prototype.indexOf.call(box.children, b);
   return i < 0 ? null : i;
@@ -59,8 +59,8 @@ export class PressBinder {
   private lastUp = -Infinity;
 
   constructor(
-    private onTap: (lane: number) => void,
-    private onPreview: (lane: number | null) => void,
+    private onTap: ((i: number) => void) | null,
+    private onPreview: (i: number | null) => void,
     private schedule: (fn: () => void) => void,
   ) {}
 
@@ -68,7 +68,7 @@ export class PressBinder {
     const [n, o] = pressStep(this.s, e);
     this.s = n;
     if (o.preview !== undefined) this.onPreview(o.preview);
-    if (o.send !== undefined) this.onTap(o.send);
+    if (o.send !== undefined) this.onTap?.(o.send);
   }
 
   /** Returns whether this pointer now owns the press (so the caller can capture it). */
@@ -107,16 +107,16 @@ export class PressBinder {
   /** A click: from a keyboard or assistive tech it taps; right after a pointer press it is that press's echo. */
   click(lane: number | null, at: number): void {
     if (at - this.lastUp < CLICK_AFTER_UP_MS) { this.lastUp = -Infinity; return; }
-    if (lane !== null) this.onTap(lane);
+    if (lane !== null) this.onTap?.(lane);
   }
 }
 
 /**
- * Wires taps and holds on the lane box. Listeners sit on the box, which survives renderLanes
- * rebuilding its buttons. Returns a cancel function for when the board changes under a press
- * (undo, restart, rewind).
+ * Wires taps and holds on the children of `box` matching `sel` (lanes, or full slots; null `onTap` makes taps inert). Listeners sit on
+ * the box, which survives its children being rebuilt. Returns a cancel function for when the board
+ * changes under a press (undo, restart, rewind).
  */
-export function bindLanePress(box: HTMLElement, onTap: (lane: number) => void, onPreview: (lane: number | null) => void): () => void {
+export function bindPress(box: HTMLElement, sel: string, onTap: ((i: number) => void) | null, onPreview: (i: number | null) => void): () => void {
   let showing = false;
   const preview = (l: number | null) => {
     if (l !== null && !showing) navigator.vibrate?.(10);
@@ -125,14 +125,14 @@ export function bindLanePress(box: HTMLElement, onTap: (lane: number) => void, o
   };
   const b = new PressBinder(onTap, preview, (fn) => window.setTimeout(fn, HOLD_MS));
   box.addEventListener('pointerdown', (ev) => {
-    if (b.down(ev.pointerId, ev.button, laneOf(box, ev.target as Element), performance.now())) box.setPointerCapture(ev.pointerId);
+    if (b.down(ev.pointerId, ev.button, itemAt(box, ev.target as Element, sel), performance.now())) box.setPointerCapture(ev.pointerId);
   });
   box.addEventListener('pointermove', (ev) => {
-    if (b.owns(ev.pointerId)) b.move(ev.pointerId, laneOf(box, document.elementFromPoint(ev.clientX, ev.clientY)));
+    if (b.owns(ev.pointerId)) b.move(ev.pointerId, itemAt(box, document.elementFromPoint(ev.clientX, ev.clientY), sel));
   });
   box.addEventListener('pointerup', (ev) => b.up(ev.pointerId, performance.now()));
   box.addEventListener('pointercancel', (ev) => b.cancel(ev.pointerId));
-  box.addEventListener('click', (ev) => b.click(laneOf(box, ev.target as Element), performance.now()));
+  box.addEventListener('click', (ev) => b.click(itemAt(box, ev.target as Element, sel), performance.now()));
   box.addEventListener('contextmenu', (ev) => ev.preventDefault());
   window.addEventListener('blur', () => b.cancel()); // a release outside the window may never arrive
   return () => b.cancel();
