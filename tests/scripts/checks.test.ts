@@ -27,8 +27,8 @@ describe('checkStructure', () => {
     const rows = Array.from({ length: 36 }, () => 'ab'.repeat(20));
     expect(checkStructure({ ...base, rows, slots: 3 })).toEqual(['slots 3 outside easy band 4-5']);
     const hard = checkStructure({ ...base, rows, band: 'hard', slots: 4 });
-    expect(hard).toContain('slots 4 outside hard band 3-3');
-    expect(checkStructure({ ...base, rows, band: 'hard', slots: 2 })).toContain('slots 2 outside hard band 3-3');
+    expect(hard).toContain('slots 4 outside hard band 3');
+    expect(checkStructure({ ...base, rows, band: 'hard', slots: 2 })).toContain('slots 2 outside hard band 3');
   });
   test('accepts a grid inside its band', () => {
     const rows = Array.from({ length: 36 }, () => 'ab'.repeat(20));
