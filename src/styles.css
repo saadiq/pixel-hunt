@@ -56,7 +56,9 @@ canvas#board{display:block;border-radius:8px}
 @keyframes drop{from{transform:translateY(14px) scale(.9)}to{transform:none}}
 @keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
 
-.lanes{display:grid;grid-template-columns:repeat(var(--l,4),1fr);gap:8px;flex:none;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.lanes{display:grid;grid-template-columns:repeat(var(--l,4),1fr);gap:8px;flex:none}
+/* Pressable boxes (press.ts): a hold must not scroll, select or pop the touch callout. */
+.lanes,.slots{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .lane{display:flex;flex-direction:column;gap:5px;align-items:stretch;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:6px;min-width:0}
 .lane:disabled{cursor:default;opacity:.55}
 .lane.hint{outline:2px solid var(--warn);outline-offset:2px;animation:hint 1.1s ease-in-out 3}

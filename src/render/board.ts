@@ -5,7 +5,7 @@ import { type Ant, type Cells, type Crumb, type Geom, drawCrumbs, holeY, spawnAn
 import { type CubeShades, shadeCache } from './cube';
 import { fitBoard } from './fit';
 import { type Layer, buildLayer, drawChewing, syncLayer } from './layer';
-import { drawMarkers, drawPreview, reachable, targets } from './marks';
+import { type PreviewPick, drawMarkers, drawPreview, reachable, targets } from './marks';
 
 export interface Renderer {
   reset(g: Game): void;
@@ -13,8 +13,11 @@ export interface Renderer {
   bite: BiteFn;
   frame(now: number, g: Game, fast: boolean): void;
   busy(): boolean;
-  /** Show what a squad of this colour can reach right now (null hides it). Cleared by reset. */
-  preview(color: number | null): void;
+  /**
+   * Light the blocks of the colour `color()` gives, as `pick` chooses (by default what a squad can reach right now).
+   * `color` is read every frame, so the preview follows the board and a null from it shows nothing. Null hides it; reset clears it.
+   */
+  preview(color: (() => number | null) | null, pick?: PreviewPick): void;
   onChew?: () => void;
 }
 
@@ -61,7 +64,7 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer {
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   const reduce = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
   let geo: Geom = { W: 1, H: 1, cs: 5, T: 3, nest: 14, ox: 3, oy: 3, bpx: 5 };
-  let CW = 0, CH = 0, dpr = 1, fastNow = false, last: Game | null = null, previewing: number | null = null;
+  let CW = 0, CH = 0, dpr = 1, fastNow = false, last: Game | null = null, previewing: { color: () => number | null; pick: PreviewPick } | null = null;
   let cells: Cells = { colors: [], vis: new Int16Array(0), chew: new Float64Array(0) };
   let ants: Ant[] = [], crumbs: Crumb[] = [], pat: CanvasPattern | null = null, stage: [number, number] = [0, 0];
   let shades: CubeShades[] = [], layer: Layer | null = null;
@@ -107,13 +110,14 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       drawChewing(ctx, geo, cells, shades, chewing, now, fast ? 65 : 130, reduce);
       const marks = targets(ants);
-      if (previewing !== null) drawPreview(ctx, geo, reachable(cells.vis, geo.W, geo.H, previewing, marks), cells.colors[previewing]);
+      const pc = previewing?.color() ?? null;
+      if (previewing && pc !== null) drawPreview(ctx, geo, previewing.pick(cells.vis, geo.W, geo.H, pc, marks), cells.colors[pc]);
       drawMarkers(ctx, geo, marks, cells.colors, now, reduce);
       crumbs = drawCrumbs(ctx, crumbs, now);
       ants = stepAnts(ctx, ants, now, geo, cells, crumbs, reduce, r.onChew);
     },
     busy: () => ants.length > 0,
-    preview(color) { previewing = color; },
+    preview(color, pick = reachable) { previewing = color && { color, pick }; },
   };
   return r;
 }

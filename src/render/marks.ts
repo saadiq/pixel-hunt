@@ -28,12 +28,20 @@ export function drawMarkers(
   }
 }
 
-/** Blocks of `color` that look eatable on screen right now, minus those an ant is already heading for. */
-export function reachable(vis: Int16Array, W: number, H: number, color: number, marks: Map<number, number>): number[] {
-  const exp = exposedMask(vis, W, H), out: number[] = [];
-  for (let i = 0; i < vis.length; i++) if (exp[i] && vis[i] === color && !marks.has(i)) out.push(i);
+/** Picks which blocks of `color` a preview lights, leaving out those an ant is already heading for. */
+export type PreviewPick = (vis: Int16Array, W: number, H: number, color: number, marks: Map<number, number>) => number[];
+
+function colorCells(vis: Int16Array, color: number, marks: Map<number, number>, only?: Uint8Array): number[] {
+  const out: number[] = [];
+  for (let i = 0; i < vis.length; i++) if ((!only || only[i]) && vis[i] === color && !marks.has(i)) out.push(i);
   return out;
 }
+
+/** Blocks of `color` that look eatable on screen right now. */
+export const reachable: PreviewPick = (vis, W, H, color, marks) => colorCells(vis, color, marks, exposedMask(vis, W, H));
+
+/** Every block of `color` still on screen, reachable or buried. */
+export const remaining: PreviewPick = (vis, _W, _H, color, marks) => colorCells(vis, color, marks);
 
 /** The reach preview: the board dimmed, with each reachable block re-lit and ringed. */
 export function drawPreview(ctx: CanvasRenderingContext2D, g: Geom, cells: number[], hex: string): void {

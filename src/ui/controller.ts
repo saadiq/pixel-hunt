@@ -2,6 +2,7 @@
 import { hashStr } from '../core/rng';
 import type { Band, Level, Meta } from '../core/types';
 import { createRenderer, type Renderer } from '../render/board';
+import { remaining } from '../render/marks';
 import { SCENES } from '../scenes';
 import { MANIFEST } from '../scenes/manifest';
 import { canRewind, canUndo, type Game, newGame, status, tapLane, tick, undo } from '../state/game';
@@ -226,7 +227,20 @@ function wire(): void {
   $('muteBtn').onclick = toggleSound;
   $('restartBtn').onclick = () => { ensureAudio(); if (g) start(g.meta); };
   $('speedBtn').onclick = () => { save.prefs.fast = !save.prefs.fast; store(save); syncSpeed(); };
-  cancelPress = bindPress($('lanes'), '.lane', onTap, (l) => renderer.preview(l === null ? null : g?.lanes[l]?.[0]?.color ?? null));
+  // One preview at a time: a hold on lanes or slots ends a hold on the other. The colour is re-read every
+  // frame, so the preview follows the squad held and goes blank once it leaves or the board is over.
+  let lanes = (): void => {}, slots = (): void => {};
+  const held = (get: () => number | undefined) => (): number | null => (over ? null : get() ?? null);
+  lanes = bindPress($('lanes'), '.lane', onTap, (l) => {
+    if (l !== null) slots();
+    renderer.preview(l === null ? null : held(() => g?.lanes[l]?.[0]?.color));
+  });
+  // A held slot shows every block of its colour left, buried ones too: what to dig toward to free it.
+  slots = bindPress($('slots'), '.slot.full', null, (k) => {
+    if (k !== null) lanes();
+    renderer.preview(k === null ? null : held(() => g?.slots[k]?.color), remaining);
+  });
+  cancelPress = () => { lanes(); slots(); };
   wireSheets();
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') persist(); });
   const stage = $('stage');
