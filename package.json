@@ -9,6 +9,7 @@
     "lint": "bunx eslint .",
     "validate": "bun scripts/validate.ts",
     "export-pngs": "bun scripts/export-pngs.ts",
+    "og-image": "bun scripts/og-image.ts",
     "build-scenes": "bun scripts/build-scenes.ts",
     "colour-pairs": "bun scripts/colour-pairs.ts"
   },

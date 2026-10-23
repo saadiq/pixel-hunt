@@ -45,6 +45,7 @@ To try it on a phone on the same network, run `bun run dev --host 0.0.0.0` and o
 | `bun run validate [id...] [--quick]` | Solvability and difficulty table for scenes; with no id it checks every scene and random mode |
 | `bun run build-scenes [id...]` | Turn `scenes/art/<id>.svg` into scene data |
 | `bun run export-pngs [id...]` | Export PNG previews of scenes |
+| `bun run og-image` | Rebuild the link-preview card, `public/og-image.png` |
 | `bun run colour-pairs` | The closest colour pairs (CIEDE2000) across every scene and random palette |
 
 ## Project layout
