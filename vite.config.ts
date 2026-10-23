@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import { DESCRIPTION, OG_ALT, SITE_URL, TAGLINE, THEME, escapeXml } from './scripts/site';
+
+const SITE_META: Record<string, string> = { SITE_URL, DESCRIPTION, THEME, OG_ALT };
 
 // preview.html (the scene preview) is a dev-only page: listed as an input while
 // serving, left out of the production build.
@@ -12,6 +15,10 @@ export default defineConfig(({ command }) => ({
     },
   },
   plugins: [
+    {
+      name: 'site-meta',
+      transformIndexHtml: (html) => html.replace(/%(SITE_URL|DESCRIPTION|THEME|OG_ALT)%/g, (_, k: string) => escapeXml(SITE_META[k])),
+    },
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon-180x180.png', 'icon.svg'],
@@ -19,13 +26,13 @@ export default defineConfig(({ command }) => ({
         id: 'pixel-hunt',
         name: 'Pixel Hunt',
         short_name: 'Pixel Hunt',
-        description: 'A pixel-art puzzle. Send the right squads to eat every pixel.',
+        description: TAGLINE,
         display: 'standalone',
         orientation: 'portrait',
         start_url: './',
         scope: './',
         background_color: '#e7ecef',
-        theme_color: '#2c56cc',
+        theme_color: THEME,
         icons: [
           { src: 'pwa-64x64.png', sizes: '64x64', type: 'image/png' },
           { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
